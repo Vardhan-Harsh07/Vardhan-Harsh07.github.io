@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Harsh Vardhan Chauhan, Résumé</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Unbounded:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4; margin: 14mm 15mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #14163A; font: 400 9.6pt/1.45 "Geist", sans-serif; }
+    h1 { margin: 0; font: 800 22pt/1 "Unbounded", sans-serif; letter-spacing: -0.04em; }
+    .role { margin: 4pt 0 0; font-size: 11pt; color: #2A33E8; font-weight: 500; }
+    .contact { margin: 6pt 0 0; font: 400 8.5pt/1.4 "Geist Mono", monospace; color: #545878; }
+    .contact a { color: inherit; }
+    .bar { height: 4pt; margin: 10pt 0 2pt; background: linear-gradient(90deg, #2A33E8 0 78%, #FFE45C 78%); }
+    h2 { margin: 12pt 0 5pt; font: 700 9.5pt/1 "Unbounded", sans-serif; color: #2A33E8; letter-spacing: -0.01em; }
+    .item { margin-bottom: 7pt; break-inside: avoid; }
+    .head { display: flex; justify-content: space-between; gap: 12pt; font-weight: 600; }
+    .when { font: 400 8.5pt/1.4 "Geist Mono", monospace; color: #545878; white-space: nowrap; }
+    .sub { color: #545878; font-size: 9pt; }
+    ul { margin: 3pt 0 0; padding-left: 12pt; }
+    li { margin-top: 1.5pt; }
+    .skills { display: grid; grid-template-columns: 9.5em 1fr; gap: 2pt 10pt; }
+    .skills dt { font-weight: 600; }
+    .skills dd { margin: 0; }
+    mark { background: #FFE45C; color: inherit; padding: 0 2pt; }
+  </style>
+</head>
+<body>
+  <h1>Harsh Vardhan Chauhan</h1>
+  <p class="role">Forward Deployed Engineer. I build AI agents and get them working for real customers.</p>
+  <!-- TODO: add portfolio, GitHub and LinkedIn URLs once deployed -->
+  <p class="contact">Kurukshetra, India &nbsp; <a href="mailto:vardhanharsh806@gmail.com">vardhanharsh806@gmail.com</a></p>
+  <div class="bar"></div>
+
+  <h2>Experience</h2>
+  <div class="item">
+    <div class="head"><span>Forward Deployed Engineer, InboxKit <span class="sub">(remote, Dubai)</span></span><span class="when">Apr 2026 to present</span></div>
+    <ul>
+      <li>Primary technical contact for enterprise customers: troubleshoot complex product issues and drive resolution across support, engineering and product.</li>
+      <li>Run and improve customer onboarding, implementation and operating procedures to raise adoption, reliability and time to value.</li>
+      <li>Translate customer requirements into concrete fixes, feature improvements and technical solutions with product and engineering.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="head"><span>AI Research &amp; Algorithm Intern, Arcflip <span class="sub">(US startup, remote)</span></span><span class="when">Dec 2025 to Feb 2026</span></div>
+    <ul>
+      <li>Designed and built the core scoring engine for an AI career-matching platform, combining multi-dimensional signals to rank best-fit candidates at scale.</li>
+      <li>Engineered end-to-end Python pipelines that enforced data integrity and removed manual processing across agentic workflows.</li>
+      <li>Designed a scalable schema for diverse career paths; calibrated outputs against reference profiles to improve accuracy and reduce scoring drift.</li>
+    </ul>
+  </div>
+
+  <h2>Projects</h2>
+  <div class="item">
+    <div class="head"><span>Agentic AI Research Assistant</span><span class="when">Python, LangGraph, OpenAI API, Serper.dev, Streamlit</span></div>
+    <ul>
+      <li>Multi-agent deep research system in the spirit of Perplexity: planning, retrieval, analysis, reflection and synthesis agents in LangGraph with deterministic routing and controlled depth.</li>
+      <li>Real-time web search through Serper.dev for retrieval-augmented generation and citation-backed reports.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="head"><span>Krishi Saahayak, crop disease detection</span><span class="when">Python, TensorFlow, CNN, TensorRT, Flask</span></div>
+    <ul>
+      <li>Custom CNN trained from scratch at 91.44% accuracy, raised to <mark>99.55%</mark> with an ensemble majority vote across 38 disease classes on real-world field images.</li>
+      <li>Optimised with NVIDIA TensorRT and served as a real-time Flask REST API; published at ICICC-2026 (Springer).</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="head"><span>TalentScout Hiring Assistant</span><span class="when">Python, Zephyr-7B, Hugging Face, Streamlit</span></div>
+    <ul>
+      <li>LLM screening chatbot that generates role-specific technical questions from each candidate's declared stack.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="head"><span>RedditMind <span class="sub">(in progress)</span></span><span class="when">Next.js, Trigger.dev, Claude API, pgvector</span></div>
+    <ul>
+      <li>Agent that reads a user's subreddits overnight and writes a personalised morning briefing that improves with use.</li>
+    </ul>
+  </div>
+
+  <h2>Publications</h2>
+  <div class="item">
+    <ul>
+      <li><b>Automated Identification of Crop Diseases Using Deep Learning Frameworks.</b> Co-authored. Accepted at ICICC-2026 (Springer).</li>
+      <li><b>Leveraging Digital Devices for Behavioral Health Assessment via ML.</b> Co-authored. Springer, 2025.</li>
+    </ul>
+  </div>
+
+  <h2>Education</h2>
+  <div class="item">
+    <div class="head"><span>B.Tech, Computer Science (Data Science), Bennett University</span><span class="when">2022 to 2026</span></div>
+    <p class="sub" style="margin: 2pt 0 0">CGPA 8.95. Deep Learning, Machine Learning, Information Retrieval, AI Systems.</p>
+  </div>
+
+  <h2>Skills</h2>
+  <dl class="skills">
+    <dt>Agentic AI &amp; LLMs</dt><dd>LangGraph, GPT-4o, Claude, Zephyr-7B, Hugging Face Transformers, prompt engineering, RAG</dd>
+    <dt>ML &amp; deep learning</dt><dd>TensorFlow, Keras, scikit-learn, XGBoost, LightGBM, CNNs, RNNs, LSTMs</dd>
+    <dt>Programming</dt><dd>Python, C++, SQL, JavaScript</dd>
+    <dt>Tools &amp; infra</dt><dd>Flask, REST APIs, TensorRT, MySQL, Git, OpenAI API, Streamlit, React</dd>
+  </dl>
+</body>
+</html>

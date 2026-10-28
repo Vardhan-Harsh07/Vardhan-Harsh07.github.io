@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Link preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Geist+Mono:wght@400;500&family=Geist:wght@500;600&family=Unbounded:wght@800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    html, body { width: 1200px; height: 630px; overflow: hidden; }
+    body {
+      position: relative;
+      color: #fff;
+      font-family: "Geist", sans-serif;
+      background:
+        radial-gradient(70% 90% at 90% 0%, rgba(255, 255, 255, 0.14), transparent 60%),
+        radial-gradient(80% 80% at 0% 100%, rgba(8, 10, 70, 0.6), transparent 70%),
+        #2A33E8;
+    }
+    canvas { position: absolute; inset: 0; }
+    .content { position: absolute; left: 72px; top: 64px; right: 330px; }
+    .label { font: 500 20px/1 "Geist Mono", monospace; color: #C6CAFF; }
+    .note { position: absolute; left: 270px; top: -14px; font: 700 34px/1 "Caveat", cursive; color: #FFE45C; transform: rotate(-4deg); white-space: nowrap; }
+    h1 { margin-top: 26px; font: 800 78px/1.02 "Unbounded", sans-serif; letter-spacing: -0.045em; }
+    .caret { display: inline-block; width: 0.42em; height: 0.82em; margin-left: 0.08em; vertical-align: -0.06em; background: #FFE45C; }
+    .rule { height: 3px; margin-top: 22px; background: rgba(255, 255, 255, 0.35); }
+    .answer { margin-top: 26px; font: 500 27px/1.5 "Geist", sans-serif; max-width: 760px; text-shadow: 0 0 18px #2A33E8; }
+    .cite { display: inline-block; padding: 1px 12px; margin: 0 2px; border-radius: 999px; background: #fff; color: #2A33E8; font: 500 17px/1.6 "Geist Mono", monospace; vertical-align: 4px; }
+    mark { background: #FFE45C; color: #14163A; padding: 0 8px; border-radius: 4px; }
+    .flow { position: absolute; right: 72px; top: 110px; width: 210px; display: grid; gap: 14px; list-style: none; padding: 0; }
+    .flow li { display: flex; justify-content: space-between; padding: 12px 16px; border: 2px solid #fff; border-radius: 12px; font: 500 19px/1 "Geist Mono", monospace; background: rgba(20, 24, 140, 0.45); }
+    .flow li span { color: #C6CAFF; font-size: 14px; }
+    .flow li.active { background: #fff; color: #2A33E8; }
+    .flow li.active span { color: #2A33E8; }
+    .sticker { position: absolute; right: 64px; bottom: 54px; padding: 12px 20px; border-radius: 10px; background: #FFE45C; color: #14163A; font: 700 38px/1 "Caveat", cursive; transform: rotate(6deg); box-shadow: 0 14px 24px -10px rgba(0, 0, 0, 0.45); }
+    .name { position: absolute; left: 72px; bottom: 48px; font: 500 18px/1 "Geist Mono", monospace; color: #C6CAFF; }
+  </style>
+</head>
+<body>
+  <canvas width="1200" height="630"></canvas>
+  <div class="content">
+    <p class="label">Ask about Harsh</p>
+    <p class="note">ask it anything about me</p>
+    <h1>Who is Harsh Vardhan Chauhan?<span class="caret"></span></h1>
+    <div class="rule"></div>
+    <p class="answer">A Forward Deployed Engineer at InboxKit <span class="cite">InboxKit</span> who builds AI agents and a crop-disease model with <mark>99.55%</mark> accuracy <span class="cite">Krishi Saahayak</span></p>
+  </div>
+  <ol class="flow">
+    <li>Plan <span>done</span></li>
+    <li>Search <span>done</span></li>
+    <li>Read <span>done</span></li>
+    <li>Reflect <span>done</span></li>
+    <li class="active">Write <span>running</span></li>
+  </ol>
+  <p class="sticker">a live agent lives here</p>
+  <script>
+    // The same latent-field look as the site, frozen mid-search.
+    const ctx = document.querySelector('canvas').getContext('2d');
+    let seed = 11;
+    const rand = () => {
+      seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+    const spread = () => (rand() + rand() + rand() - 1.5) / 1.5;
+    const clusters = [
+      [0.10, 0.92, ['LangGraph', 'RAG', 'Reflection']], [0.46, 0.95, ['Ensemble', 'TensorRT', 'CNN']],
+      [0.62, 0.08, ['Springer', 'ICICC-2026']], [0.40, 0.04, ['pgvector', 'Next.js']],
+      [0.88, 0.04, ['Enterprise', 'Support']], [0.70, 0.78, ['Scoring engine', 'Python', 'XGBoost']],
+    ];
+    const lit = new Set(['LangGraph', 'Ensemble', 'Enterprise', 'Scoring engine', 'Springer', 'RAG']);
+    const origin = [380, 330];
+    for (const [cx, cy, terms] of clusters) {
+      for (let i = 0; i < 26; i += 1) {
+        ctx.fillStyle = `rgba(255,255,255,${0.12 + rand() * 0.2})`;
+        ctx.beginPath();
+        ctx.arc((cx + spread() * 0.16) * 1200, (cy + spread() * 0.14) * 630, 0.6 + rand() * 1.4, 0, 7);
+        ctx.fill();
+      }
+      terms.forEach((term, i) => {
+        const x = (cx + spread() * 0.06) * 1200;
+        const y = (cy + (i - 1) * 0.045) * 630;
+        const on = lit.has(term);
+        if (on) {
+          ctx.strokeStyle = 'rgba(255,228,92,0.55)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(...origin);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+        ctx.fillStyle = on ? '#FFE45C' : 'rgba(255,255,255,0.35)';
+        ctx.beginPath();
+        ctx.arc(x, y, on ? 4.5 : 2.5, 0, 7);
+        ctx.fill();
+        ctx.font = `${on ? 500 : 400} ${on ? 16 : 13}px "Geist Mono", monospace`;
+        ctx.fillText(term, x + 9, y + 5);
+      });
+    }
+  </script>
+</body>
+</html>
