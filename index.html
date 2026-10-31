@@ -28,7 +28,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" id="sheet">
+  <script>
+    try {
+      const colour = localStorage.getItem('colour');
+      if (/^(emerald|tangerine|pink|violet)$/.test(colour)) document.getElementById('sheet').href = `palettes/${colour}.css`;
+    } catch {}
+  </script>
 </head>
 <body>
   <a class="skip" href="#exhibits">Skip to the exhibits</a>
@@ -49,6 +55,7 @@
       </nav>
       <div class="bar-tools">
         <button type="button" class="kbd-btn" data-action="palette" aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K">Search <kbd class="kbd-hint">⌘K</kbd></button>
+        <button type="button" class="colour-btn" data-action="colour" aria-label="Change colour, now blue" title="Change colour"><span aria-hidden="true" style="background: conic-gradient(#2A33E8 0 72deg, #0B8A5F 0 144deg, #D9480F 0 216deg, #D6246E 0 288deg, #6A2BE8 0)"></span></button>
         <button type="button" class="theme-switch" role="switch" aria-checked="false" aria-label="Dark theme"><span class="knob" aria-hidden="true"></span></button>
       </div>
     </header>

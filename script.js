@@ -255,6 +255,40 @@ function setTheme(theme) {
 }
 
 const toggleTheme = () => setTheme(isDark() ? 'light' : 'dark');
+
+/* ---------- Colour ---------- */
+
+const COLOURS = { blue: '#2A33E8', emerald: '#0B8A5F', tangerine: '#D9480F', pink: '#D6246E', violet: '#6A2BE8' };
+const COLOUR_NAMES = Object.keys(COLOURS);
+const sheet = document.querySelector('#sheet');
+const colourButton = document.querySelector('[data-action="colour"]');
+const themeColor = document.querySelector('meta[name="theme-color"]');
+let colour = COLOUR_NAMES.find((name) => sheet.getAttribute('href').includes(name)) ?? 'blue';
+let turns = 0;
+
+function syncColour() {
+  colourButton.setAttribute('aria-label', `Change colour, now ${colour}`);
+  colourButton.firstElementChild.style.transform = `rotate(${turns * -72}deg)`;
+  themeColor.content = COLOURS[colour];
+}
+
+function setColour(name) {
+  if (!COLOURS[name]) return;
+  turns += (COLOUR_NAMES.indexOf(name) - COLOUR_NAMES.indexOf(colour) + COLOUR_NAMES.length) % COLOUR_NAMES.length;
+  colour = name;
+  sheet.addEventListener('load', () => deskField.refreshColors(), { once: true });
+  sheet.href = name === 'blue' ? 'styles.css' : `palettes/${name}.css`;
+  try {
+    localStorage.setItem('colour', name);
+  } catch {}
+  syncColour();
+  toast(`Colour set to ${name}.`);
+}
+
+const nextColour = () => setColour(COLOUR_NAMES[(COLOUR_NAMES.indexOf(colour) + 1) % COLOUR_NAMES.length]);
+colourButton.addEventListener('click', nextColour);
+turns = COLOUR_NAMES.indexOf(colour);
+syncColour();
 themeSwitch.addEventListener('click', toggleTheme);
 systemDark.addEventListener('change', syncTheme);
 syncTheme();
@@ -1072,6 +1106,9 @@ function paletteCommands() {
     { label: 'Copy email address', group: 'Action', keys: 'contact mail', run: copyEmail },
     { label: 'Print my résumé', group: 'Action', keys: 'resume cv download pdf', run: printResume },
     { label: `Switch to the ${isDark() ? 'light' : 'dark'} theme`, group: 'Action', keys: 'theme mode dark light', run: toggleTheme },
+    ...COLOUR_NAMES.filter((name) => name !== colour).map((name) => ({
+      label: `Change the colour to ${name}`, group: 'Action', keys: 'colour color palette accent', run: () => setColour(name),
+    })),
     { label: 'Open the terminal', group: 'Action', keys: 'shell console cli command', run: openTerminal },
     {
       label: 'Write Harsh a note', group: 'Action', keys: 'message contact hire',
@@ -1231,12 +1268,13 @@ const HELP = [
   'copy email           copy Harsh\'s email address',
   'resume               print the résumé',
   'theme light|dark     switch the theme',
+  'colour <name>        blue, emerald, tangerine, pink or violet',
   'sudo hire harsh      you know you want to',
   'clear                clear the screen',
   'exit                 close the terminal',
 ].join('\n');
 
-const COMMANDS = ['help', 'ls', 'cat', 'open', 'ask', 'now', 'whoami', 'copy', 'resume', 'theme', 'sudo', 'clear', 'exit', 'history', 'pwd', 'date', 'echo'];
+const COMMANDS = ['help', 'ls', 'cat', 'open', 'ask', 'now', 'whoami', 'copy', 'resume', 'theme', 'colour', 'sudo', 'clear', 'exit', 'history', 'pwd', 'date', 'echo'];
 
 function print(text, className = '') {
   const block = document.createElement('div');
@@ -1310,6 +1348,10 @@ function execute(raw) {
       break;
     case 'theme':
       if (rest === 'light' || rest === 'dark') { setTheme(rest); print(`Theme set to ${rest}.`); } else print('theme: use "theme light" or "theme dark".', 'err');
+      break;
+    case 'colour':
+    case 'color':
+      if (COLOURS[rest]) { setColour(rest); print(`Colour set to ${rest}.`); } else print(`colour: pick one of ${COLOUR_NAMES.join(', ')}.`, 'err');
       break;
     case 'sudo':
       if (/^hire\s+harsh$/i.test(rest)) {
