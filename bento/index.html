@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Harsh Vardhan Chauhan</title>
+<meta name="description" content="Harsh Vardhan Chauhan, Forward Deployed Engineer at InboxKit. I build AI agents and get them working for real customers.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232A3CDB%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-family=%22Arial%22 font-weight=%22700%22 font-size=%2215%22 fill=%22%23fff%22 text-anchor=%22middle%22%3EHV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#ask">Skip to the ask-me box</a>
+
+<main class="bento" id="top">
+
+  <!-- Identity -->
+  <section class="tile t-id" style="--i:0" aria-labelledby="id-name">
+    <div class="id-top">
+      <p class="status"><span class="pulse" aria-hidden="true"></span>Open to conversations</p>
+      <p class="id-where">Kurukshetra, India</p>
+    </div>
+    <div class="id-main">
+      <h1 id="id-name" class="name"><span>Harsh Vardhan</span><span>Chauhan</span></h1>
+      <p class="role">Forward Deployed Engineer at <strong>InboxKit</strong></p>
+    </div>
+    <p class="oneliner">I build AI agents and get them working for real customers.</p>
+    <div class="id-actions">
+      <a class="btn btn-light" href="mailto:vardhanharsh806@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="../Harsh-Vardhan-Chauhan-Resume.pdf" download>Download résumé</a>
+    </div>
+  </section>
+
+  <!-- Clock -->
+  <section class="tile t-clock" style="--i:1" aria-labelledby="clk-h">
+    <h2 id="clk-h" class="tl">Local time in Kurukshetra</h2>
+    <p class="clock" aria-live="off"><time id="clock-time">--:--</time><span id="clock-sec" class="sec">:--</span></p>
+    <p class="clock-sub" id="clock-sub">India Standard Time</p>
+    <svg class="sky" viewBox="0 0 200 64" aria-hidden="true">
+      <g id="stars"></g>
+      <path class="sky-arc" d="M10 58 Q100 -18 190 58" fill="none"/>
+      <line class="sky-ground" x1="0" y1="58" x2="200" y2="58"/>
+      <g id="sky-body"><circle r="7" class="sky-sun"/></g>
+    </svg>
+  </section>
+
+  <!-- Location -->
+  <section class="tile t-loc" style="--i:2" aria-labelledby="loc-h">
+    <h2 id="loc-h" class="tl">Based in</h2>
+    <svg class="map" viewBox="0 0 240 170" role="img" aria-label="Stylised map with a pin on Kurukshetra, India">
+      <defs>
+        <pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" class="map-dot"/></pattern>
+      </defs>
+      <rect width="240" height="170" fill="url(#dots)"/>
+      <g class="contours" fill="none">
+        <path d="M30 140 C60 110 50 70 95 60 S170 40 200 75 S215 150 160 155 S60 165 30 140Z"/>
+        <path d="M60 128 C80 104 76 84 104 76 S160 64 182 88 S188 138 152 140 S80 146 60 128Z"/>
+        <path d="M88 116 C100 100 102 92 118 88 S152 84 162 100 S160 126 140 126 S98 130 88 116Z"/>
+      </g>
+      <path class="river" d="M0 40 C40 50 70 30 110 46 S180 70 240 52" fill="none"/>
+      <g class="pin" transform="translate(124 104)">
+        <circle class="pin-ring" r="10"/>
+        <circle class="pin-ring r2" r="10"/>
+        <path class="pin-body" d="M0 0 C-9 -12 -11 -16 -11 -21 A11 11 0 1 1 11 -21 C11 -16 9 -12 0 0Z"/>
+        <circle cx="0" cy="-21" r="4" class="pin-hole"/>
+      </g>
+    </svg>
+    <p class="loc-name">Kurukshetra, India</p>
+    <p class="loc-coord">29.97° N, 76.88° E</p>
+  </section>
+
+  <!-- Krishi -->
+  <section class="tile t-krishi" style="--i:3" aria-labelledby="kr-h">
+    <div class="kr-head">
+      <h2 id="kr-h" class="tl">Krishi Saahayak, crop disease detection</h2>
+      <p class="kr-tag">Springer, ICICC-2026</p>
+    </div>
+    <div class="kr-body">
+      <div class="kr-big">
+        <p class="metric"><span id="kr-count" data-target="99.55">99.55</span><span class="pct">%</span></p>
+        <p class="metric-cap">accuracy across 38 crop disease classes, from a majority vote of five models</p>
+      </div>
+      <div class="bars" role="img" aria-label="Accuracy: custom CNN 91.44 percent, five-model ensemble 99.55 percent">
+        <div class="bar-row">
+          <p class="bar-lbl"><span>Custom CNN, built from scratch</span><span>91.44%</span></p>
+          <div class="bar-track"><div class="bar b-cnn" style="--w:91.44%"></div></div>
+        </div>
+        <div class="bar-row">
+          <p class="bar-lbl"><span>Ensemble of five models</span><span>99.55%</span></p>
+          <div class="bar-track"><div class="bar b-ens" style="--w:99.55%"></div></div>
+        </div>
+        <p class="bar-note">Error rate drops from 8.56% to 0.45%. Optimised with TensorRT, served as a real-time Flask API.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ask -->
+  <section class="tile t-ask" id="ask" style="--i:4" aria-labelledby="ask-h">
+    <h2 id="ask-h" class="ask-title">Ask about Harsh</h2>
+    <p class="ask-sub">A small scripted agent that answers from this page.</p>
+    <div class="chat" id="chat">
+      <div class="msg bot" id="answer" aria-live="polite" aria-atomic="true">Try a question, or tap one below.</div>
+    </div>
+    <div class="chips" role="group" aria-label="Suggested questions">
+      <button type="button" class="chip">What does he do at InboxKit?</button>
+      <button type="button" class="chip">What is he building now?</button>
+      <button type="button" class="chip">Has he published papers?</button>
+      <button type="button" class="chip">What's his stack?</button>
+    </div>
+    <form class="ask-form" id="ask-form" autocomplete="off">
+      <label for="ask-input" class="sr">Your question about Harsh</label>
+      <input id="ask-input" name="q" type="text" placeholder="Ask anything, e.g. where is he based?" maxlength="160">
+      <button type="submit" class="ask-send">Ask</button>
+    </form>
+  </section>
+
+  <!-- RedditMind -->
+  <section class="tile t-reddit" style="--i:5" aria-labelledby="rm-h">
+    <p class="building"><span class="pulse pulse-dark" aria-hidden="true"></span>Building now</p>
+    <h2 id="rm-h" class="proj-title">RedditMind</h2>
+    <p class="proj-desc">An agent that reads your subreddits overnight and writes a personalised morning briefing that gets smarter with use.</p>
+    <div class="brief" aria-hidden="true">
+      <div class="brief-head"><span>Morning briefing</span><span class="brief-time">06:00</span></div>
+      <div class="brief-feed">
+        <div class="bcard"><i class="bdot c1"></i><span class="bl w80"></span><span class="bl w55"></span></div>
+        <div class="bcard"><i class="bdot c2"></i><span class="bl w70"></span><span class="bl w45"></span></div>
+        <div class="bcard"><i class="bdot c3"></i><span class="bl w85"></span><span class="bl w60"></span></div>
+        <div class="bcard"><i class="bdot c1"></i><span class="bl w65"></span><span class="bl w50"></span></div>
+      </div>
+    </div>
+    <ul class="tags"><li>Next.js</li><li>Trigger.dev</li><li>Claude API</li><li>Postgres + pgvector</li></ul>
+  </section>
+
+  <!-- Now -->
+  <section class="tile t-now" style="--i:6" aria-labelledby="now-h">
+    <h2 id="now-h" class="tl">Now</h2>
+    <p class="now-text">Learning the ins and outs of Meta ads.</p>
+    <div class="now-meter" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- TalentScout -->
+  <section class="tile t-talent" style="--i:7" aria-labelledby="ts-h">
+    <h2 id="ts-h" class="proj-title sm">TalentScout</h2>
+    <p class="proj-desc">LLM screening assistant that writes role-specific technical questions from each candidate's declared stack.</p>
+    <div class="ts-demo" aria-hidden="true">
+      <span class="ts-in">Python, Flask, SQL</span>
+      <span class="ts-q">Q1</span><span class="ts-q">Q2</span><span class="ts-q">Q3</span>
+    </div>
+    <ul class="tags"><li>Zephyr-7B</li><li>Hugging Face</li><li>Streamlit</li></ul>
+  </section>
+
+  <!-- Research -->
+  <section class="tile t-research" style="--i:8" aria-labelledby="ra-h">
+    <div class="ra-head">
+      <h2 id="ra-h" class="proj-title sm">Agentic AI Research Assistant</h2>
+      <p class="year">2025</p>
+    </div>
+    <p class="proj-desc">Perplexity-style multi-agent deep research with deterministic routing, live web search and citation-backed reports.</p>
+    <ol class="pipe" aria-label="Agent pipeline">
+      <li>Plan</li><li>Search</li><li>Read</li><li>Reflect</li><li>Write</li>
+    </ol>
+    <p class="pipe-cap" id="pipe-cap"><b>Write.</b> A synthesis agent turns the findings into a citation-backed report.</p>
+    <ul class="tags"><li>LangGraph</li><li>OpenAI API</li><li>Serper.dev</li><li>Streamlit</li></ul>
+  </section>
+
+  <!-- Experience -->
+  <section class="tile t-exp" style="--i:9" aria-labelledby="ex-h">
+    <h2 id="ex-h" class="tl">Experience</h2>
+    <ol class="timeline">
+      <li class="now">
+        <p class="tw">Apr 2026 to now</p>
+        <h3>Forward Deployed Engineer, InboxKit</h3>
+        <p>Primary technical contact for enterprise customers. Turns their requirements into fixes, features and technical solutions, and runs onboarding and implementation.</p>
+      </li>
+      <li>
+        <p class="tw">Dec 2025 to Feb 2026</p>
+        <h3>AI Research &amp; Algorithm Intern, Arcflip</h3>
+        <p>Designed and built the core scoring engine for an AI career-matching platform, ranking best-fit candidates at scale.</p>
+      </li>
+      <li>
+        <p class="tw">2022 to 2026</p>
+        <h3>B.Tech, Computer Science (Data Science), Bennett University</h3>
+        <p>CGPA 8.95. Deep learning, machine learning, information retrieval, AI systems.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Papers -->
+  <section class="tile t-papers" style="--i:10" aria-labelledby="pp-h" tabindex="0">
+    <h2 id="pp-h" class="tl">Two Springer papers</h2>
+    <div class="stack">
+      <article class="sheet s2">
+        <p class="sheet-meta">Springer, 2025</p>
+        <h3>Leveraging Digital Devices for Behavioral Health Assessment via ML</h3>
+        <p class="sheet-by">Co-authored</p>
+      </article>
+      <article class="sheet s1">
+        <p class="sheet-meta">ICICC-2026, Springer</p>
+        <h3>Automated Identification of Crop Diseases Using Deep Learning Frameworks</h3>
+        <p class="sheet-by">Co-authored, accepted</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="tile t-contact" style="--i:11" aria-labelledby="ct-h">
+    <h2 id="ct-h" class="ct-title">Let's talk about the thing you're trying to ship.</h2>
+    <div class="ct-mail">
+      <a class="mail" href="mailto:vardhanharsh806@gmail.com">vardhanharsh806@gmail.com</a>
+      <button type="button" class="copy" id="copy" data-email="vardhanharsh806@gmail.com">Copy email</button>
+      <span class="sr" id="copy-status" aria-live="polite"></span>
+    </div>
+    <div class="ct-links">
+      <a href="../Harsh-Vardhan-Chauhan-Resume.pdf" download>Résumé (PDF)</a>
+      <a href="https://github.com/Vardhan-Harsh07" rel="noopener" target="_blank">GitHub</a>
+      <a class="quiet" href="../">Open the playful version</a>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="tile t-stack" style="--i:12" aria-labelledby="st-h">
+    <h2 id="st-h" class="sr">Tech stack</h2>
+    <p class="sr">Agents and LLMs: LangGraph, Claude, GPT-4o, Zephyr-7B, Hugging Face Transformers, RAG, prompt engineering. ML: TensorFlow, Keras, scikit-learn, XGBoost, LightGBM, CNNs, LSTMs. Code: Python, TypeScript, SQL, C++, JavaScript. Shipping: Flask, Next.js, REST APIs, TensorRT, Postgres, Git, Streamlit, React.</p>
+    <div class="marquee" aria-hidden="true">
+      <div class="mq-row" data-items="LangGraph|Claude|GPT-4o|Zephyr-7B|Hugging Face Transformers|RAG|Prompt engineering|TensorFlow|Keras|scikit-learn|XGBoost|LightGBM|CNNs|LSTMs"></div>
+      <div class="mq-row rev" data-items="Python|TypeScript|SQL|C++|JavaScript|Flask|Next.js|REST APIs|TensorRT|Postgres|Git|Streamlit|React"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>Harsh Vardhan Chauhan, Kurukshetra. <a href="#top">Back to top</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
