@@ -11,7 +11,7 @@ const CLUSTERS = [
   { x: 0.50, y: 0.90, terms: ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras'] },
   { x: 0.88, y: 0.80, terms: ['Scoring engine', 'XGBoost', 'LightGBM', 'Calibration', 'Signals'] },
   { x: 0.90, y: 0.14, terms: ['Enterprise', 'Onboarding', 'SOPs', 'Support', 'Debugging'] },
-  { x: 0.62, y: 0.06, terms: ['Springer', 'ICICC-2026', 'Health ML'] },
+  { x: 0.62, y: 0.06, terms: ['Springer', 'ICICC-2026', 'Health ML', 'Cosmology'] },
   { x: 0.38, y: 0.05, terms: ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit'] },
   { x: 0.67, y: 0.56, terms: ['Python', 'SQL', 'C++', 'Flask', 'Streamlit', 'Zephyr-7B', 'Hugging Face', 'LSTM'] },
 ];
@@ -302,6 +302,7 @@ const SOURCES = {
   7: ['papers', 'Springer 2025'],
   8: ['talentscout', 'TalentScout'],
   9: ['bennett', 'Bennett'],
+  10: ['papers', 'Elsevier 2025'],
 };
 const SOURCE_COUNT = Object.keys(SOURCES).length;
 
@@ -340,11 +341,11 @@ const ANSWERS = [
   },
   {
     ask: 'Where is his research?',
-    match: /\b(research|papers?|publications?|published|springer|icicc|academic|study|studied|university|degree|cgpa|education)\b/i,
-    keys: ['research', 'paper', 'papers', 'publication', 'springer', 'academic', 'university', 'degree', 'education', 'college', 'bennett', 'cgpa', 'gpa'],
-    parts: 2,
-    terms: ['Springer', 'ICICC-2026', 'Health ML', 'CNN', 'Ensemble'],
-    text: "Two co-authored Springer papers: crop-disease detection with deep learning, accepted at ICICC-2026 [6], and behavioral health assessment from everyday device data, published in 2025 [7]. The first grew out of his Krishi Saahayak model [5]. He studied computer science with a data science major at Bennett University and graduated with a CGPA of 8.95 [9].",
+    match: /\b(research|papers?|publications?|published|springer|elsevier|icicc|cosmology|gravity|astronomy|academic|study|studied|university|degree|cgpa|education)\b/i,
+    keys: ['research', 'paper', 'papers', 'publication', 'springer', 'elsevier', 'cosmology', 'academic', 'university', 'degree', 'education', 'college', 'bennett', 'cgpa', 'gpa'],
+    parts: 3,
+    terms: ['Springer', 'ICICC-2026', 'Health ML', 'Cosmology', 'CNN', 'Ensemble'],
+    text: "Three co-authored papers: crop-disease detection with deep learning, accepted at ICICC-2026 [6], behavioral health assessment from everyday device data, published by Springer in 2025 [7], and a cosmology study in a higher-order theory of gravity, published in Elsevier's Astronomy and Computing in 2025 [10]. The first grew out of his Krishi Saahayak model [5]. He studied computer science with a data science major at Bennett University and graduated with a CGPA of 8.95 [9].",
   },
   {
     ask: "What's his stack?",
@@ -795,8 +796,9 @@ krishi.querySelector('[data-action="scan"]').addEventListener('click', scanNext)
 /* ---------- Papers: swap the top sheet ---------- */
 
 document.querySelector('[data-action="shuffle"]').addEventListener('click', () => {
-  for (const sheet of document.querySelectorAll('.sheet')) {
-    sheet.dataset.order = sheet.dataset.order === '0' ? '1' : '0';
+  const sheets = document.querySelectorAll('.sheet');
+  for (const sheet of sheets) {
+    sheet.dataset.order = String((Number(sheet.dataset.order) + sheets.length - 1) % sheets.length);
   }
 });
 
@@ -1232,7 +1234,7 @@ const FILES = {
   'krishi.md': 'Krishi Saahayak (2025)\n- CNN from scratch: 91.44%. Five-model ensemble: 99.55%\n- 38 crop disease classes, TensorRT, real-time Flask API\n- Became a paper accepted at ICICC-2026 (Springer)',
   'talentscout.md': 'TalentScout (2025)\n- Zephyr-7B screening bot that writes questions for each candidate\'s stack',
   'redditmind.md': 'RedditMind (building now)\n- Reads your subreddits overnight, writes a short morning briefing\n- Next.js, Trigger.dev, Claude API, Postgres with pgvector',
-  'papers.md': '1. Automated Identification of Crop Diseases Using Deep Learning Frameworks. ICICC-2026, Springer. Accepted.\n2. Leveraging Digital Devices for Behavioral Health Assessment via ML. Springer, 2025. Published.',
+  'papers.md': '1. Automated Identification of Crop Diseases Using Deep Learning Frameworks. ICICC-2026, Springer. Accepted.\n2. Leveraging Digital Devices for Behavioral Health Assessment via ML. Springer, 2025. Published.\n3. A Cosmological Probe in a Theory of Higher-Order Gravity. Astronomy and Computing, Elsevier, 2025. Published.',
   'bennett.md': 'B.Tech, Computer Science (Data Science), Bennett University, 2022 to 2026\nCGPA 8.95',
   'contact.md': `Email: ${EMAIL}\nType "copy email" to copy it, or "sudo hire harsh".`,
 };
@@ -1515,34 +1517,33 @@ if (!reduced) {
 
 const favicon = document.querySelector('#favicon');
 const pageTitle = document.title;
-const AWAY_TITLES = ['👀 Come back…', 'Harsh is still here', 'The agent is waiting', '🥺 Don’t leave yet'];
-const faceIcon = (dx) => 'data:image/svg+xml,' + encodeURIComponent(
+const AWAY_TITLES = ['👀 Harsh Vardhan', '👀 Harsh is waiting'];
+// Favicon frames: the eyes glance around, and blink now and then
+const faceIcon = (dx, dy, shut = false) => 'data:image/svg+xml,' + encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#5B2BE0"/>` +
-  `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
-  `<circle cx="${22 + dx}" cy="30" r="4.6" fill="#1F153B"/><circle cx="${42 + dx}" cy="30" r="4.6" fill="#1F153B"/>` +
-  `<rect x="24" y="44" width="16" height="7" rx="3.5" fill="#FFE45C"/></svg>`);
-const AWAY_ICONS = [faceIcon(-4), faceIcon(4)];
+  (shut
+    ? `<rect x="13" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/><rect x="33" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/>`
+    : `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
+      `<circle cx="${22 + dx}" cy="${28 + dy}" r="4.6" fill="#1F153B"/><circle cx="${42 + dx}" cy="${28 + dy}" r="4.6" fill="#1F153B"/>`) +
+  `<rect x="21" y="45" width="22" height="5.5" rx="2.75" fill="#FFE45C"/></svg>`);
+const AWAY_ICONS = [faceIcon(-4, 0), faceIcon(-3, -4), faceIcon(4, -3), faceIcon(4, 2), faceIcon(0, 0, true), faceIcon(-2, 3)];
 let awayTimer = 0;
-let backTimer = 0;
 
 document.addEventListener('visibilitychange', () => {
   clearInterval(awayTimer);
-  clearTimeout(backTimer);
   if (document.hidden) {
     let tick = 0;
     const step = () => {
-      document.title = AWAY_TITLES[Math.floor(tick / 2) % AWAY_TITLES.length];
-      favicon.href = AWAY_ICONS[tick % 2];
+      favicon.href = AWAY_ICONS[tick % AWAY_ICONS.length];
+      document.title = AWAY_TITLES[Math.floor(tick / 4) % AWAY_TITLES.length];
       tick += 1;
     };
     step();
-    awayTimer = setInterval(step, 1000);
+    awayTimer = setInterval(step, 1100);
   } else {
-    document.title = '👋 Welcome back!';
+    document.title = pageTitle;
     favicon.href = 'logo.svg';
     blink();
-    setTimeout(blink, 300);
-    backTimer = setTimeout(() => { document.title = pageTitle; }, 1800);
   }
 });
 
