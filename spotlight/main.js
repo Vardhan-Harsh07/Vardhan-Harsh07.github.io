@@ -98,7 +98,7 @@
     });
   }
 
-  /* Local time in Kurukshetra */
+  /* Local time in Haryana */
   var clock = document.getElementById("clock");
   if (clock) {
     var fmt = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit", hour12: true });

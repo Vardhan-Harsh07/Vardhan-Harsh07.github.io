@@ -130,7 +130,7 @@ a:hover { text-decoration-thickness: 2px; }
 @keyframes blink { 50% { transform: scaleY(0.08); } }
 .pupil { transition: transform 0.12s ease-out; }
 /* What Harsh is up to right now: a solid pill so the field's labels pass behind it */
-.now {
+.bar .now {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -156,7 +156,7 @@ a:hover { text-decoration-thickness: 2px; }
 }
 .now-tag .now-dot { background: var(--marker-ink); width: 0.4rem; height: 0.4rem; animation-name: beacon-ink; }
 @keyframes beacon-ink { 0% { box-shadow: 0 0 0 0 rgba(31, 21, 59, 0.5); } 70%, 100% { box-shadow: 0 0 0 0.45rem rgba(31, 21, 59, 0); } }
-.now::after {
+.bar .now::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -166,7 +166,7 @@ a:hover { text-decoration-thickness: 2px; }
   pointer-events: none;
 }
 @keyframes sheen { 0%, 70% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-@media (prefers-reduced-motion: reduce) { .now::after { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .bar .now::after { animation: none; } }
 .now-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 0 rgba(255, 228, 92, 0.6); animation: beacon 2.4s ease-out infinite; }
 @keyframes beacon { 0% { box-shadow: 0 0 0 0 rgba(255, 228, 92, 0.55); } 70%, 100% { box-shadow: 0 0 0 0.6rem rgba(255, 228, 92, 0); } }
 .bar nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-weight: 500; margin-left: auto; }
@@ -488,10 +488,8 @@ kbd {
   top: 50%;
   height: 10px;
   transform: translateY(-50%);
-  background:
-    linear-gradient(var(--ink), var(--ink)) center / 100% 2px no-repeat,
-    repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 2.2%) center / 100% 10px no-repeat;
-  opacity: 0.55;
+  background: linear-gradient(var(--ink), var(--ink)) center / 100% 2px no-repeat;
+  opacity: 0.35;
 }
 .ruler li {
   position: absolute;
@@ -511,10 +509,13 @@ kbd {
   height: 10px;
   margin: 0 0 -5px -5px;
   border-radius: 50%;
-  background: var(--desk-note);
+  background: var(--desk);
+  box-shadow: inset 0 0 0 2.5px var(--ink);
 }
 .ruler li.low::after { bottom: auto; top: -0.9rem; margin: -5px 0 0 -5px; }
-.ruler li.now::after { background: var(--marker); box-shadow: 0 0 0 3px var(--desk); outline: 2px solid var(--desk-note); }
+.ruler li.now::after { width: 12px; height: 12px; margin: -6px 0 0 -6px; background: var(--marker); box-shadow: 0 0 0 0 rgba(255, 228, 92, 0.6); animation: beacon 2.4s ease-out infinite; }
+:root[data-theme="white"] .ruler li.now::after { box-shadow: inset 0 0 0 2px #5B2BE0; animation: none; }
+.ruler li.now .tick-year { color: var(--desk-note); }
 .tick-year { display: block; font-weight: 500; color: var(--ink); }
 .ruler li:first-child { transform: none; text-align: left; }
 .ruler li:first-child::after { left: 5px; }
@@ -1049,3 +1050,5 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+.ex-code + .btn-ink { margin-left: 1.5rem; margin-top: 0.75rem; }
