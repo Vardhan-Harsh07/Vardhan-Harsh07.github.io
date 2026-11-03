@@ -25,9 +25,15 @@ function seeded(seed) {
   };
 }
 
-const ON_BLUE = () => ({ dot: '255, 255, 255', lit: '255, 228, 92' });
+const fields = [];
 
-function createField(canvas, { dotsPerCluster = 22, labelAlpha = 0.34, origin = null, colors = ON_BLUE, constellation = false } = {}) {
+// Fields on the hero and contact panels take their colours from that panel's theme scope
+const panelColors = (canvas) => () => {
+  const style = getComputedStyle(canvas.parentElement);
+  return { dot: style.getPropertyValue('--hero-dot').trim(), lit: style.getPropertyValue('--hero-lit').trim() };
+};
+
+function createField(canvas, { dotsPerCluster = 22, labelAlpha = 0.34, origin = null, colors = panelColors(canvas), constellation = false } = {}) {
   const ctx = canvas.getContext('2d');
   const rand = seeded(11);
   const spread = () => (rand() + rand() + rand() - 1.5) / 1.5;
@@ -171,7 +177,7 @@ function createField(canvas, { dotsPerCluster = 22, labelAlpha = 0.34, origin = 
     });
   }
 
-  return {
+  const field = {
     focus(labels) {
       lit = new Set(labels);
       target = labels.length ? 1 : 0;
@@ -187,6 +193,8 @@ function createField(canvas, { dotsPerCluster = 22, labelAlpha = 0.34, origin = 
       draw(performance.now());
     },
   };
+  fields.push(field);
+  return field;
 }
 
 /* ---------- Shared helpers ---------- */
@@ -226,11 +234,10 @@ function isEditable(element) {
   return element?.matches?.('input, textarea, select, [contenteditable="true"]');
 }
 
-/* ---------- Theme ---------- */
+/* ---------- Theme: purple page with white type, or flipped to white with purple type ---------- */
 
 const themeSwitch = document.querySelector('.theme-switch');
-const systemDark = matchMedia('(prefers-color-scheme: dark)');
-const isDark = () => (root.dataset.theme ?? (systemDark.matches ? 'dark' : 'light')) === 'dark';
+const isWhite = () => root.dataset.theme === 'white';
 const cssColor = (name) => getComputedStyle(root).getPropertyValue(name).trim();
 
 const deskField = createField(document.querySelector('.desk-field'), {
@@ -241,56 +248,24 @@ const deskField = createField(document.querySelector('.desk-field'), {
 });
 
 function syncTheme() {
-  themeSwitch.setAttribute('aria-checked', String(isDark()));
-  deskField.refreshColors();
+  themeSwitch.setAttribute('aria-checked', String(isWhite()));
+  document.querySelector('meta[name="theme-color"]').content = isWhite() ? '#FFFFFF' : '#5B2BE0';
+  fields.forEach((field) => field.refreshColors());
 }
 
 function setTheme(theme) {
-  root.dataset.theme = theme;
+  if (theme === 'white') root.dataset.theme = 'white';
+  else delete root.dataset.theme;
   try {
     localStorage.setItem('theme', theme);
   } catch {}
   syncTheme();
-  toast(`Switched to the ${theme} theme.`);
+  toast(theme === 'white' ? 'Flipped to white.' : 'Back to purple.');
 }
 
-const toggleTheme = () => setTheme(isDark() ? 'light' : 'dark');
+const toggleTheme = () => setTheme(isWhite() ? 'purple' : 'white');
 
-/* ---------- Colour ---------- */
-
-const COLOURS = { blue: '#2A33E8', emerald: '#0B8A5F', tangerine: '#D9480F', pink: '#D6246E', violet: '#6A2BE8' };
-const COLOUR_NAMES = Object.keys(COLOURS);
-const sheet = document.querySelector('#sheet');
-const colourButton = document.querySelector('[data-action="colour"]');
-const themeColor = document.querySelector('meta[name="theme-color"]');
-let colour = COLOUR_NAMES.find((name) => sheet.getAttribute('href').includes(name)) ?? 'blue';
-let turns = 0;
-
-function syncColour() {
-  colourButton.setAttribute('aria-label', `Change colour, now ${colour}`);
-  colourButton.firstElementChild.style.transform = `rotate(${turns * -72}deg)`;
-  themeColor.content = COLOURS[colour];
-}
-
-function setColour(name) {
-  if (!COLOURS[name]) return;
-  turns += (COLOUR_NAMES.indexOf(name) - COLOUR_NAMES.indexOf(colour) + COLOUR_NAMES.length) % COLOUR_NAMES.length;
-  colour = name;
-  sheet.addEventListener('load', () => deskField.refreshColors(), { once: true });
-  sheet.href = name === 'blue' ? 'styles.css' : `palettes/${name}.css`;
-  try {
-    localStorage.setItem('colour', name);
-  } catch {}
-  syncColour();
-  toast(`Colour set to ${name}.`);
-}
-
-const nextColour = () => setColour(COLOUR_NAMES[(COLOUR_NAMES.indexOf(colour) + 1) % COLOUR_NAMES.length]);
-colourButton.addEventListener('click', nextColour);
-turns = COLOUR_NAMES.indexOf(colour);
-syncColour();
 themeSwitch.addEventListener('click', toggleTheme);
-systemDark.addEventListener('change', syncTheme);
 syncTheme();
 
 /* ---------- The agent ---------- */
@@ -1105,10 +1080,7 @@ function paletteCommands() {
     { label: 'Go to contact', group: 'Jump', keys: 'email hire', run: () => jumpTo('contact') },
     { label: 'Copy email address', group: 'Action', keys: 'contact mail', run: copyEmail },
     { label: 'Print my résumé', group: 'Action', keys: 'resume cv download pdf', run: printResume },
-    { label: `Switch to the ${isDark() ? 'light' : 'dark'} theme`, group: 'Action', keys: 'theme mode dark light', run: toggleTheme },
-    ...COLOUR_NAMES.filter((name) => name !== colour).map((name) => ({
-      label: `Change the colour to ${name}`, group: 'Action', keys: 'colour color palette accent', run: () => setColour(name),
-    })),
+    { label: isWhite() ? 'Flip back to purple' : 'Flip to white', group: 'Action', keys: 'theme mode dark light colour color purple white invert', run: toggleTheme },
     { label: 'Open the terminal', group: 'Action', keys: 'shell console cli command', run: openTerminal },
     {
       label: 'Write Harsh a note', group: 'Action', keys: 'message contact hire',
@@ -1267,14 +1239,13 @@ const HELP = [
   'whoami               who you are',
   'copy email           copy Harsh\'s email address',
   'resume               print the résumé',
-  'theme light|dark     switch the theme',
-  'colour <name>        blue, emerald, tangerine, pink or violet',
+  'theme purple|white   flip the colours',
   'sudo hire harsh      you know you want to',
   'clear                clear the screen',
   'exit                 close the terminal',
 ].join('\n');
 
-const COMMANDS = ['help', 'ls', 'cat', 'open', 'ask', 'now', 'whoami', 'copy', 'resume', 'theme', 'colour', 'sudo', 'clear', 'exit', 'history', 'pwd', 'date', 'echo'];
+const COMMANDS = ['help', 'ls', 'cat', 'open', 'ask', 'now', 'whoami', 'copy', 'resume', 'theme', 'sudo', 'clear', 'exit', 'history', 'pwd', 'date', 'echo'];
 
 function print(text, className = '') {
   const block = document.createElement('div');
@@ -1347,11 +1318,7 @@ function execute(raw) {
       printResume();
       break;
     case 'theme':
-      if (rest === 'light' || rest === 'dark') { setTheme(rest); print(`Theme set to ${rest}.`); } else print('theme: use "theme light" or "theme dark".', 'err');
-      break;
-    case 'colour':
-    case 'color':
-      if (COLOURS[rest]) { setColour(rest); print(`Colour set to ${rest}.`); } else print(`colour: pick one of ${COLOUR_NAMES.join(', ')}.`, 'err');
+      if (rest === 'purple' || rest === 'white') { setTheme(rest); print(`Theme set to ${rest}.`); } else print('theme: use "theme purple" or "theme white".', 'err');
       break;
     case 'sudo':
       if (/^hire\s+harsh$/i.test(rest)) {
@@ -1481,4 +1448,121 @@ document.addEventListener('keydown', (event) => {
 
 fitInput();
 placeLoop();
-run(ANSWERS[0].ask, { type: true, loopBack: true });
+/* ---------- The face: eyes that follow you, and miss you when you leave ---------- */
+
+const logo = document.querySelector('.mark .logo');
+const pupils = [...logo.querySelectorAll('.pupil')];
+const eyes = [...logo.querySelectorAll('[data-eye]')];
+const finePointer = matchMedia('(pointer: fine)').matches;
+
+function lookAt(x, y) {
+  const box = logo.getBoundingClientRect();
+  const dx = x - (box.left + box.width / 2);
+  const dy = y - (box.top + box.height * 0.44);
+  const reach = Math.min(1, Math.hypot(dx, dy) / 240);
+  const angle = Math.atan2(dy, dx);
+  const shift = `translate(${(Math.cos(angle) * 3.6 * reach).toFixed(2)}px, ${(Math.sin(angle) * 4.6 * reach).toFixed(2)}px)`;
+  pupils.forEach((pupil) => { pupil.style.transform = shift; });
+}
+
+function blink() {
+  eyes.forEach((eye) => {
+    eye.classList.remove('blink');
+    eye.getBoundingClientRect();
+    eye.classList.add('blink');
+  });
+}
+
+if (!reduced) {
+  let frame = 0;
+  addEventListener('pointermove', (e) => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => lookAt(e.clientX, e.clientY));
+  });
+  (function blinkLater() {
+    setTimeout(() => { blink(); blinkLater(); }, 2500 + Math.random() * 3500);
+  })();
+  // Without a mouse, the eyes glance around on their own
+  if (!finePointer) {
+    setInterval(() => {
+      const box = logo.getBoundingClientRect();
+      lookAt(box.left + (Math.random() - 0.5) * 600, box.top + Math.random() * 400);
+    }, 2200);
+  }
+}
+
+const favicon = document.querySelector('#favicon');
+const pageTitle = document.title;
+const AWAY_TITLES = ['👀 Come back…', 'Harsh is still here', 'The agent is waiting', '🥺 Don’t leave yet'];
+const faceIcon = (dx) => 'data:image/svg+xml,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#5B2BE0"/>` +
+  `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
+  `<circle cx="${22 + dx}" cy="30" r="4.6" fill="#1F153B"/><circle cx="${42 + dx}" cy="30" r="4.6" fill="#1F153B"/>` +
+  `<rect x="24" y="44" width="16" height="7" rx="3.5" fill="#FFE45C"/></svg>`);
+const AWAY_ICONS = [faceIcon(-4), faceIcon(4)];
+let awayTimer = 0;
+let backTimer = 0;
+
+document.addEventListener('visibilitychange', () => {
+  clearInterval(awayTimer);
+  clearTimeout(backTimer);
+  if (document.hidden) {
+    let tick = 0;
+    const step = () => {
+      document.title = AWAY_TITLES[Math.floor(tick / 2) % AWAY_TITLES.length];
+      favicon.href = AWAY_ICONS[tick % 2];
+      tick += 1;
+    };
+    step();
+    awayTimer = setInterval(step, 1000);
+  } else {
+    document.title = '👋 Welcome back!';
+    favicon.href = 'logo.svg';
+    blink();
+    setTimeout(blink, 300);
+    backTimer = setTimeout(() => { document.title = pageTitle; }, 1800);
+  }
+});
+
+// Profile links lean toward the cursor
+if (finePointer && !reduced) {
+  document.querySelectorAll('[data-magnet]').forEach((link) => {
+    link.addEventListener('pointermove', (e) => {
+      const box = link.getBoundingClientRect();
+      link.style.transform = `translate(${(e.clientX - box.left - box.width / 2) * 0.25}px, ${(e.clientY - box.top - box.height / 2) * 0.35}px)`;
+    });
+    link.addEventListener('pointerleave', () => { link.style.transform = ''; });
+  });
+}
+
+/* ---------- Intro: plays once per visit, any click or key skips it ---------- */
+
+const introDone = new Promise((resolve) => {
+  const intro = document.querySelector('.intro');
+  const finish = () => {
+    root.classList.remove('intro-on');
+    resolve();
+  };
+  if (!root.classList.contains('intro-on')) {
+    root.classList.add('intro-ready');
+    resolve();
+    return;
+  }
+  try {
+    sessionStorage.setItem('intro', '1');
+  } catch {}
+  let lifted = false;
+  const lift = () => {
+    if (lifted) return;
+    lifted = true;
+    root.classList.add('intro-ready');
+    intro.classList.add('leave');
+    setTimeout(finish, 760);
+  };
+  setTimeout(lift, 1700);
+  intro.addEventListener('click', lift);
+  addEventListener('keydown', lift, { once: true });
+});
+
+introDone.then(() => run(ANSWERS[0].ask, { type: true, loopBack: true }));
+
