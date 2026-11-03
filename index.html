@@ -17,11 +17,13 @@
   <meta name="twitter:title" content="Harsh Vardhan Singh Chauhan">
   <meta name="twitter:description" content="Ask an agent about Harsh, then poke the things he built.">
   <meta name="twitter:image" content="https://vardhan-harsh07.github.io/og.png">
-  <meta name="theme-color" content="#5B2BE0">
+  <meta name="theme-color" content="#FFFFFF">
   <script>
     try {
-      if (localStorage.getItem('theme') === 'white') document.documentElement.dataset.theme = 'white';
+      if (localStorage.getItem('theme') === 'purple') document.documentElement.dataset.theme = 'purple';
     } catch {}
+    // White is the main look; purple is the switch-on mode
+    if (document.documentElement.dataset.theme !== 'purple') document.documentElement.dataset.theme = 'white';
     try {
       // The intro plays once per visit, never for people who prefer less motion
       if (!sessionStorage.getItem('intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('intro-on');
@@ -68,7 +70,7 @@
       </nav>
       <div class="bar-tools">
         <button type="button" class="kbd-btn" data-action="palette" aria-haspopup="dialog" aria-keyshortcuts="Meta+K Control+K">Search <kbd class="kbd-hint">⌘K</kbd></button>
-        <button type="button" class="theme-switch" role="switch" aria-checked="false" aria-label="Flip to white"><span class="knob" aria-hidden="true"></span></button>
+        <button type="button" class="theme-switch" role="switch" aria-checked="false" aria-label="Purple mode"><span class="knob" aria-hidden="true"></span></button>
       </div>
     </header>
 

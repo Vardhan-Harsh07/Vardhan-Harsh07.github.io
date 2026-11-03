@@ -248,19 +248,41 @@ const deskField = createField(document.querySelector('.desk-field'), {
 });
 
 function syncTheme() {
-  themeSwitch.setAttribute('aria-checked', String(isWhite()));
+  themeSwitch.setAttribute('aria-checked', String(!isWhite()));
   document.querySelector('meta[name="theme-color"]').content = isWhite() ? '#FFFFFF' : '#5B2BE0';
   fields.forEach((field) => field.refreshColors());
 }
 
-function setTheme(theme) {
-  if (theme === 'white') root.dataset.theme = 'white';
-  else delete root.dataset.theme;
+function applyTheme(theme) {
+  root.dataset.theme = theme;
   try {
     localStorage.setItem('theme', theme);
   } catch {}
   syncTheme();
-  toast(theme === 'white' ? 'Flipped to white.' : 'Back to purple.');
+}
+
+// The new colour pours out of the switch in a growing circle
+function setTheme(theme) {
+  if ((theme === 'white') === isWhite()) return;
+  if (reduced || !document.startViewTransition) {
+    applyTheme(theme);
+    return;
+  }
+  const box = themeSwitch.getBoundingClientRect();
+  const x = box.left + box.width / 2;
+  const y = box.top + box.height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+  const transition = document.startViewTransition(() => applyTheme(theme));
+  transition.ready.then(() => {
+    root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      { duration: 900, easing: 'cubic-bezier(0.65, 0, 0.15, 1)', pseudoElement: '::view-transition-new(root)' },
+    );
+    root.animate(
+      { transform: ['scale(1)', 'scale(0.96)'], filter: ['blur(0)', 'blur(3px)'] },
+      { duration: 900, easing: 'cubic-bezier(0.65, 0, 0.15, 1)', pseudoElement: '::view-transition-old(root)' },
+    );
+  });
 }
 
 const toggleTheme = () => setTheme(isWhite() ? 'purple' : 'white');
@@ -1080,7 +1102,7 @@ function paletteCommands() {
     { label: 'Go to contact', group: 'Jump', keys: 'email hire', run: () => jumpTo('contact') },
     { label: 'Copy email address', group: 'Action', keys: 'contact mail', run: copyEmail },
     { label: 'Print my résumé', group: 'Action', keys: 'resume cv download pdf', run: printResume },
-    { label: isWhite() ? 'Flip back to purple' : 'Flip to white', group: 'Action', keys: 'theme mode dark light colour color purple white invert', run: toggleTheme },
+    { label: isWhite() ? 'Switch to purple' : 'Switch to white', group: 'Action', keys: 'theme mode dark light colour color purple white invert', run: toggleTheme },
     { label: 'Open the terminal', group: 'Action', keys: 'shell console cli command', run: openTerminal },
     {
       label: 'Write Harsh a note', group: 'Action', keys: 'message contact hire',

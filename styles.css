@@ -263,6 +263,13 @@ kbd {
 }
 .kbd-btn:hover { border-color: var(--on-ultra); }
 
+/* Theme change: no message, just the new colour sweeping out from the switch */
+::view-transition-old(root),
+::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-old(root) { z-index: 1; }
+::view-transition-new(root) { z-index: 2; }
+.theme-switch:active .knob { scale: 0.85; }
+
 /* Flip switch: the knob shows the colour the page flips to */
 .theme-switch {
   position: relative;
