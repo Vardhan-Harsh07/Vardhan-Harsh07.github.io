@@ -129,7 +129,44 @@ a:hover { text-decoration-thickness: 2px; }
 .eye.blink { animation: blink 0.22s ease-in-out; }
 @keyframes blink { 50% { transform: scaleY(0.08); } }
 .pupil { transition: transform 0.12s ease-out; }
-.now { display: inline-flex; align-items: center; gap: 0.5rem; font: 400 0.8125rem/1.2 var(--mono); color: var(--on-ultra-muted); }
+/* What Harsh is up to right now: a solid pill so the field's labels pass behind it */
+.now {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.85rem 0.3rem 0.3rem;
+  border: 1.5px solid var(--on-ultra-faint);
+  border-radius: 999px;
+  background: var(--ultra-deep);
+  box-shadow: 0 6px 18px -8px rgba(20, 5, 70, 0.6);
+  font: 500 0.875rem/1.2 var(--text);
+  color: var(--on-ultra);
+  position: relative;
+  overflow: hidden;
+}
+.now-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--marker);
+  color: var(--marker-ink);
+  font: 700 0.75rem/1 var(--mono);
+}
+.now-tag .now-dot { background: var(--marker-ink); width: 0.4rem; height: 0.4rem; animation-name: beacon-ink; }
+@keyframes beacon-ink { 0% { box-shadow: 0 0 0 0 rgba(31, 21, 59, 0.5); } 70%, 100% { box-shadow: 0 0 0 0.45rem rgba(31, 21, 59, 0); } }
+.now::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.22) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: sheen 5s ease-in-out 2.5s infinite;
+  pointer-events: none;
+}
+@keyframes sheen { 0%, 70% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .now::after { animation: none; } }
 .now-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--marker); box-shadow: 0 0 0 0 rgba(255, 228, 92, 0.6); animation: beacon 2.4s ease-out infinite; }
 @keyframes beacon { 0% { box-shadow: 0 0 0 0 rgba(255, 228, 92, 0.55); } 70%, 100% { box-shadow: 0 0 0 0.6rem rgba(255, 228, 92, 0); } }
 .bar nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-weight: 500; margin-left: auto; }
