@@ -60,9 +60,10 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+.desk { overflow-x: clip; }
+
 body {
   margin: 0;
-  overflow-x: clip;
   background: var(--desk);
   color: var(--ink);
   font: 400 1.0625rem/1.6 var(--text);
