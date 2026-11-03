@@ -114,6 +114,7 @@ a:hover { text-decoration-thickness: 2px; }
   padding: 1.25rem max(1rem, 4vw) 3.5rem;
 }
 .console > :not(.field) { position: relative; z-index: 1; }
+.console > .bar { z-index: 3; }
 
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.75rem; }
 .mark { display: inline-flex; align-items: center; gap: 0.7rem; font: 700 0.95rem/1.2 var(--display); letter-spacing: -0.01em; text-decoration: none; }
@@ -171,32 +172,87 @@ a:hover { text-decoration-thickness: 2px; }
 @keyframes beacon { 0% { box-shadow: 0 0 0 0 rgba(255, 228, 92, 0.55); } 70%, 100% { box-shadow: 0 0 0 0.6rem rgba(255, 228, 92, 0); } }
 .bar nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-weight: 500; margin-left: auto; }
 
-/* Profile links: icon hops, underline draws in, the link leans toward the cursor */
-.socials a {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.3rem 0.1rem;
-  text-decoration: none;
-  transition: transform 0.25s ease-out;
+/* Profile links: round icons that hop on hover and drop a preview of the profile */
+.socials { gap: 0.6rem; }
+.social { position: relative; }
+.social > a {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1.5px solid var(--on-ultra-faint);
+  border-radius: 50%;
+  background: var(--wash);
+  color: var(--on-ultra);
+  transition: transform 0.25s ease-out, background 0.2s, color 0.2s, border-color 0.2s;
 }
-.socials a span {
-  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0% 2px;
-  transition: background-size 0.35s cubic-bezier(0.6, 0, 0.2, 1);
-  padding-bottom: 2px;
-}
-.socials a:hover span, .socials a:focus-visible span { background-size: 100% 2px; }
-.ico { width: 1.05rem; height: 1.05rem; flex: none; }
-.socials a:hover .ico { animation: hop 0.55s cubic-bezier(0.3, 1.6, 0.5, 1); color: var(--marker); }
-:root[data-theme="white"] .socials a:hover .ico { color: #5B2BE0; }
-@keyframes hop { 0% { transform: none; } 35% { transform: translateY(-5px) rotate(-14deg) scale(1.2); } 100% { transform: none; } }
+.social > a:hover, .social > a:focus-visible { background: var(--on-ultra); color: var(--ultra); border-color: var(--on-ultra); }
+.ico { width: 1.1rem; height: 1.1rem; flex: none; }
+.social > a:hover .ico { animation: hop 0.55s cubic-bezier(0.3, 1.6, 0.5, 1); }
+@keyframes hop { 0% { transform: none; } 35% { transform: translateY(-4px) rotate(-14deg) scale(1.15); } 100% { transform: none; } }
 .ico-mail .flap { transform-box: fill-box; transform-origin: center top; transition: transform 0.3s; }
-.socials a:hover .ico-mail .flap { transform: scaleY(-1) translateY(-2px); }
-.intro-ready .socials a { animation: drop-in 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) backwards; }
-.intro-ready .socials a:nth-child(2) { animation-delay: 0.08s; }
-.intro-ready .socials a:nth-child(3) { animation-delay: 0.16s; }
-.intro-ready .socials a:nth-child(4) { animation-delay: 0.24s; }
+.social > a:hover .ico-mail .flap { transform: scaleY(-1) translateY(-2px); }
+
+.peek {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: -0.5rem;
+  z-index: 30;
+  width: 17.5rem;
+  padding: 1rem;
+  border-radius: 16px;
+  font: 400 0.875rem/1.45 var(--text);
+  text-align: left;
+  box-shadow: 0 24px 48px -16px rgba(20, 5, 70, 0.45), 0 2px 6px rgba(20, 5, 70, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.96);
+  transform-origin: top right;
+  transition: opacity 0.18s ease, transform 0.25s cubic-bezier(0.3, 1.4, 0.5, 1), visibility 0s linear 0.2s;
+  pointer-events: none;
+}
+.peek::before { content: ""; position: absolute; top: -0.75rem; left: 0; right: 0; height: 0.75rem; }
+@media (hover: hover) and (pointer: fine) {
+  .social:hover .peek, .social:focus-within .peek {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0.08s, 0.08s, 0s;
+    pointer-events: auto;
+  }
+}
+.peek img { border-radius: 50%; object-fit: cover; flex: none; }
+.peek-who { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.peek-who p { display: grid; line-height: 1.25; }
+.peek-who b { font-weight: 600; font-size: 0.95rem; }
+.peek-who span, .peek-muted { opacity: 0.65; }
+.peek-name { font-weight: 600; font-size: 0.95rem; }
+.peek-label { margin-top: 0.75rem; font-size: 0.75rem; opacity: 0.6; }
+.peek-stat b { font-weight: 700; }
+.peek-btn { display: inline-block; margin-top: 0.8rem; padding: 0.4rem 0.9rem; border-radius: 999px; font-weight: 600; font-size: 0.8rem; }
+
+.peek-github { background: #0D1117; color: #E6EDF3; border: 1px solid #30363D; }
+.peek-repos { list-style: none; margin: 0.35rem 0 0; padding: 0; display: grid; gap: 0.3rem; }
+.peek-repos li { display: flex; align-items: center; gap: 0.5rem; font: 500 0.8rem/1.3 var(--mono); color: #4493F8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.peek-repos li::before { content: ""; flex: none; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: #3572A5; }
+
+.peek-linkedin { padding: 0 1rem 1rem; overflow: hidden; background: #FFFFFF; color: #191919; border: 1px solid #E0DFDC; }
+.peek-linkedin .peek-banner { height: 3.25rem; margin: 0 -1rem; background: linear-gradient(120deg, #0A66C2, #5B2BE0); }
+.peek-linkedin img { margin-top: -1.75rem; border: 3px solid #FFFFFF; }
+.peek-linkedin .peek-name { margin-top: 0.4rem; }
+.peek-linkedin .peek-btn { background: #0A66C2; color: #FFFFFF; }
+
+.peek-x { background: #000000; color: #E7E9EA; border: 1px solid #2F3336; }
+.peek-x .peek-btn { background: #EFF3F4; color: #0F1419; }
+
+.peek-mail { background: #5B2BE0; color: #FFFFFF; }
+.peek-mail .peek-label { margin-top: 0; }
+.peek-mail .peek-name { margin: 0.2rem 0 0.4rem; font-family: var(--display); font-size: 0.8rem; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+
+.intro-ready .social > a { animation: drop-in 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) backwards; }
+.intro-ready .social:nth-child(2) > a { animation-delay: 0.08s; }
+.intro-ready .social:nth-child(3) > a { animation-delay: 0.16s; }
+.intro-ready .social:nth-child(4) > a { animation-delay: 0.24s; }
 @keyframes drop-in { from { opacity: 0; transform: translateY(-14px); } }
 
 /* ---------- Intro: the face wakes up, looks around, and the curtain lifts ---------- */

@@ -1547,6 +1547,28 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+// The GitHub preview fills in live numbers the first time someone looks at it
+const githubPeek = document.querySelector('.peek-github');
+let githubLoaded = false;
+async function loadGithub() {
+  if (githubLoaded) return;
+  githubLoaded = true;
+  try {
+    const [user, repos] = await Promise.all([
+      fetch('https://api.github.com/users/Vardhan-Harsh07').then((r) => (r.ok ? r.json() : Promise.reject())),
+      fetch('https://api.github.com/users/Vardhan-Harsh07/repos?sort=pushed&per_page=8').then((r) => (r.ok ? r.json() : Promise.reject())),
+    ]);
+    githubPeek.querySelector('[data-gh="repos"]').textContent = user.public_repos;
+    const list = githubPeek.querySelector('[data-gh="recent"]');
+    const projects = repos.filter((repo) => !repo.fork && !repo.name.endsWith('.github.io')).slice(0, 3);
+    list.replaceChildren(...projects.map((repo) => Object.assign(document.createElement('li'), { textContent: repo.name })));
+  } catch {
+    // Keep the numbers baked into the page if GitHub is unreachable or rate-limited
+  }
+}
+githubPeek.parentElement.addEventListener('pointerenter', loadGithub, { once: true });
+githubPeek.parentElement.addEventListener('focusin', loadGithub, { once: true });
+
 // Profile links lean toward the cursor
 if (finePointer && !reduced) {
   document.querySelectorAll('[data-magnet]').forEach((link) => {
