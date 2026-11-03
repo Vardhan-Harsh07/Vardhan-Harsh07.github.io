@@ -285,7 +285,7 @@ const SOURCE_COUNT = Object.keys(SOURCES).length;
 
 const ANSWERS = [
   {
-    ask: 'Who is Harsh Vardhan Chauhan?',
+    ask: 'Who is Harsh Vardhan?',
     match: /\b(who|about|intro|yourself|summary)\b/i,
     keys: ['who', 'about', 'introduction', 'summary', 'background', 'harsh', 'profile'],
     parts: 3,
@@ -1202,7 +1202,7 @@ let terminalReturn = null;
 let greeted = false;
 
 const FILES = {
-  'about.md': 'Harsh Vardhan Chauhan\nForward Deployed Engineer at InboxKit. Builds AI agents and gets them working for real customers.\nKurukshetra, India.',
+  'about.md': 'Harsh Vardhan Singh Chauhan\nForward Deployed Engineer at InboxKit. Builds AI agents and gets them working for real customers.\nKurukshetra, India.',
   'now.md': NOW,
   'inboxkit.md': 'Forward Deployed Engineer, InboxKit (Apr 2026 to now, remote, Dubai)\n- The engineer enterprise customers work with when something breaks\n- Runs onboarding, implementation and the procedures behind them\n- Turns customer requirements into fixes and features',
   'arcflip.md': 'AI Research & Algorithm Intern, Arcflip (Dec 2025 to Feb 2026)\n- Built the core scoring engine for AI career matching\n- Python pipelines that kept data clean across agent workflows\n- Calibrated scores against reference profiles to cut drift',

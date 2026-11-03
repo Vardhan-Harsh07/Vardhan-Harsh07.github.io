@@ -1,4 +1,4 @@
-# Harsh Vardhan Chauhan
+# Harsh Vardhan Singh Chauhan
 
 Personal portfolio: https://vardhan-harsh07.github.io
 
