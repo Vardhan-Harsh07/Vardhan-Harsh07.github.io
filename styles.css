@@ -588,26 +588,47 @@ kbd {
 .ruler li:last-child::after { left: calc(100% - 5px); }
 
 /* Exhibit grid */
-.exhibits {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(2rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 2.5rem);
-  align-items: start;
-}
+.exhibits { display: block; }
 .ex { position: relative; scroll-margin-top: 2rem; }
-.ex-stamp { grid-column: span 7; }
-.ex-clypso { grid-column: span 5; }
-.ex-treadle { grid-column: span 5; }
-.ex-realcheck { grid-column: span 7; }
-.ex-inboxkit { grid-column: span 5; }
-.ex-assistant { grid-column: span 7; }
-.ex-arcflip { grid-column: span 7; }
-.ex-papers { grid-column: span 5; }
-.ex-krishi { grid-column: span 7; }
-.ex-redditmind { grid-column: span 5; }
-.ex-waystub { grid-column: span 7; }
-.ex-talentscout { grid-column: span 5; }
-.ex-bennett { grid-column: 4 / span 6; }
+/* Exhibits come in chapters; inside each, two columns stack on their own so short cards leave no holes */
+.chapter + .chapter { margin-top: clamp(4rem, 8vw, 6.5rem); }
+.chapter-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.25rem;
+  padding-bottom: 1rem;
+  margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
+  border-bottom: 2px solid var(--ink);
+}
+.chapter-head h3 { font: 800 clamp(1.6rem, 3.4vw, 2.6rem)/1 var(--display); letter-spacing: -0.04em; }
+.chapter-head p { font: 400 1.15rem/1.3 var(--serif); font-style: italic; color: var(--ink-2); }
+.chapter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: stretch;
+}
+section[aria-labelledby="ch-shipped"] .chapter-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.chapter-grid > .col { display: flex; flex-direction: column; gap: clamp(2rem, 4vw, 3.25rem); min-width: 0; }
+/* The last card in each column stretches, so a pair of cards ends on the same line;
+   its links sit on the bottom edge so the extra room reads as intended */
+.chapter-grid > .col > .ex:last-child { flex: 1; display: flex; flex-direction: column; }
+.chapter-grid > .col > .ex:last-child > .ex-links { margin-top: auto; padding-top: 1.1rem; }
+/* A full-width card under the pair: demo on the left, the story on the right */
+.chapter-wide { margin-top: clamp(2rem, 4vw, 3.25rem); display: grid; gap: clamp(2rem, 4vw, 3.25rem); }
+.chapter-wide .ex { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); column-gap: clamp(1.5rem, 3.5vw, 3rem); align-items: start; align-content: start; }
+.chapter-wide .ex > * { grid-column: 2; }
+.chapter-wide .ex > :is(.shop, .briefing, .seal) { grid-column: 1; grid-row: 1 / span 8; }
+.chapter-wide .ex > .placard { margin-top: 0.25rem; }
+.chapter-wide .ex-bennett { grid-template-columns: auto minmax(0, 1fr); align-items: center; text-align: left; padding: 1.5rem 0; border-top: 1.5px dashed color-mix(in srgb, var(--ink) 30%, transparent); }
+.chapter-wide .ex-bennett .seal { width: 9rem; }
+.chapter-wide .ex-bennett .ex-text { margin-top: 0; max-width: 34rem; }
+@media (max-width: 860px) {
+  .chapter-wide .ex, .chapter-wide .ex-bennett { grid-template-columns: minmax(0, 1fr); }
+  .chapter-wide .ex > * , .chapter-wide .ex > :is(.shop, .briefing, .seal) { grid-column: 1; grid-row: auto; }
+  .chapter-wide .ex > .placard { order: -1; }
+}
 
 .ex.flash { animation: flash 1.8s ease-out; }
 @keyframes flash { 0%, 30% { box-shadow: 0 0 0 6px var(--marker); } 100% { box-shadow: 0 0 0 6px transparent; } }
@@ -1080,10 +1101,7 @@ kbd {
 /* ---------- Responsive ---------- */
 
 @media (max-width: 1080px) {
-  .ex-krishi, .ex-arcflip, .ex-stamp, .ex-realcheck, .ex-waystub { grid-column: span 12; }
-  .ex-papers, .ex-inboxkit, .ex-talentscout, .ex-redditmind, .ex-clypso, .ex-treadle { grid-column: span 6; }
-  .ex-assistant { grid-column: span 7; }
-  .ex-bennett { grid-column: span 5; }
+  .chapter-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 
 @media (max-width: 860px) {
@@ -1096,7 +1114,7 @@ kbd {
   .flow li { padding: 0.4rem 0.65rem; font-size: 0.8125rem; border-radius: 999px; }
   .flow li + li::before, .flow li::after { display: none; }
 
-  .exhibits > .ex { grid-column: 1 / -1; }
+  .chapter-grid { grid-template-columns: minmax(0, 1fr); }
   .contact-inner { grid-template-columns: minmax(0, 1fr); }
 
   .ruler { height: auto; margin: 2rem 0 2.5rem; padding-left: 1.25rem; border-left: 2px solid var(--ink); display: grid; gap: 0.75rem; }
@@ -1122,7 +1140,7 @@ kbd {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
-.ex-code + .btn-ink { margin-left: 1.5rem; margin-top: 0.75rem; }
+
 
 
 /* ---------- Stamp: airmail envelope with a live postmark ---------- */
@@ -1158,7 +1176,7 @@ kbd {
 .ex-stamp .btn-ink:hover { background: #333333; }
 .stamp-try { margin-top: 0.6rem; font-size: 0.8125rem; color: #555555; }
 .stamp-try button { border: 0; background: none; padding: 0 0.15rem; font: inherit; font-weight: 600; color: #111111; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-.stamp-rows { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 0.5rem; max-width: 22rem; }
+.stamp-rows { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 0.5rem; max-width: min(22rem, calc(100% - 8.5rem)); }
 .stamp-rows li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: 0.15rem 0.75rem; padding: 0.55rem 0; border-top: 1.5px dashed #D9D9D9; font-size: 0.875rem; }
 .stamp-rows span { font: 700 0.8125rem/1.4 var(--mono); }
 .stamp-rows em { font-style: normal; color: #555555; }
@@ -1221,11 +1239,11 @@ kbd {
   border-radius: 4px;
   box-shadow: var(--paper-shadow);
 }
-.floor { display: grid; justify-items: center; gap: 1rem; padding: 1.5rem 0.5rem 1rem; border-radius: 4px; background: radial-gradient(70% 60% at 60% 30%, #2C4537, #16241D 80%); }
+.floor { display: grid; justify-items: center; gap: 0.8rem; padding: 1.25rem 0.5rem 0.9rem; border-radius: 4px; background: radial-gradient(70% 60% at 60% 30%, #2C4537, #16241D 80%); }
 .pedal {
   position: relative;
-  width: 9.5rem;
-  height: 12rem;
+  width: 8.5rem;
+  height: 10.5rem;
   border: 0;
   border-radius: 14px 14px 10px 10px;
   background: linear-gradient(180deg, #4C6E5B, #3D5A4A 40%, #2F4739);
@@ -1243,7 +1261,7 @@ kbd {
 .pedal-plate { position: absolute; right: 0.8rem; top: 0.75rem; padding: 0.15rem 0.4rem; background: #E7E6D8; color: #14201A; font: 600 0.6rem/1.2 var(--mono); border-radius: 2px; }
 .pedal-grip { position: absolute; left: 1rem; right: 1rem; top: 3rem; bottom: 1.4rem; background: repeating-linear-gradient(180deg, #0F1311 0 0.7rem, transparent 0.7rem 1.35rem); border-radius: 3px; opacity: 0.9; }
 .floor-state { font-size: 0.875rem; text-align: center; min-height: 2.6em; }
-.tape { list-style: none; margin: 0; padding: 0.7rem 0.85rem 1rem; width: min(100%, 22rem); min-height: 7.5rem; max-height: 7.5rem; overflow: hidden; background: #E7E6D8; color: #14201A; font: 400 0.75rem/1.5 var(--mono); display: flex; flex-direction: column; justify-content: flex-end; -webkit-mask: linear-gradient(transparent, #000 35%); mask: linear-gradient(transparent, #000 35%); clip-path: polygon(0 0, 100% 0, 100% 92%, 95% 100%, 90% 92%, 85% 100%, 80% 92%, 75% 100%, 70% 92%, 65% 100%, 60% 92%, 55% 100%, 50% 92%, 45% 100%, 40% 92%, 35% 100%, 30% 92%, 25% 100%, 20% 92%, 15% 100%, 10% 92%, 5% 100%, 0 92%); }
+.tape { list-style: none; margin: 0; padding: 0.7rem 0.85rem 1rem; width: min(100%, 22rem); min-height: 6.25rem; max-height: 6.25rem; overflow: hidden; background: #E7E6D8; color: #14201A; font: 400 0.75rem/1.5 var(--mono); display: flex; flex-direction: column; justify-content: flex-end; -webkit-mask: linear-gradient(transparent, #000 35%); mask: linear-gradient(transparent, #000 35%); clip-path: polygon(0 0, 100% 0, 100% 92%, 95% 100%, 90% 92%, 85% 100%, 80% 92%, 75% 100%, 70% 92%, 65% 100%, 60% 92%, 55% 100%, 50% 92%, 45% 100%, 40% 92%, 35% 100%, 30% 92%, 25% 100%, 20% 92%, 15% 100%, 10% 92%, 5% 100%, 0 92%); }
 .ex-treadle .ex-code { color: #E7E6D8; }
 
 /* ---------- RealCheck: a product page and its grade ---------- */
@@ -1336,6 +1354,7 @@ kbd {
 
 @media (max-width: 600px) {
   .postmark { position: static; display: block; margin: 1rem 0 0 auto; }
+  .stamp-rows { max-width: none; }
   .tt-days { grid-template-columns: 1fr; }
   .tt-day { border-right: 0; border-bottom: 1px solid #1A1A1A; min-height: 0; }
 }
@@ -1343,3 +1362,39 @@ kbd {
   .postmark.thump, .clyp-card, .reviews.scanning li, .rc-badge.graded b, .reviews li.flagged::after { animation: none; }
   .postmark.thump { opacity: 0.9; }
 }
+
+
+/* ---------- Link cards: live sites and code, shown as small cards ---------- */
+.ex-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; margin-top: 1.1rem; }
+.link-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.5rem 0.9rem 0.5rem 0.5rem;
+  border: 1.5px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, currentColor 6%, transparent);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.3, 1.4, 0.5, 1), border-color 0.2s, background 0.2s, box-shadow 0.25s;
+}
+.link-card:hover, .link-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: currentColor;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  box-shadow: 0 12px 22px -14px rgba(0, 0, 0, 0.5);
+}
+.lc-icon { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 10px; background: currentColor; }
+.lc-icon .ico { width: 1.25rem; height: 1.25rem; color: #FFFFFF; mix-blend-mode: normal; }
+.lc-github .lc-icon { background: #0D1117; }
+.lc-text { display: grid; min-width: 0; line-height: 1.2; }
+.lc-text b { font: 600 0.9rem/1.2 var(--text); }
+.lc-text small { font: 400 0.75rem/1.3 var(--mono); opacity: 0.7; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 15rem; }
+.lc-arrow { flex: none; width: 1rem; height: 1rem; opacity: 0.6; transition: transform 0.25s, opacity 0.2s; }
+.link-card:hover .lc-arrow { transform: translate(2px, -2px); opacity: 1; }
+.link-card:hover .lc-icon .ico { animation: hop 0.55s cubic-bezier(0.3, 1.6, 0.5, 1); }
+/* The icon tile is drawn in the card's own text colour, so its glyph needs the opposite */
+.ex-clypso .lc-site .lc-icon .ico, .ex-treadle .lc-site .lc-icon .ico, .ex-assistant .lc-site .lc-icon .ico { color: #111111; }
+.ex-links .btn-ink { margin: 0; }

@@ -169,6 +169,13 @@
       </ol>
 
       <div class="exhibits">
+        <section class="chapter" aria-labelledby="ch-shipped">
+          <header class="chapter-head">
+            <h3 id="ch-shipped">Shipped</h3>
+            <p>Live, and in people’s hands.</p>
+          </header>
+          <div class="chapter-grid">
+            <div class="col">
         <!-- Stamp: a working mini check, live DNS lookups from the browser -->
         <article class="ex ex-stamp" id="stamp">
           <header class="placard">
@@ -198,29 +205,12 @@
           </div>
           <p class="ex-text">Stamp runs the DNS lookups Gmail, Outlook and Yahoo make before they accept your mail, grades the domain and tells you exactly what to publish. This card does a real, smaller version of it: three live lookups from your browser.</p>
           <p class="ex-stack">Next.js 16, React 19, Drizzle, Turso, Vercel</p>
-          <a class="ex-code" href="https://stamp-zeta-two.vercel.app/"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open Stamp</span></a>
-        </article>
-
-        <!-- Clypso: sample extractions streaming in -->
-        <article class="ex ex-clypso" id="clypso">
-          <header class="placard">
-            <h3>Clypso</h3>
-            <p>Building now, YouTube videos into structured content</p>
-          </header>
-          <div class="clyp">
-            <div class="clyp-tabs" role="tablist" aria-label="Sample videos">
-              <button type="button" role="tab" aria-selected="true" data-clip="0">The bakery</button>
-              <button type="button" role="tab" aria-selected="false" data-clip="1">The night bus</button>
-              <button type="button" role="tab" aria-selected="false" data-clip="2">The code review</button>
-            </div>
-            <p class="clyp-video"><span class="clyp-play" aria-hidden="true"></span><span data-clyp="title">How a small bakery prices a loaf</span></p>
-            <div class="clyp-out" aria-live="polite"></div>
+          <div class="ex-links">
+            <a class="link-card lc-site" href="https://stamp-zeta-two.vercel.app/"><span class="lc-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="lc-text"><b>Open Stamp</b><small>stamp-zeta-two.vercel.app</small></span><svg class="lc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <p class="clyp-note">Website preview only. The product is still being built, so its site can't extract anything yet. These are sample outputs.</p>
-          <p class="ex-text">Paste a YouTube link, or make one API call, and get a summary, key points, verified quotes, chapters, SEO metadata and social posts back.</p>
-          <p class="ex-stack">Next.js, Hono, Claude API, Postgres on Neon, Drizzle, Upstash</p>
         </article>
-
+            </div>
+            <div class="col">
         <!-- Treadle: press and hold the pedal -->
         <article class="ex ex-treadle" id="treadle">
           <header class="placard">
@@ -235,13 +225,17 @@
               <span class="visually-hidden">Press and hold the pedal</span>
             </button>
             <p class="floor-state" id="treadle-state">Press and hold the pedal. Foot up. Nothing is running.</p>
-            <ol class="tape" aria-live="off"></ol>
+            <ol class="tape" aria-live="off"><li>Waiting for a foot.</li></ol>
           </div>
           <p class="ex-text">A pet project in pure UI: a product page for a pedal that doesn't exist, where agents run only while your foot is down. A 3D pedal, exploded technical drawings, and a deadpan voice. Concept. No pedal exists.</p>
           <p class="ex-stack">three.js, hand-written HTML, CSS and JavaScript</p>
-          <a class="ex-code" href="https://treadle-pedal.vercel.app/index.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Visit Treadle</span></a>
+          <div class="ex-links">
+            <a class="link-card lc-site" href="https://treadle-pedal.vercel.app/index.html"><span class="lc-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.7 2.6 4 5.6 4 9s-1.3 6.4-4 9c-2.7-2.6-4-5.6-4-9s1.3-6.4 4-9Z" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="lc-text"><b>Visit Treadle</b><small>treadle-pedal.vercel.app</small></span><svg class="lc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
         </article>
-
+            </div>
+          </div>
+          <div class="chapter-wide">
         <!-- RealCheck: grade a product's reviews -->
         <article class="ex ex-realcheck" id="realcheck">
           <header class="placard">
@@ -284,7 +278,110 @@
           <p class="ex-text">Grades the reviews on a product page from A to F while you shop, on Amazon, Flipkart, Walmart, Myntra and more, and shows why. It runs entirely in your browser, makes no network requests of its own, and has no sign-up.</p>
           <p class="ex-stack">Chrome extension, JavaScript, runs fully on-device</p>
         </article>
+          </div>
+        </section>
 
+        <section class="chapter" aria-labelledby="ch-building">
+          <header class="chapter-head">
+            <h3 id="ch-building">Building now</h3>
+            <p>Being built, or about to be.</p>
+          </header>
+          <div class="chapter-grid">
+            <div class="col">
+        <!-- Clypso: sample extractions streaming in -->
+        <article class="ex ex-clypso" id="clypso">
+          <header class="placard">
+            <h3>Clypso</h3>
+            <p>Building now, YouTube videos into structured content</p>
+          </header>
+          <div class="clyp">
+            <div class="clyp-tabs" role="tablist" aria-label="Sample videos">
+              <button type="button" role="tab" aria-selected="true" data-clip="0">The bakery</button>
+              <button type="button" role="tab" aria-selected="false" data-clip="1">The night bus</button>
+              <button type="button" role="tab" aria-selected="false" data-clip="2">The code review</button>
+            </div>
+            <p class="clyp-video"><span class="clyp-play" aria-hidden="true"></span><span data-clyp="title">How a small bakery prices a loaf</span></p>
+            <div class="clyp-out" aria-live="polite"></div>
+          </div>
+          <p class="clyp-note">Website preview only. The product is still being built, so its site can't extract anything yet. These are sample outputs.</p>
+          <p class="ex-text">Paste a YouTube link, or make one API call, and get a summary, key points, verified quotes, chapters, SEO metadata and social posts back.</p>
+          <p class="ex-stack">Next.js, Hono, Claude API, Postgres on Neon, Drizzle, Upstash</p>
+        </article>
+            </div>
+            <div class="col">
+        <!-- Waystub: a sketch of the planner's core idea -->
+        <article class="ex ex-waystub" id="waystub">
+          <header class="placard">
+            <h3>Waystub</h3>
+            <p>In planning, a trip planner set as a railway timetable</p>
+          </header>
+          <div class="timetable">
+            <p class="tt-head"><span>Paris, 3 days</span><span>Drag or tap a stop to move it</span></p>
+            <div class="tt-days"></div>
+            <p class="tt-warn" aria-live="polite"></p>
+          </div>
+          <p class="ex-text">Drag a stop anywhere, on desktop or phone, and the list, map, travel times and warnings stay in sync. This card is a small sketch of that idea: the Louvre is closed on Tuesdays, so move it.</p>
+          <p class="ex-stack">In planning: Astro, React, MapLibre, OpenStreetMap data</p>
+        </article>
+            </div>
+          </div>
+          <div class="chapter-wide">
+        <!-- RedditMind: a preview of the morning briefing -->
+        <article class="ex ex-redditmind" id="redditmind">
+          <header class="placard">
+            <h3>RedditMind</h3>
+            <p>Building now</p>
+          </header>
+          <div class="briefing">
+            <p class="b-date">Your morning briefing</p>
+            <ol>
+              <li>
+                <p class="b-sub">r/LocalLLaMA</p>
+                <h4>Running a 70B model on two consumer GPUs, with benchmarks</h4>
+                <p class="b-why">Why it matters to you: you've been reading about running models cheaply.</p>
+              </li>
+              <li>
+                <p class="b-sub">r/MachineLearning</p>
+                <h4>Small ensembles keep beating one big model on plant disease data</h4>
+                <p class="b-why">Why it matters to you: it's your Krishi Saahayak result, replicated.</p>
+              </li>
+              <li>
+                <p class="b-sub">r/startups</p>
+                <h4>What forward deployed engineers actually do all day</h4>
+                <p class="b-why">Why it matters to you: it's your job title.</p>
+              </li>
+            </ol>
+            <p class="b-foot">3 of 412 new posts made the cut. Preview with made-up posts.</p>
+            <span class="sticker">Still building</span>
+          </div>
+          <p class="ex-text">An agent that reads your subreddits overnight and hands you a short briefing in the morning, learning what you care about from what you read.</p>
+          <p class="ex-stack">Next.js, Trigger.dev, Claude API, Postgres with pgvector</p>
+        </article>
+          </div>
+        </section>
+
+        <section class="chapter" aria-labelledby="ch-work">
+          <header class="chapter-head">
+            <h3 id="ch-work">Work</h3>
+            <p>Where I’ve been employed.</p>
+          </header>
+          <div class="chapter-grid">
+            <div class="col">
+        <!-- Arcflip: a toy version of the scoring engine -->
+        <article class="ex ex-arcflip" id="arcflip">
+          <header class="placard">
+            <h3>Scoring engine at Arcflip</h3>
+            <p>Dec 2025 to Feb 2026, AI research intern</p>
+          </header>
+          <div class="ranker">
+            <div class="weights"></div>
+            <ol class="ranking"></ol>
+          </div>
+          <p class="ex-text">A toy version of the engine I built for an AI career-matching platform. The real one combines many signals to rank best-fit candidates at scale, with pipelines that keep the data clean and scores calibrated against reference profiles.</p>
+          <p class="scribble scribble-arcflip" aria-hidden="true">drag the weights</p>
+        </article>
+            </div>
+            <div class="col">
         <!-- InboxKit: a support ticket moving across teams -->
         <article class="ex ex-inboxkit" id="inboxkit">
           <header class="placard">
@@ -309,66 +406,17 @@
           <p class="ex-text">A typical day, simplified. I'm the engineer enterprise customers work with when something breaks, and I turn what they ask for into product changes.</p>
           <p class="scribble scribble-inboxkit" aria-hidden="true">my actual job</p>
         </article>
-
-        <!-- Research assistant: the hero is the exhibit -->
-        <article class="ex ex-assistant" id="assistant">
-          <header class="placard">
-            <h3>Agentic Research Assistant</h3>
-            <p>2025, multi-agent deep research</p>
-          </header>
-          <p class="used">You've already used this one.</p>
-          <p class="ex-text">The agent at the top of this page is a scripted version of it. The real one runs separate LangGraph agents that plan, search the live web through Serper.dev, analyse, check their own claims and write a report with citations.</p>
-          <p class="ex-stack">Python, LangGraph, OpenAI API, Serper.dev, Streamlit</p>
-          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/ai_research_agent"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
-          <button type="button" class="btn-ink" data-action="rerun">Run it again</button>
-        </article>
-
-        <!-- Arcflip: a toy version of the scoring engine -->
-        <article class="ex ex-arcflip" id="arcflip">
-          <header class="placard">
-            <h3>Scoring engine at Arcflip</h3>
-            <p>Dec 2025 to Feb 2026, AI research intern</p>
-          </header>
-          <div class="ranker">
-            <div class="weights"></div>
-            <ol class="ranking"></ol>
+            </div>
           </div>
-          <p class="ex-text">A toy version of the engine I built for an AI career-matching platform. The real one combines many signals to rank best-fit candidates at scale, with pipelines that keep the data clean and scores calibrated against reference profiles.</p>
-          <p class="scribble scribble-arcflip" aria-hidden="true">drag the weights</p>
-        </article>
+        </section>
 
-        <!-- Papers: two printed first pages -->
-        <article class="ex ex-papers" id="papers">
-          <header class="placard">
-            <h3>Papers</h3>
-            <p>Three co-authored, Springer and Elsevier</p>
+        <section class="chapter" aria-labelledby="ch-earlier">
+          <header class="chapter-head">
+            <h3 id="ch-earlier">Research and earlier projects</h3>
+            <p>Where it started: models, agents and papers.</p>
           </header>
-          <div class="paper-stack">
-            <article class="sheet" data-order="0">
-              <p class="venue">ICICC-2026, Springer</p>
-              <h4>Automated Identification of Crop Diseases Using Deep Learning Frameworks</h4>
-              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
-              <p class="abstract"><b>Abstract.</b> Deep learning models that identify crop diseases from leaf images across 38 disease classes, built from the Krishi Saahayak work.</p>
-              <span class="stamp">Accepted</span>
-            </article>
-            <article class="sheet" data-order="1">
-              <p class="venue">Springer, 2025</p>
-              <h4><a href="https://link.springer.com/chapter/10.1007/978-3-031-98728-1_17">Leveraging Digital Devices for Behavioral Health Assessment via ML</a></h4>
-              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
-              <p class="abstract"><b>Abstract.</b> Machine learning on data from everyday digital devices to assess behavioral health.</p>
-              <span class="stamp">Published</span>
-            </article>
-            <article class="sheet" data-order="2">
-              <p class="venue">Astronomy and Computing, Elsevier, 2025</p>
-              <h4><a href="https://doi.org/10.1016/j.ascom.2025.100988">A Cosmological Probe in a Theory of Higher-Order Gravity</a></h4>
-              <p class="authors">Shaily, A. Srivastava, Harsh Vardhan Singh Chauhan, A. Pratap, J. K. Singh</p>
-              <p class="abstract"><b>Abstract.</b> A cosmological model studied within a higher-order theory of gravity. Volume 53, article 100988.</p>
-              <span class="stamp">Published</span>
-            </article>
-          </div>
-          <button type="button" class="btn-line" data-action="shuffle">Show the next paper</button>
-        </article>
-
+          <div class="chapter-grid">
+            <div class="col">
         <!-- Krishi Saahayak: herbarium specimen card with a voting ensemble -->
         <article class="ex ex-krishi" id="krishi">
           <header class="placard">
@@ -409,55 +457,58 @@
           </div>
           <p class="ex-text">A CNN trained from scratch on 38 disease classes, then an ensemble that votes. Optimised with TensorRT and served as a real-time Flask API.</p>
           <p class="ex-stack">Python, TensorFlow, TensorRT, Flask</p>
-          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/Krishi-Sahaayak-AI-Powered-Crop-Disease-Detection-and-Recommendation-System-"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
+          <div class="ex-links">
+            <a class="link-card lc-github" href="https://github.com/Vardhan-Harsh07/Krishi-Sahaayak-AI-Powered-Crop-Disease-Detection-and-Recommendation-System-"><span class="lc-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg></span><span class="lc-text"><b>Code on GitHub</b><small>Vardhan-Harsh07/Krishi-Sahaayak-AI-Powered-Crop-Disease-Detection-and-Recommendation-System-</small></span><svg class="lc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
           <p class="scribble scribble-krishi" aria-hidden="true">five models voting beat one model guessing</p>
         </article>
 
-        <!-- RedditMind: a preview of the morning briefing -->
-        <article class="ex ex-redditmind" id="redditmind">
+        <!-- Research assistant: the hero is the exhibit -->
+        <article class="ex ex-assistant" id="assistant">
           <header class="placard">
-            <h3>RedditMind</h3>
-            <p>Building now</p>
+            <h3>Agentic Research Assistant</h3>
+            <p>2025, multi-agent deep research</p>
           </header>
-          <div class="briefing">
-            <p class="b-date">Your morning briefing</p>
-            <ol>
-              <li>
-                <p class="b-sub">r/LocalLLaMA</p>
-                <h4>Running a 70B model on two consumer GPUs, with benchmarks</h4>
-                <p class="b-why">Why it matters to you: you've been reading about running models cheaply.</p>
-              </li>
-              <li>
-                <p class="b-sub">r/MachineLearning</p>
-                <h4>Small ensembles keep beating one big model on plant disease data</h4>
-                <p class="b-why">Why it matters to you: it's your Krishi Saahayak result, replicated.</p>
-              </li>
-              <li>
-                <p class="b-sub">r/startups</p>
-                <h4>What forward deployed engineers actually do all day</h4>
-                <p class="b-why">Why it matters to you: it's your job title.</p>
-              </li>
-            </ol>
-            <p class="b-foot">3 of 412 new posts made the cut. Preview with made-up posts.</p>
-            <span class="sticker">Still building</span>
+          <p class="used">You've already used this one.</p>
+          <p class="ex-text">The agent at the top of this page is a scripted version of it. The real one runs separate LangGraph agents that plan, search the live web through Serper.dev, analyse, check their own claims and write a report with citations.</p>
+          <p class="ex-stack">Python, LangGraph, OpenAI API, Serper.dev, Streamlit</p>
+          <div class="ex-links">
+            <button type="button" class="btn-ink" data-action="rerun">Run it again</button>
+            <a class="link-card lc-github" href="https://github.com/Vardhan-Harsh07/ai_research_agent"><span class="lc-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg></span><span class="lc-text"><b>Code on GitHub</b><small>Vardhan-Harsh07/ai_research_agent</small></span><svg class="lc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </div>
-          <p class="ex-text">An agent that reads your subreddits overnight and hands you a short briefing in the morning, learning what you care about from what you read.</p>
-          <p class="ex-stack">Next.js, Trigger.dev, Claude API, Postgres with pgvector</p>
         </article>
-
-        <!-- Waystub: a sketch of the planner's core idea -->
-        <article class="ex ex-waystub" id="waystub">
+            </div>
+            <div class="col">
+        <!-- Papers: two printed first pages -->
+        <article class="ex ex-papers" id="papers">
           <header class="placard">
-            <h3>Waystub</h3>
-            <p>In planning, a trip planner set as a railway timetable</p>
+            <h3>Papers</h3>
+            <p>Three co-authored, Springer and Elsevier</p>
           </header>
-          <div class="timetable">
-            <p class="tt-head"><span>Paris, 3 days</span><span>Drag or tap a stop to move it</span></p>
-            <div class="tt-days"></div>
-            <p class="tt-warn" aria-live="polite"></p>
+          <div class="paper-stack">
+            <article class="sheet" data-order="0">
+              <p class="venue">ICICC-2026, Springer</p>
+              <h4>Automated Identification of Crop Diseases Using Deep Learning Frameworks</h4>
+              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
+              <p class="abstract"><b>Abstract.</b> Deep learning models that identify crop diseases from leaf images across 38 disease classes, built from the Krishi Saahayak work.</p>
+              <span class="stamp">Accepted</span>
+            </article>
+            <article class="sheet" data-order="1">
+              <p class="venue">Springer, 2025</p>
+              <h4><a href="https://link.springer.com/chapter/10.1007/978-3-031-98728-1_17">Leveraging Digital Devices for Behavioral Health Assessment via ML</a></h4>
+              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
+              <p class="abstract"><b>Abstract.</b> Machine learning on data from everyday digital devices to assess behavioral health.</p>
+              <span class="stamp">Published</span>
+            </article>
+            <article class="sheet" data-order="2">
+              <p class="venue">Astronomy and Computing, Elsevier, 2025</p>
+              <h4><a href="https://doi.org/10.1016/j.ascom.2025.100988">A Cosmological Probe in a Theory of Higher-Order Gravity</a></h4>
+              <p class="authors">Shaily, A. Srivastava, Harsh Vardhan Singh Chauhan, A. Pratap, J. K. Singh</p>
+              <p class="abstract"><b>Abstract.</b> A cosmological model studied within a higher-order theory of gravity. Volume 53, article 100988.</p>
+              <span class="stamp">Published</span>
+            </article>
           </div>
-          <p class="ex-text">Drag a stop anywhere, on desktop or phone, and the list, map, travel times and warnings stay in sync. This card is a small sketch of that idea: the Louvre is closed on Tuesdays, so move it.</p>
-          <p class="ex-stack">In planning: Astro, React, MapLibre, OpenStreetMap data</p>
+          <button type="button" class="btn-line" data-action="shuffle">Show the next paper</button>
         </article>
 
         <!-- TalentScout: a working screening chat -->
@@ -480,9 +531,13 @@
           </div>
           <p class="ex-text">Writes technical questions for the stack each candidate says they know, so recruiters don't draft them by hand. The original runs on Zephyr-7B; these questions are pre-written.</p>
           <p class="ex-stack">Python, Zephyr-7B, Hugging Face, Streamlit</p>
-          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/talentscout-hiring-assistant"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
+          <div class="ex-links">
+            <a class="link-card lc-github" href="https://github.com/Vardhan-Harsh07/talentscout-hiring-assistant"><span class="lc-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg></span><span class="lc-text"><b>Code on GitHub</b><small>Vardhan-Harsh07/talentscout-hiring-assistant</small></span><svg class="lc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
         </article>
-
+            </div>
+          </div>
+          <div class="chapter-wide">
         <!-- Bennett: a university seal -->
         <article class="ex ex-bennett" id="bennett">
           <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Bennett University, B.Tech Computer Science (Data Science), CGPA 8.95">
@@ -495,6 +550,8 @@
           </svg>
           <p class="ex-text">B.Tech in Computer Science (Data Science). Deep learning, machine learning, information retrieval and AI systems.</p>
         </article>
+          </div>
+        </section>
 
       </div>
     </div>
