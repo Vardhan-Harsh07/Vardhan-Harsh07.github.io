@@ -1611,7 +1611,7 @@ let greeted = false;
 const FILES = {
   'stamp.md': 'Stamp (2026, live)\nRuns the DNS checks Gmail, Outlook and Yahoo make: SPF, DKIM, DMARC, MX, MTA-STS, BIMI, blocklists. Grades the domain and says what to fix.\nhttps://stamp-zeta-two.vercel.app',
   'realcheck.md': 'RealCheck (2026, Chrome extension, in store review)\nGrades product reviews from A to F on Amazon, Flipkart, Walmart, Myntra and more. Runs entirely in your browser.',
-  'clypso.md': 'Clypso (building)\nYouTube video in, summary, key points, quotes, chapters, SEO and social posts out. The website is up; the product is still being built.',
+  'clypso.md': 'Clypso (building)\nYouTube video in, summary, key points, quotes, chapters, SEO and social posts out. The website is up; the product is still being built.\nhttps://clypso-eta.vercel.app',
   'treadle.md': 'Treadle (2026, UI concept)\nA product page for a foot pedal that runs AI agents while your foot is down. Concept. No pedal exists.\nhttps://treadle-pedal.vercel.app',
   'waystub.md': 'Waystub (in planning)\nA trip planner set as a railway timetable. Drag a stop and every time and warning follows.',
   'about.md': 'Harsh Vardhan Singh Chauhan\nForward Deployed Engineer at InboxKit. Builds AI agents and gets them working for real customers.\nHaryana, India.',

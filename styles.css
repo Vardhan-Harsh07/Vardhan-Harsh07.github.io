@@ -609,7 +609,7 @@ kbd {
   gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: stretch;
 }
-section[aria-labelledby="ch-shipped"] .chapter-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+:is(section[aria-labelledby="ch-shipped"], section[aria-labelledby="ch-building"]) .chapter-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .chapter-grid > .col { display: flex; flex-direction: column; gap: clamp(2rem, 4vw, 3.25rem); min-width: 0; }
 /* The last card in each column stretches, so a pair of cards ends on the same line;
    its links sit on the bottom edge so the extra room reads as intended */
@@ -1341,6 +1341,7 @@ section[aria-labelledby="ch-shipped"] .chapter-grid { grid-template-columns: min
   -webkit-mask: radial-gradient(circle at 2.85rem 0, transparent 0.25rem, #000 0.26rem) top / 100% 51% no-repeat, radial-gradient(circle at 2.85rem 100%, transparent 0.25rem, #000 0.26rem) bottom / 100% 51% no-repeat;
           mask: radial-gradient(circle at 2.85rem 0, transparent 0.25rem, #000 0.26rem) top / 100% 51% no-repeat, radial-gradient(circle at 2.85rem 100%, transparent 0.25rem, #000 0.26rem) bottom / 100% 51% no-repeat;
 }
+.tt-stop span { min-width: 0; }
 .tt-stop time { font: 600 0.78rem/1.25 var(--mono); font-variant-numeric: tabular-nums; border-right: 1px dashed #1A1A1A; padding-right: 0.3rem; }
 .tt-stop.closed { background: #FFE9E2; border-color: #C62828; }
 .tt-stop.closed::after { content: "Closed today"; grid-column: 2; font: 600 0.68rem/1.2 var(--mono); color: #C62828; }
@@ -1400,8 +1401,8 @@ section[aria-labelledby="ch-shipped"] .chapter-grid { grid-template-columns: min
 .ex-links .btn-ink { margin: 0; }
 
 /* Education: a quiet centred sign-off under the last chapter */
-.edu { display: flex; align-items: center; justify-content: center; gap: 1.1rem; margin: clamp(3.5rem, 7vw, 5rem) auto 0; text-align: left; }
-.edu-seal { flex: none; width: 4.75rem; color: var(--seal); transform: rotate(-8deg); }
-.edu p { display: grid; gap: 0.2rem; }
-.edu b { font: 700 1rem/1.25 var(--display); letter-spacing: -0.02em; }
-.edu span { font: 400 0.8125rem/1.4 var(--mono); color: var(--ink-2); }
+.edu { display: flex; align-items: center; justify-content: center; gap: clamp(1.25rem, 3vw, 2rem); margin: clamp(3.5rem, 7vw, 5rem) auto 0; text-align: left; }
+.edu-seal { flex: none; width: clamp(6.5rem, 12vw, 9rem); color: var(--seal); transform: rotate(-8deg); }
+.edu p { display: grid; gap: 0.45rem; }
+.edu b { font: 800 clamp(1.35rem, 3vw, 2.1rem)/1.15 var(--display); letter-spacing: -0.035em; }
+.edu span { font: 400 clamp(0.95rem, 1.4vw, 1.1rem)/1.4 var(--mono); color: var(--ink-2); }
