@@ -1911,7 +1911,7 @@ const pageTitle = document.title;
 const AWAY_TITLES = ['👀 Harsh Vardhan', '👀 Harsh is waiting'];
 // Favicon frames: the eyes glance around, and blink now and then
 const faceIcon = (dx, dy, shut = false) => 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#0E0F0C"/>` +
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="#0E0F0C" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3"/>` +
   (shut
     ? `<rect x="13" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/><rect x="33" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/>`
     : `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
@@ -1933,7 +1933,7 @@ document.addEventListener('visibilitychange', () => {
     awayTimer = setInterval(step, 1100);
   } else {
     document.title = pageTitle;
-    favicon.href = 'logo.svg';
+    favicon.href = 'favicon.svg?v=20261109191428';
     blink();
   }
 });
