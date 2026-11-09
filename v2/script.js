@@ -461,6 +461,98 @@ rack.replaceChildren(...RACK.map((r) => {
 }));
 const rackItems = (cited) => RACK.filter((r) => r.nums.some((n) => cited.includes(n))).map((r) => rack.querySelector(`[data-id="${r.id}"]`));
 
+/* ---------- Nodes: the projects the agent can read, placed around the hero ---------- */
+
+const NODES = [
+  ['treadle', 'Treadle', 0.33, 0.115], ['clypso', 'Clypso', 0.5, 0.105], ['stamp', 'Stamp', 0.68, 0.12],
+  ['realcheck', 'RealCheck', 0.655, 0.43], ['arcflip', 'Arcflip', 0.635, 0.58], ['krishi', 'Krishi Saahayak', 0.66, 0.73],
+  ['inboxkit', 'InboxKit', 0.775, 0.63], ['papers', 'Papers', 0.865, 0.735], ['assistant', 'Research Assistant', 0.78, 0.84],
+  ['talentscout', 'TalentScout', 0.13, 0.94], ['redditmind', 'RedditMind', 0.33, 0.95], ['waystub', 'Waystub', 0.5, 0.94], ['bennett', 'Education', 0.9, 0.93],
+];
+const LINKS = [['stamp', 'inboxkit'], ['krishi', 'papers'], ['assistant', 'clypso'], ['redditmind', 'clypso']];
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const nodeLayer = document.querySelector('.nodes');
+const nodeEls = {};
+const svgEl = (tag, attrs = {}) => { const el = document.createElementNS(SVG_NS, tag); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); return el; };
+const linkLayer = svgEl('g', { class: 'node-links' });
+const wireLayer = svgEl('g', { class: 'node-wires' });
+const dotLayer = svgEl('g', { class: 'node-dots' });
+nodeLayer.append(linkLayer, wireLayer, dotLayer);
+for (const [id, name] of NODES) {
+  const g = svgEl('g', { class: 'node', 'data-id': id });
+  g.append(svgEl('circle', { class: 'node-pulse', r: 6 }), svgEl('circle', { class: 'node-ring', r: 5.5 }));
+  const label = svgEl('text', { class: 'node-label', x: 12, y: 4 });
+  label.textContent = name;
+  g.append(label);
+  g.addEventListener('click', () => jumpTo(id));
+  dotLayer.append(g);
+  nodeEls[id] = g;
+}
+
+function layoutNodes() {
+  const hero = nodeLayer.getBoundingClientRect();
+  nodeLayer.setAttribute('viewBox', `0 0 ${hero.width} ${hero.height}`);
+  // Anything a node must never sit on: the header, the question, the answer, the steps
+  const blocks = [...document.querySelectorAll('.bar, .ask, .trace, .answer, .followups, .flow, .graph-title')].map((el) => el.getBoundingClientRect()).filter((r) => r.width);
+  const clashes = (x, y, w) => blocks.some((r) => x - 8 < r.right - hero.left && x + w + 8 > r.left - hero.left && y - 12 < r.bottom - hero.top && y + 12 > r.top - hero.top);
+  for (const [id, , fx, fy] of NODES) {
+    const g = nodeEls[id];
+    const w = g.querySelector('text').getComputedTextLength() + 14;
+    const x = fx * hero.width;
+    let y = fy * hero.height;
+    const tries = [0, -0.04, 0.04, -0.08, 0.08].map((d) => y + d * hero.height);
+    y = tries.find((ty) => ty > 20 && ty < hero.height - 14 && x + w < hero.width - 8 && !clashes(x, ty, w));
+    g.style.display = y === undefined ? 'none' : '';
+    if (y !== undefined) { g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`); g.dataset.x = x; g.dataset.y = y; }
+  }
+  // Only short links between neighbours, so no line ever crosses the content
+  linkLayer.replaceChildren(...LINKS.filter(([a, b]) => nodeEls[a].style.display !== 'none' && nodeEls[b].style.display !== 'none' && Math.hypot(nodeEls[a].dataset.x - nodeEls[b].dataset.x, nodeEls[a].dataset.y - nodeEls[b].dataset.y) < 340).map(([a, b]) => svgEl('line', { x1: nodeEls[a].dataset.x, y1: nodeEls[a].dataset.y, x2: nodeEls[b].dataset.x, y2: nodeEls[b].dataset.y })));
+}
+new ResizeObserver(() => requestAnimationFrame(layoutNodes)).observe(document.querySelector('.console'));
+
+const projectNodes = {
+  reset() {
+    wireLayer.replaceChildren();
+    Object.values(nodeEls).forEach((g) => g.classList.remove('hit', 'dim', 'kept'));
+  },
+  search(ids, runRef) {
+    layoutNodes();
+    const hero = nodeLayer.getBoundingClientRect();
+    const field = input.getBoundingClientRect();
+    const ox = field.left - hero.left + Math.min(field.width * 0.45, 360);
+    const oy = field.bottom - hero.top + 6;
+    ids.filter((id) => nodeEls[id] && nodeEls[id].style.display !== 'none').forEach((id, i) => {
+      const g = nodeEls[id];
+      const x = Number(g.dataset.x);
+      const y = Number(g.dataset.y);
+      const cx = (ox + x) / 2 + (y < oy ? -60 : 60);
+      const cy = Math.min(oy, y) - Math.abs(x - ox) * 0.18;
+      const path = svgEl('path', { d: `M${ox.toFixed(1)} ${oy.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`, class: 'wire' });
+      wireLayer.append(path);
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = reduced ? 0 : length;
+      setTimeout(() => {
+        if (runRef() === false) return;
+        path.style.strokeDashoffset = 0;
+        if (!reduced) {
+          const spark = svgEl('circle', { class: 'spark', r: 3 });
+          spark.append(Object.assign(svgEl('animateMotion', { dur: '0.7s', fill: 'freeze', path: path.getAttribute('d') })));
+          wireLayer.append(spark);
+          spark.querySelector('animateMotion').beginElement();
+          setTimeout(() => spark.remove(), 760);
+        }
+        setTimeout(() => g.classList.add('hit'), reduced ? 0 : 620);
+      }, reduced ? 0 : i * 120);
+    });
+    Object.entries(nodeEls).forEach(([id, g]) => { if (!ids.includes(id)) g.classList.add('dim'); });
+  },
+  settle() {
+    wireLayer.querySelectorAll('.wire').forEach((p) => p.classList.add('fade'));
+    Object.values(nodeEls).forEach((g) => { if (g.classList.contains('hit')) g.classList.add('kept'); });
+  },
+};
+
 async function run(question, { type = false, loopBack = false } = {}) {
   const id = ++runId;
   const { answer, assumed } = route(question);
@@ -474,6 +566,7 @@ async function run(question, { type = false, loopBack = false } = {}) {
   loop.classList.remove('active');
   heroField.clear();
   rack.querySelectorAll('li').forEach((li) => li.classList.remove('hit', 'read', 'dim'));
+  projectNodes.reset();
   trace.classList.add('running');
   trace.open = true;
 
@@ -494,6 +587,7 @@ async function run(question, { type = false, loopBack = false } = {}) {
   await step('plan', 'Planning', plan, 650);
   if (id !== runId) return;
   heroField.focus(answer.terms);
+  projectNodes.search([...new Set(cited.map((n) => SOURCES[n][0]))], () => id === runId);
   rackItems(cited).forEach((li, i) => setTimeout(() => { if (id === runId) li.classList.add('hit'); }, reduced ? 0 : 120 + i * 110));
   await step('search', 'Searching', `Matched ${cited.length} of ${SOURCE_COUNT} sources`, 900);
   if (id !== runId) return;
@@ -530,6 +624,7 @@ async function run(question, { type = false, loopBack = false } = {}) {
   setStep('write', 'done');
   addLine('write', `Wrote ${answer.text.split(/\s+/).length} words with ${cited.length} citation${cited.length === 1 ? '' : 's'}`);
 
+  projectNodes.settle();
   trace.classList.remove('running');
   trace.open = false;
   status.textContent = cited.length ? `Answered from ${cited.length} of ${SOURCE_COUNT} sources` : 'No matching sources';
