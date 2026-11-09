@@ -10,10 +10,10 @@ const CLUSTERS = [
   { x: 0.14, y: 0.86, terms: ['LangGraph', 'RAG', 'Planner', 'Reflection', 'Serper.dev', 'GPT-4o', 'Claude API', 'Prompting'] },
   { x: 0.50, y: 0.90, terms: ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras'] },
   { x: 0.88, y: 0.80, terms: ['Scoring engine', 'XGBoost', 'LightGBM', 'Calibration', 'Signals'] },
-  { x: 0.90, y: 0.14, terms: ['Enterprise', 'Onboarding', 'SOPs', 'Support', 'Debugging'] },
+  { x: 0.90, y: 0.14, terms: ['Enterprise', 'Onboarding', 'SOPs', 'Support', 'Debugging', 'DNS', 'SPF', 'DMARC'] },
   { x: 0.62, y: 0.06, terms: ['Springer', 'ICICC-2026', 'Health ML', 'Cosmology'] },
-  { x: 0.38, y: 0.05, terms: ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit'] },
-  { x: 0.67, y: 0.56, terms: ['Python', 'SQL', 'C++', 'Flask', 'Streamlit', 'Zephyr-7B', 'Hugging Face', 'LSTM'] },
+  { x: 0.38, y: 0.05, terms: ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit', 'Hono', 'MapLibre'] },
+  { x: 0.67, y: 0.56, terms: ['Python', 'SQL', 'C++', 'Flask', 'Streamlit', 'Zephyr-7B', 'Hugging Face', 'LSTM', 'three.js', 'Chrome extension'] },
 ];
 
 function seeded(seed) {
@@ -303,6 +303,11 @@ const SOURCES = {
   8: ['talentscout', 'TalentScout'],
   9: ['bennett', 'Bennett'],
   10: ['papers', 'Elsevier 2025'],
+  11: ['stamp', 'Stamp'],
+  12: ['realcheck', 'RealCheck'],
+  13: ['clypso', 'Clypso'],
+  14: ['treadle', 'Treadle'],
+  15: ['waystub', 'Waystub'],
 };
 const SOURCE_COUNT = Object.keys(SOURCES).length;
 
@@ -312,16 +317,16 @@ const ANSWERS = [
     match: /\b(who|about|intro|yourself|summary)\b/i,
     keys: ['who', 'about', 'introduction', 'summary', 'background', 'harsh', 'profile'],
     parts: 3,
-    terms: ['Enterprise', 'LangGraph', 'Ensemble', 'Scoring engine', 'Reddit', 'Springer'],
-    text: "Harsh is a Forward Deployed Engineer at InboxKit, where he's the engineer enterprise customers work with when something breaks [1]. He built a Perplexity-style multi-agent research system [4], a crop-disease model with 99.55% accuracy that became a Springer paper [5] [6], and the scoring engine behind Arcflip's career matching [2]. Right now he's building RedditMind [3].",
+    terms: ['Enterprise', 'DMARC', 'Chrome extension', 'LangGraph', 'Ensemble', 'Springer'],
+    text: "Harsh is a Forward Deployed Engineer at InboxKit, where he's the engineer enterprise customers work with when something breaks [1]. He recently shipped Stamp, a live email deliverability checker [11], and RealCheck, a Chrome extension that grades product reviews [12]. Before that he built a multi-agent research system [4] and a crop-disease model with 99.55% accuracy that became a Springer paper [5] [6]. Right now he's building Clypso [13].",
   },
   {
     ask: 'What has he shipped?',
-    match: /\b(ship|shipped|built|build|projects?|made|portfolio)\b/i,
-    keys: ['shipped', 'built', 'projects', 'portfolio', 'made', 'products', 'work', 'krishi', 'talentscout', 'arcflip'],
-    parts: 2,
-    terms: ['LangGraph', 'RAG', 'CNN', 'TensorRT', 'Zephyr-7B', 'Scoring engine'],
-    text: "A multi-agent deep-research system that plans, searches, checks its own claims and writes cited reports [4]. Krishi Saahayak, which spots 38 crop diseases from a leaf photo at 99.55% accuracy and runs in real time on TensorRT [5]. TalentScout, a screening bot that writes interview questions for each candidate's stack [8]. And at Arcflip, the scoring engine that ranks candidates for career matching [2].",
+    match: /\b(ship|shipped|built|build|projects?|made|portfolio|stamp|realcheck|treadle|extension|email|dns)\b/i,
+    keys: ['shipped', 'built', 'projects', 'portfolio', 'made', 'products', 'work', 'krishi', 'talentscout', 'arcflip', 'stamp', 'realcheck', 'treadle', 'extension'],
+    parts: 3,
+    terms: ['DNS', 'SPF', 'DMARC', 'Chrome extension', 'three.js', 'LangGraph', 'CNN', 'TensorRT'],
+    text: "Stamp, which runs the DNS checks Gmail and Outlook make and tells you how to fix your domain [11]. RealCheck, a Chrome extension that grades product reviews from A to F, entirely in your browser [12]. Treadle, a UI concept for a foot pedal that runs AI agents [14]. Before those: a multi-agent deep-research system that plans, searches, checks its own claims and writes cited reports [4]. Krishi Saahayak, which spots 38 crop diseases from a leaf photo at 99.55% accuracy and runs in real time on TensorRT [5]. TalentScout, a screening bot that writes interview questions for each candidate's stack [8]. And at Arcflip, the scoring engine that ranks candidates for career matching [2].",
   },
   {
     ask: 'Can he work with customers?',
@@ -333,11 +338,11 @@ const ANSWERS = [
   },
   {
     ask: "What's he building now?",
-    match: /\b(now|currently|current|building|next|reddit\w*|side)\b/i,
-    keys: ['now', 'currently', 'building', 'next', 'reddit', 'redditmind', 'latest', 'today', 'recent'],
-    parts: 1,
-    terms: ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit', 'Claude API'],
-    text: "RedditMind [3]. It's an agent that reads your subreddits overnight and writes a short morning briefing, learning what you care about from what you read. It's still being built, on Next.js, Trigger.dev, the Claude API and Postgres with pgvector [3]. On the side, he's learning the ins and outs of Meta ads.",
+    match: /\b(now|currently|current|building|next|reddit\w*|clypso|waystub|youtube|side)\b/i,
+    keys: ['now', 'currently', 'building', 'next', 'reddit', 'redditmind', 'clypso', 'waystub', 'youtube', 'latest', 'today', 'recent'],
+    parts: 2,
+    terms: ['Next.js', 'Hono', 'Claude API', 'pgvector', 'Reddit', 'MapLibre'],
+    text: "Clypso [13], which turns a YouTube video into a summary, key points, verified quotes, chapters and social posts from one link or one API call. Its website is up but the product is still being built. Alongside it, RedditMind, an agent that writes you a morning briefing from your subreddits [3], and next in line is Waystub, a trip planner set as a railway timetable [15]. On the side, he's learning the ins and outs of Meta ads.",
   },
   {
     ask: 'Where is his research?',
@@ -617,13 +622,18 @@ document.fonts?.ready.then(() => { fitInput(); placeLoop(); });
 /* ---------- Exhibits light up the background as they scroll past ---------- */
 
 const EXHIBITS = [
-  ['krishi', 'Krishi Saahayak', ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras']],
-  ['papers', 'Papers', ['Springer', 'ICICC-2026', 'Health ML']],
-  ['arcflip', 'Arcflip scoring engine', ['Scoring engine', 'XGBoost', 'LightGBM', 'Calibration', 'Signals']],
+  ['stamp', 'Stamp', ['DNS', 'SPF', 'DMARC', 'Next.js']],
+  ['clypso', 'Clypso', ['Claude API', 'Hono', 'Next.js', 'Prompting']],
+  ['treadle', 'Treadle', ['three.js']],
+  ['realcheck', 'RealCheck', ['Chrome extension', 'Signals']],
   ['inboxkit', 'InboxKit', ['Enterprise', 'Onboarding', 'SOPs', 'Support', 'Debugging']],
-  ['talentscout', 'TalentScout', ['Zephyr-7B', 'Hugging Face', 'Streamlit', 'Prompting']],
-  ['redditmind', 'RedditMind', ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit']],
   ['assistant', 'Research Assistant', ['LangGraph', 'RAG', 'Planner', 'Reflection', 'Serper.dev']],
+  ['arcflip', 'Arcflip scoring engine', ['Scoring engine', 'XGBoost', 'LightGBM', 'Calibration', 'Signals']],
+  ['papers', 'Papers', ['Springer', 'ICICC-2026', 'Health ML', 'Cosmology']],
+  ['krishi', 'Krishi Saahayak', ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras']],
+  ['redditmind', 'RedditMind', ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit']],
+  ['waystub', 'Waystub', ['MapLibre']],
+  ['talentscout', 'TalentScout', ['Zephyr-7B', 'Hugging Face', 'Streamlit', 'Prompting']],
   ['bennett', 'Bennett University', ['Python', 'SQL', 'C++', 'LSTM']],
 ];
 
@@ -792,6 +802,379 @@ uploadInput.addEventListener('change', async () => {
 paintLeaf(LEAVES[0]);
 renderVotes(LEAVES[0].votes);
 krishi.querySelector('[data-action="scan"]').addEventListener('click', scanNext);
+
+/* ---------- Stamp: three live DNS lookups from the browser ---------- */
+
+const stampEx = document.querySelector('#stamp');
+const stampInput = stampEx.querySelector('#stamp-domain');
+const postmark = stampEx.querySelector('.postmark');
+const stampRows = Object.fromEntries([...stampEx.querySelectorAll('[data-row]')].map((li) => [li.dataset.row, li]));
+const stampMore = stampEx.querySelector('.stamp-more');
+let stampRun = 0;
+
+async function lookup(name, type) {
+  const response = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(name)}&type=${type}`, { headers: { accept: 'application/dns-json' } });
+  if (!response.ok) throw new Error('lookup failed');
+  const data = await response.json();
+  const code = type === 'TXT' ? 16 : 15;
+  return (data.Answer ?? []).filter((a) => a.type === code).map((a) => a.data.replace(/"\s*"/g, '').replace(/^"|"$/g, ''));
+}
+
+function setRow(row, state, text) {
+  const li = stampRows[row];
+  li.classList.remove('loading');
+  li.dataset.state = state;
+  li.querySelector('em').textContent = text;
+}
+
+function stampPostmark(domain, grade) {
+  postmark.querySelector('[data-pm="ring"]').textContent = `${domain.toUpperCase()}  •  STAMP  •  `;
+  postmark.querySelector('[data-pm="grade"]').textContent = grade;
+  postmark.dataset.grade = grade;
+  postmark.classList.remove('thump');
+  postmark.getBoundingClientRect();
+  postmark.classList.add('thump');
+}
+
+async function checkDomain(raw) {
+  const domain = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/[/?#].*$/, '').replace(/\.$/, '');
+  stampInput.value = domain;
+  if (!/^(?=.{3,253}$)([a-z0-9-]{1,63}\.)+[a-z]{2,63}$/.test(domain)) {
+    stampInput.focus();
+    toast('That doesn’t look like a domain. Try something like github.com.');
+    return;
+  }
+  const run = ++stampRun;
+  for (const li of Object.values(stampRows)) {
+    li.classList.add('loading');
+    delete li.dataset.state;
+    li.querySelector('em').textContent = 'Looking up…';
+  }
+  try {
+    const [txt, dmarcTxt, mx] = await Promise.all([lookup(domain, 'TXT'), lookup(`_dmarc.${domain}`, 'TXT'), lookup(domain, 'MX')]);
+    if (run !== stampRun) return;
+    let points = 0;
+    const spf = txt.find((r) => /^v=spf1\b/i.test(r));
+    if (!spf) setRow('spf', 'fail', 'No SPF record. Anyone can claim to send as this domain.');
+    else if (/[-~]all\b/i.test(spf)) { points += 2; setRow('spf', 'pass', spf.length > 90 ? `${spf.slice(0, 88)}…` : spf); }
+    else { points += 1; setRow('spf', 'warn', `${spf.length > 70 ? `${spf.slice(0, 68)}…` : spf} (ends without a strict all)`); }
+    const dmarc = dmarcTxt.find((r) => /^v=DMARC1\b/i.test(r));
+    const policy = dmarc?.match(/\bp=(\w+)/i)?.[1]?.toLowerCase();
+    if (!dmarc) setRow('dmarc', 'fail', 'No DMARC record. Forged mail goes unchecked.');
+    else if (policy === 'reject' || policy === 'quarantine') { points += 2; setRow('dmarc', 'pass', `p=${policy}: forged mail is ${policy === 'reject' ? 'refused' : 'sent to spam'}`); }
+    else { points += 1; setRow('dmarc', 'warn', 'p=none: forged mail is only reported, not stopped'); }
+    if (mx.length) {
+      points += 1;
+      const host = mx[0].split(' ').pop().replace(/\.$/, '');
+      setRow('mx', 'pass', `${mx.length} mail server${mx.length > 1 ? 's' : ''}, e.g. ${host}`);
+    } else setRow('mx', 'fail', 'No MX records. This domain can’t receive mail.');
+    stampPostmark(domain, ['F', 'F', 'D', 'C', 'B', 'A'][points]);
+    stampMore.querySelector('a').href = `https://stamp-zeta-two.vercel.app/check/${encodeURIComponent(domain)}`;
+    stampMore.hidden = false;
+  } catch {
+    if (run !== stampRun) return;
+    for (const row of Object.keys(stampRows)) setRow(row, 'warn', 'The lookup didn’t come back. Try again.');
+    stampPostmark(domain, '?');
+  }
+}
+
+stampEx.querySelector('.stamp-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  checkDomain(stampInput.value);
+});
+stampEx.querySelectorAll('[data-domain]').forEach((button) => button.addEventListener('click', () => checkDomain(button.dataset.domain)));
+
+/* ---------- Clypso: sample extractions stream in ---------- */
+
+const CLIPS = [
+  {
+    title: 'How a small bakery prices a loaf',
+    summary: 'A baker explains how her shop moved from copying a rival’s prices to costing each loaf by flour, labour and oven time, and why the first honest number came as a shock.',
+    points: ['Copying a rival’s price hid a loss on every sourdough', 'Oven time was the biggest hidden cost', 'One small price rise paid for a second baker'],
+    quote: ['“The first honest number was the scariest thing I’ve baked.”', '04:12'],
+    chapters: [['00:00', 'Copying the shop next door'], ['03:40', 'Costing one loaf'], ['09:15', 'The new price list']],
+  },
+  {
+    title: 'Riding the last night bus across the city',
+    summary: 'A driver walks through a 2 a.m. route, who rides it and why, and what changed when the city cut it to one bus every forty minutes.',
+    points: ['Most riders are shift workers heading home', 'Forty-minute gaps pushed people into long walks', 'A pilot brought back a twenty-minute weekend service'],
+    quote: ['“Everyone on this bus is going to or from work.”', '07:31'],
+    chapters: [['00:00', 'Leaving the depot'], ['05:02', 'The hospital stop'], ['12:48', 'What the cuts did']],
+  },
+  {
+    title: 'How we review code in under an hour',
+    summary: 'An engineering lead shares the rules that cut their team’s review time: small pull requests, a written why, and reviewing for risk before style.',
+    points: ['Big pull requests wait three times longer', 'Every pull request opens with a paragraph of why', 'Style comments go to the linter, not the reviewer'],
+    quote: ['“Review for what could break, not for how you’d have written it.”', '06:05'],
+    chapters: [['00:00', 'The two-day review problem'], ['04:20', 'Small pull requests'], ['10:30', 'Risk first']],
+  },
+];
+const clypsoEx = document.querySelector('#clypso');
+const clypOut = clypsoEx.querySelector('.clyp-out');
+let clypRun = 0;
+
+function clypCard(label, color, body) {
+  const card = document.createElement('section');
+  card.className = 'clyp-card';
+  card.style.setProperty('--c', color);
+  const heading = document.createElement('h4');
+  heading.textContent = label;
+  card.append(heading, body);
+  return card;
+}
+
+async function playClip(index) {
+  const run = ++clypRun;
+  const clip = CLIPS[index];
+  clypsoEx.querySelectorAll('[data-clip]').forEach((tab) => tab.setAttribute('aria-selected', String(Number(tab.dataset.clip) === index)));
+  clypsoEx.querySelector('[data-clyp="title"]').textContent = clip.title;
+  clypOut.replaceChildren();
+  const summary = Object.assign(document.createElement('p'), { textContent: clip.summary });
+  const points = document.createElement('ul');
+  points.append(...clip.points.map((p) => Object.assign(document.createElement('li'), { textContent: p })));
+  const quote = document.createElement('p');
+  quote.append(clip.quote[0], ' ', Object.assign(document.createElement('span'), { className: 'mono', textContent: clip.quote[1] }));
+  const chapters = document.createElement('p');
+  chapters.className = 'mono';
+  chapters.textContent = clip.chapters.map(([t, c]) => `${t}  ${c}`).join('\n');
+  chapters.style.whiteSpace = 'pre-line';
+  const cards = [clypCard('Summary', '#F5B83D', summary), clypCard('Key points', '#F97316', points), clypCard('Quotes', '#EC4899', quote), clypCard('Chapters', '#A78BFA', chapters)];
+  for (const card of cards) {
+    await wait(420);
+    if (run !== clypRun) return;
+    clypOut.append(card);
+  }
+}
+
+clypsoEx.querySelectorAll('[data-clip]').forEach((tab) => tab.addEventListener('click', () => playClip(Number(tab.dataset.clip))));
+new IntersectionObserver((entries, observer) => {
+  if (entries.some((entry) => entry.isIntersecting)) {
+    observer.disconnect();
+    playClip(0);
+  }
+}, { threshold: 0.3 }).observe(clypsoEx);
+
+/* ---------- Treadle: agents run only while the pedal is held ---------- */
+
+const pedal = document.querySelector('.pedal');
+const tape = document.querySelector('.tape');
+const floorState = document.querySelector('.floor-state');
+const TAPE_LINES = ['agent 1: reading the repository', 'agent 2: running the tests', 'agent 1: 3 files changed', 'agent 3: drafting the release note', 'agent 2: 128 tests passed', 'agent 3: release note ready for review', 'agent 1: opening a pull request'];
+let tapeTimer = 0;
+let tapeLine = 0;
+
+function printTape(text) {
+  tape.append(Object.assign(document.createElement('li'), { textContent: text }));
+  while (tape.children.length > 6) tape.firstElementChild.remove();
+}
+
+function pedalDown() {
+  if (pedal.getAttribute('aria-pressed') === 'true') return;
+  pedal.setAttribute('aria-pressed', 'true');
+  floorState.textContent = 'Foot down. Agents running.';
+  printTape(TAPE_LINES[tapeLine++ % TAPE_LINES.length]);
+  tapeTimer = setInterval(() => printTape(TAPE_LINES[tapeLine++ % TAPE_LINES.length]), reduced ? 900 : 480);
+}
+
+function pedalUp() {
+  if (pedal.getAttribute('aria-pressed') !== 'true') return;
+  clearInterval(tapeTimer);
+  pedal.setAttribute('aria-pressed', 'false');
+  floorState.textContent = 'Foot up. Agents stopped. They have not been told.';
+  printTape('— foot up —');
+}
+
+pedal.addEventListener('pointerdown', (e) => {
+  pedal.setPointerCapture(e.pointerId);
+  pedalDown();
+});
+for (const type of ['pointerup', 'pointercancel', 'lostpointercapture']) pedal.addEventListener(type, pedalUp);
+pedal.addEventListener('keydown', (e) => {
+  if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
+    e.preventDefault();
+    pedalDown();
+  }
+});
+pedal.addEventListener('keyup', (e) => { if (e.key === ' ' || e.key === 'Enter') pedalUp(); });
+pedal.addEventListener('blur', pedalUp);
+pedal.addEventListener('contextmenu', (e) => e.preventDefault());
+
+/* ---------- RealCheck: scan the reviews and grade them ---------- */
+
+const realcheckEx = document.querySelector('#realcheck');
+const reviewList = realcheckEx.querySelector('.reviews');
+const rcButton = realcheckEx.querySelector('[data-action="realcheck"]');
+const rcBadge = realcheckEx.querySelector('.rc-badge');
+const rcReport = realcheckEx.querySelector('.rc-report');
+
+async function runRealCheck() {
+  const reviews = [...reviewList.children];
+  if (rcBadge.classList.contains('graded')) {
+    reviews.forEach((li) => li.classList.remove('flagged', 'read-these'));
+    rcBadge.classList.remove('graded');
+    rcBadge.querySelector('b').textContent = '?';
+    rcReport.hidden = true;
+  }
+  rcButton.disabled = true;
+  reviews.forEach((li, i) => li.style.setProperty('--n', i));
+  reviewList.classList.add('scanning');
+  await wait(900);
+  reviewList.classList.remove('scanning');
+  for (const li of reviews.filter((r) => r.dataset.flag)) {
+    li.classList.add('flagged');
+    await wait(260);
+  }
+  reviews.filter((r) => !r.dataset.flag).forEach((li) => li.classList.add('read-these'));
+  rcBadge.querySelector('b').textContent = 'D';
+  rcBadge.classList.add('graded');
+  rcReport.hidden = false;
+  rcButton.textContent = 'Run it again';
+  rcButton.disabled = false;
+}
+rcButton.addEventListener('click', runRealCheck);
+
+/* ---------- Waystub: a timetable whose times follow the stops ---------- */
+
+const WAY_DAYS = [{ name: 'Day 1', weekday: 'Tue' }, { name: 'Day 2', weekday: 'Wed' }, { name: 'Day 3', weekday: 'Thu' }];
+const WAY_STOPS = {
+  eiffel: { name: 'Eiffel Tower', visit: 90 },
+  louvre: { name: 'Louvre', visit: 150, closed: 'Tue' },
+  seine: { name: 'Walk along the Seine', visit: 60 },
+  orsay: { name: 'Musée d’Orsay', visit: 120 },
+  versailles: { name: 'Versailles', visit: 240 },
+  montmartre: { name: 'Montmartre', visit: 90 },
+  notredame: { name: 'Notre-Dame', visit: 60 },
+  marais: { name: 'Le Marais', visit: 120 },
+};
+const wayPlan = [['eiffel', 'louvre', 'seine'], ['orsay', 'versailles', 'montmartre'], ['notredame', 'marais']];
+const WAY_START = 9 * 60;
+const WAY_END = 18 * 60;
+const WAY_LEG = 25;
+const wayEx = document.querySelector('#waystub');
+const wayDays = wayEx.querySelector('.tt-days');
+const wayWarn = wayEx.querySelector('.tt-warn');
+let wayPicked = null;
+let wayDragged = null;
+
+const clock = (minutes) => `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+
+function moveStop(id, day, index = wayPlan[day].length) {
+  const from = wayPlan.findIndex((d) => d.includes(id));
+  const at = wayPlan[from].indexOf(id);
+  wayPlan[from].splice(at, 1);
+  if (from === day && at < index) index -= 1;
+  wayPlan[day].splice(index, 0, id);
+  wayPicked = null;
+  renderWaystub(id);
+}
+
+function renderWaystub(focusId) {
+  const problems = [];
+  wayDays.replaceChildren(...wayPlan.map((stops, d) => {
+    const column = document.createElement('div');
+    column.className = 'tt-day';
+    column.dataset.day = d;
+    const heading = document.createElement('h4');
+    heading.append(WAY_DAYS[d].name, Object.assign(document.createElement('span'), { textContent: WAY_DAYS[d].weekday }));
+    const list = document.createElement('ol');
+    list.className = 'tt-stops';
+    let t = WAY_START;
+    stops.forEach((id, i) => {
+      if (i) t += WAY_LEG;
+      const stop = WAY_STOPS[id];
+      const li = document.createElement('li');
+      li.className = 'tt-stop';
+      li.draggable = true;
+      li.tabIndex = 0;
+      li.dataset.id = id;
+      li.setAttribute('aria-label', `${stop.name} at ${clock(t)}, ${WAY_DAYS[d].name}. Press Enter to move it.`);
+      li.append(Object.assign(document.createElement('time'), { textContent: clock(t) }), Object.assign(document.createElement('span'), { textContent: stop.name }));
+      if (stop.closed === WAY_DAYS[d].weekday) {
+        li.classList.add('closed');
+        problems.push(`${stop.name} is closed on ${WAY_DAYS[d].weekday === 'Tue' ? 'Tuesdays' : WAY_DAYS[d].weekday}. Move it to another day.`);
+      }
+      if (wayPicked === id) li.classList.add('picked');
+      t += stop.visit;
+      list.append(li);
+    });
+    const end = document.createElement('p');
+    end.className = 'tt-end';
+    end.textContent = stops.length ? `Ends ${clock(t)}` : 'Free day';
+    if (t > WAY_END) {
+      end.classList.add('late');
+      problems.push(`${WAY_DAYS[d].name} runs to ${clock(t)}, past 18:00.`);
+    }
+    if (wayPicked) column.classList.add('target');
+    column.append(heading, list, end);
+    return column;
+  }));
+  wayWarn.classList.toggle('clear', !problems.length);
+  wayWarn.textContent = problems.length ? problems.join(' ') : 'All clear. Every stop is open and every day ends by 18:00.';
+  if (focusId) wayDays.querySelector(`[data-id="${focusId}"]`)?.focus({ preventScroll: true });
+}
+
+wayDays.addEventListener('dragstart', (e) => {
+  const li = e.target.closest('.tt-stop');
+  if (!li) return;
+  wayDragged = li.dataset.id;
+  e.dataTransfer.setData('text/plain', wayDragged);
+  e.dataTransfer.effectAllowed = 'move';
+  requestAnimationFrame(() => li.classList.add('dragging'));
+});
+wayDays.addEventListener('dragend', () => { wayDragged = null; renderWaystub(); });
+wayDays.addEventListener('dragover', (e) => {
+  const column = e.target.closest('.tt-day');
+  if (!column || !wayDragged) return;
+  e.preventDefault();
+  wayDays.querySelectorAll('.tt-day').forEach((c) => c.classList.toggle('over', c === column));
+});
+wayDays.addEventListener('drop', (e) => {
+  const column = e.target.closest('.tt-day');
+  if (!column || !wayDragged) return;
+  e.preventDefault();
+  const items = [...column.querySelectorAll('.tt-stop:not(.dragging)')];
+  const before = items.findIndex((li) => e.clientY < li.getBoundingClientRect().top + li.offsetHeight / 2);
+  const day = Number(column.dataset.day);
+  const index = before === -1 ? wayPlan[day].filter((id) => id !== wayDragged).length : wayPlan[day].filter((id) => id !== wayDragged).indexOf(items[before].dataset.id);
+  const id = wayDragged;
+  wayDragged = null;
+  const from = wayPlan.findIndex((d) => d.includes(id));
+  wayPlan[from].splice(wayPlan[from].indexOf(id), 1);
+  wayPlan[day].splice(index, 0, id);
+  renderWaystub(id);
+});
+
+// Tap or press Enter on a stop, then on a day, to move it without dragging
+wayDays.addEventListener('click', (e) => {
+  const li = e.target.closest('.tt-stop');
+  if (li) {
+    wayPicked = wayPicked === li.dataset.id ? null : li.dataset.id;
+    renderWaystub(li.dataset.id);
+    if (wayPicked) wayWarn.textContent = `Now tap the day to move ${WAY_STOPS[wayPicked].name} to.`;
+    return;
+  }
+  const column = e.target.closest('.tt-day');
+  if (column && wayPicked) moveStop(wayPicked, Number(column.dataset.day));
+});
+wayDays.addEventListener('keydown', (e) => {
+  const li = e.target.closest('.tt-stop');
+  if (!li) return;
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    li.click();
+  } else if (wayPicked && /^[1-3]$/.test(e.key)) {
+    moveStop(wayPicked, Number(e.key) - 1);
+  } else if (wayPicked && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    e.preventDefault();
+    const from = wayPlan.findIndex((d) => d.includes(wayPicked));
+    const to = Math.min(2, Math.max(0, from + (e.key === 'ArrowRight' ? 1 : -1)));
+    if (to !== from) moveStop(wayPicked, to);
+  } else if (e.key === 'Escape') {
+    wayPicked = null;
+    renderWaystub(li.dataset.id);
+  }
+});
+renderWaystub();
 
 /* ---------- Papers: swap the top sheet ---------- */
 
@@ -1226,6 +1609,11 @@ let terminalReturn = null;
 let greeted = false;
 
 const FILES = {
+  'stamp.md': 'Stamp (2026, live)\nRuns the DNS checks Gmail, Outlook and Yahoo make: SPF, DKIM, DMARC, MX, MTA-STS, BIMI, blocklists. Grades the domain and says what to fix.\nhttps://stamp-zeta-two.vercel.app',
+  'realcheck.md': 'RealCheck (2026, Chrome extension, in store review)\nGrades product reviews from A to F on Amazon, Flipkart, Walmart, Myntra and more. Runs entirely in your browser.',
+  'clypso.md': 'Clypso (building)\nYouTube video in, summary, key points, quotes, chapters, SEO and social posts out. The website is up; the product is still being built.',
+  'treadle.md': 'Treadle (2026, UI concept)\nA product page for a foot pedal that runs AI agents while your foot is down. Concept. No pedal exists.\nhttps://treadle-pedal.vercel.app',
+  'waystub.md': 'Waystub (in planning)\nA trip planner set as a railway timetable. Drag a stop and every time and warning follows.',
   'about.md': 'Harsh Vardhan Singh Chauhan\nForward Deployed Engineer at InboxKit. Builds AI agents and gets them working for real customers.\nHaryana, India.',
   'now.md': NOW,
   'inboxkit.md': 'Forward Deployed Engineer, InboxKit (Apr 2026 to now, remote, Dubai)\n- The engineer enterprise customers work with when something breaks\n- Runs onboarding, implementation and the procedures behind them\n- Turns customer requirements into fixes and features',
@@ -1240,6 +1628,7 @@ const FILES = {
 };
 
 const FILE_EXHIBITS = {
+  'stamp.md': 'stamp', 'realcheck.md': 'realcheck', 'clypso.md': 'clypso', 'treadle.md': 'treadle', 'waystub.md': 'waystub',
   'inboxkit.md': 'inboxkit', 'arcflip.md': 'arcflip', 'research-assistant.md': 'assistant', 'krishi.md': 'krishi',
   'talentscout.md': 'talentscout', 'redditmind.md': 'redditmind', 'papers.md': 'papers', 'bennett.md': 'bennett', 'contact.md': 'contact',
 };

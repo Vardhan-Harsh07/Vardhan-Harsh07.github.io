@@ -160,14 +160,214 @@
 
       <ol class="ruler" aria-label="Timeline">
         <li style="--at: 2%"><span class="tick-year">2022</span>Started at Bennett</li>
-        <li style="--at: 21%" class="low"><span class="tick-year">2025</span>Three projects, first paper</li>
-        <li style="--at: 40%"><span class="tick-year">Dec 2025</span>Arcflip</li>
-        <li style="--at: 59%" class="low"><span class="tick-year">Apr 2026</span>InboxKit</li>
-        <li style="--at: 78%"><span class="tick-year">2026</span>Graduated, ICICC paper</li>
-        <li style="--at: 98%" class="low now"><span class="tick-year">Now</span>RedditMind</li>
+        <li style="--at: 18%" class="low"><span class="tick-year">2025</span>Three projects, first paper</li>
+        <li style="--at: 34%"><span class="tick-year">Dec 2025</span>Arcflip</li>
+        <li style="--at: 50%" class="low"><span class="tick-year">Apr 2026</span>InboxKit</li>
+        <li style="--at: 66%"><span class="tick-year">2026</span>Graduated, ICICC paper</li>
+        <li style="--at: 82%" class="low"><span class="tick-year">Nov 2026</span>Shipped Stamp and RealCheck</li>
+        <li style="--at: 98%" class="now"><span class="tick-year">Now</span>Clypso</li>
       </ol>
 
       <div class="exhibits">
+        <!-- Stamp: a working mini check, live DNS lookups from the browser -->
+        <article class="ex ex-stamp" id="stamp">
+          <header class="placard">
+            <h3>Stamp</h3>
+            <p>2026, will your email land?</p>
+          </header>
+          <div class="envelope">
+            <form class="stamp-form" novalidate>
+              <label class="visually-hidden" for="stamp-domain">Domain to check</label>
+              <input id="stamp-domain" name="domain" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="yourcompany.com">
+              <button type="submit" class="btn-ink">Check</button>
+            </form>
+            <p class="stamp-try">Try <button type="button" data-domain="github.com">github.com</button> <button type="button" data-domain="stripe.com">stripe.com</button> <button type="button" data-domain="neverssl.com">neverssl.com</button></p>
+            <ul class="stamp-rows" aria-live="polite">
+              <li data-row="spf"><span>SPF</span><em>Who may send for this domain</em></li>
+              <li data-row="dmarc"><span>DMARC</span><em>What happens to forged mail</em></li>
+              <li data-row="mx"><span>MX</span><em>Where its mail is delivered</em></li>
+            </ul>
+            <svg class="postmark" viewBox="0 0 120 120" aria-hidden="true">
+              <defs><path id="pm-ring" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+              <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="3"/>
+              <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="2"/>
+              <text class="pm-ring"><textPath href="#pm-ring" data-pm="ring">NOT YET CHECKED  •  STAMP  •</textPath></text>
+              <text class="pm-grade" x="60" y="62" data-pm="grade">?</text>
+            </svg>
+            <p class="stamp-more" hidden><a data-stamp-link href="https://stamp-zeta-two.vercel.app/">Open the full report in Stamp</a> for DKIM, blocklists, MTA-STS and exactly what to fix.</p>
+          </div>
+          <p class="ex-text">Stamp runs the DNS lookups Gmail, Outlook and Yahoo make before they accept your mail, grades the domain and tells you exactly what to publish. This card does a real, smaller version of it: three live lookups from your browser.</p>
+          <p class="ex-stack">Next.js 16, React 19, Drizzle, Turso, Vercel</p>
+          <a class="ex-code" href="https://stamp-zeta-two.vercel.app/"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Open Stamp</span></a>
+        </article>
+
+        <!-- Clypso: sample extractions streaming in -->
+        <article class="ex ex-clypso" id="clypso">
+          <header class="placard">
+            <h3>Clypso</h3>
+            <p>Building now, YouTube videos into structured content</p>
+          </header>
+          <div class="clyp">
+            <div class="clyp-tabs" role="tablist" aria-label="Sample videos">
+              <button type="button" role="tab" aria-selected="true" data-clip="0">The bakery</button>
+              <button type="button" role="tab" aria-selected="false" data-clip="1">The night bus</button>
+              <button type="button" role="tab" aria-selected="false" data-clip="2">The code review</button>
+            </div>
+            <p class="clyp-video"><span class="clyp-play" aria-hidden="true"></span><span data-clyp="title">How a small bakery prices a loaf</span></p>
+            <div class="clyp-out" aria-live="polite"></div>
+          </div>
+          <p class="clyp-note">Website preview only. The product is still being built, so its site can't extract anything yet. These are sample outputs.</p>
+          <p class="ex-text">Paste a YouTube link, or make one API call, and get a summary, key points, verified quotes, chapters, SEO metadata and social posts back.</p>
+          <p class="ex-stack">Next.js, Hono, Claude API, Postgres on Neon, Drizzle, Upstash</p>
+        </article>
+
+        <!-- Treadle: press and hold the pedal -->
+        <article class="ex ex-treadle" id="treadle">
+          <header class="placard">
+            <h3>Treadle</h3>
+            <p>2026, UI concept: a foot pedal for AI agents</p>
+          </header>
+          <div class="floor">
+            <button type="button" class="pedal" aria-pressed="false" aria-describedby="treadle-state">
+              <span class="pedal-lamp" aria-hidden="true"></span>
+              <span class="pedal-plate" aria-hidden="true">Treadle</span>
+              <span class="pedal-grip" aria-hidden="true"></span>
+              <span class="visually-hidden">Press and hold the pedal</span>
+            </button>
+            <p class="floor-state" id="treadle-state">Press and hold the pedal. Foot up. Nothing is running.</p>
+            <ol class="tape" aria-live="off"></ol>
+          </div>
+          <p class="ex-text">A pet project in pure UI: a product page for a pedal that doesn't exist, where agents run only while your foot is down. A 3D pedal, exploded technical drawings, and a deadpan voice. Concept. No pedal exists.</p>
+          <p class="ex-stack">three.js, hand-written HTML, CSS and JavaScript</p>
+          <a class="ex-code" href="https://treadle-pedal.vercel.app/index.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Visit Treadle</span></a>
+        </article>
+
+        <!-- RealCheck: grade a product's reviews -->
+        <article class="ex ex-realcheck" id="realcheck">
+          <header class="placard">
+            <h3>RealCheck</h3>
+            <p>2026, Chrome extension: fake review detector</p>
+          </header>
+          <div class="shop">
+            <div class="shop-bar">
+              <span class="shop-dots" aria-hidden="true"></span>
+              <span class="shop-url">shop.example/earbuds-pro-x</span>
+              <span class="rc-badge" aria-label="RealCheck grade"><span class="rc-icon" aria-hidden="true"></span><b data-rc="grade">?</b></span>
+            </div>
+            <div class="shop-head">
+              <p class="shop-name">Earbuds Pro X, wireless</p>
+              <p class="shop-stars"><span aria-hidden="true">★★★★★</span> 4.8 from 1,204 ratings</p>
+            </div>
+            <ul class="reviews">
+              <li data-flag="Posted the same day as 3 others"><b>Amazing product!!</b> Best earbuds ever, sound is amazing, must buy for everyone. <span class="rv-meta">5★, 12 Oct</span></li>
+              <li><b>Good, not perfect</b> Bass is strong, the case feels cheap and the left bud drops once a week. <span class="rv-meta">4★, 3 Sep</span></li>
+              <li data-flag="Near-copy of another review"><b>Amazing product</b> Best earbuds ever, the sound is amazing, a must buy for everyone! <span class="rv-meta">5★, 12 Oct</span></li>
+              <li data-flag="Says it was free in exchange for a review"><b>Love them</b> I received these free in exchange for my honest review. Five stars! <span class="rv-meta">5★, 12 Oct</span></li>
+              <li><b>Returned</b> Kept disconnecting from my laptop. Support was quick, though. <span class="rv-meta">2★, 28 Aug</span></li>
+              <li data-flag="Same reviewer, 3 reviews this week"><b>Superb</b> Superb quality superb battery superb price. <span class="rv-meta">5★, 12 Oct</span></li>
+            </ul>
+            <div class="rc-report" hidden>
+              <p class="rc-verdict"><b>D</b> Many of these reviews look coordinated. Read the 4-star and 2-star ones.</p>
+              <ul class="rc-checks">
+                <li class="bad">Timing: 4 reviews on one day</li>
+                <li class="bad">Wording: near-copies and ad-style phrases</li>
+                <li class="bad">Reviewers: one name posting several reviews</li>
+                <li class="bad">Free-product reviews found</li>
+                <li class="ok">Star split looks normal</li>
+              </ul>
+            </div>
+            <div class="shop-actions">
+              <button type="button" class="btn-ink" data-action="realcheck">Run RealCheck</button>
+            </div>
+          </div>
+          <p class="rc-note">Demo with made-up reviews. RealCheck is in Chrome Web Store review.</p>
+          <p class="ex-text">Grades the reviews on a product page from A to F while you shop, on Amazon, Flipkart, Walmart, Myntra and more, and shows why. It runs entirely in your browser, makes no network requests of its own, and has no sign-up.</p>
+          <p class="ex-stack">Chrome extension, JavaScript, runs fully on-device</p>
+        </article>
+
+        <!-- InboxKit: a support ticket moving across teams -->
+        <article class="ex ex-inboxkit" id="inboxkit">
+          <header class="placard">
+            <h3>Forward Deployed Engineer at InboxKit</h3>
+            <p>Apr 2026 to now, remote, Dubai</p>
+          </header>
+          <div class="ticket">
+            <p class="t-head"><span>Ticket 4821</span><span>Enterprise customer</span><span class="t-clock" aria-hidden="true">11:30</span><span class="t-state">Open</span></p>
+            <p class="t-title">“Half our mailboxes stopped sending this morning.”</p>
+            <ol class="t-steps">
+              <li><time>09:12</time><span class="lane">Support</span>Customer reports it. I join the call.</li>
+              <li><time>09:40</time><span class="lane">Engineering</span>Reproduce it and trace it to a broken DNS record on one domain.</li>
+              <li><time>10:05</time><span class="lane">Customer</span>Walk them through the fix. Mail flows again.</li>
+              <li><time>11:30</time><span class="lane">Product</span>Write it up so the product catches it before the next customer does.</li>
+            </ol>
+            <span class="stamp stamp-resolved">Resolved</span>
+            <div class="ticket-actions">
+              <button type="button" class="btn-ink" data-action="resolve">Close the ticket</button>
+              <button type="button" class="btn-line" data-action="replay">Replay the day</button>
+            </div>
+          </div>
+          <p class="ex-text">A typical day, simplified. I'm the engineer enterprise customers work with when something breaks, and I turn what they ask for into product changes.</p>
+          <p class="scribble scribble-inboxkit" aria-hidden="true">my actual job</p>
+        </article>
+
+        <!-- Research assistant: the hero is the exhibit -->
+        <article class="ex ex-assistant" id="assistant">
+          <header class="placard">
+            <h3>Agentic Research Assistant</h3>
+            <p>2025, multi-agent deep research</p>
+          </header>
+          <p class="used">You've already used this one.</p>
+          <p class="ex-text">The agent at the top of this page is a scripted version of it. The real one runs separate LangGraph agents that plan, search the live web through Serper.dev, analyse, check their own claims and write a report with citations.</p>
+          <p class="ex-stack">Python, LangGraph, OpenAI API, Serper.dev, Streamlit</p>
+          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/ai_research_agent"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
+          <button type="button" class="btn-ink" data-action="rerun">Run it again</button>
+        </article>
+
+        <!-- Arcflip: a toy version of the scoring engine -->
+        <article class="ex ex-arcflip" id="arcflip">
+          <header class="placard">
+            <h3>Scoring engine at Arcflip</h3>
+            <p>Dec 2025 to Feb 2026, AI research intern</p>
+          </header>
+          <div class="ranker">
+            <div class="weights"></div>
+            <ol class="ranking"></ol>
+          </div>
+          <p class="ex-text">A toy version of the engine I built for an AI career-matching platform. The real one combines many signals to rank best-fit candidates at scale, with pipelines that keep the data clean and scores calibrated against reference profiles.</p>
+          <p class="scribble scribble-arcflip" aria-hidden="true">drag the weights</p>
+        </article>
+
+        <!-- Papers: two printed first pages -->
+        <article class="ex ex-papers" id="papers">
+          <header class="placard">
+            <h3>Papers</h3>
+            <p>Three co-authored, Springer and Elsevier</p>
+          </header>
+          <div class="paper-stack">
+            <article class="sheet" data-order="0">
+              <p class="venue">ICICC-2026, Springer</p>
+              <h4>Automated Identification of Crop Diseases Using Deep Learning Frameworks</h4>
+              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
+              <p class="abstract"><b>Abstract.</b> Deep learning models that identify crop diseases from leaf images across 38 disease classes, built from the Krishi Saahayak work.</p>
+              <span class="stamp">Accepted</span>
+            </article>
+            <article class="sheet" data-order="1">
+              <p class="venue">Springer, 2025</p>
+              <h4><a href="https://link.springer.com/chapter/10.1007/978-3-031-98728-1_17">Leveraging Digital Devices for Behavioral Health Assessment via ML</a></h4>
+              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
+              <p class="abstract"><b>Abstract.</b> Machine learning on data from everyday digital devices to assess behavioral health.</p>
+              <span class="stamp">Published</span>
+            </article>
+            <article class="sheet" data-order="2">
+              <p class="venue">Astronomy and Computing, Elsevier, 2025</p>
+              <h4><a href="https://doi.org/10.1016/j.ascom.2025.100988">A Cosmological Probe in a Theory of Higher-Order Gravity</a></h4>
+              <p class="authors">Shaily, A. Srivastava, Harsh Vardhan Singh Chauhan, A. Pratap, J. K. Singh</p>
+              <p class="abstract"><b>Abstract.</b> A cosmological model studied within a higher-order theory of gravity. Volume 53, article 100988.</p>
+              <span class="stamp">Published</span>
+            </article>
+          </div>
+          <button type="button" class="btn-line" data-action="shuffle">Show the next paper</button>
+        </article>
 
         <!-- Krishi Saahayak: herbarium specimen card with a voting ensemble -->
         <article class="ex ex-krishi" id="krishi">
@@ -213,100 +413,6 @@
           <p class="scribble scribble-krishi" aria-hidden="true">five models voting beat one model guessing</p>
         </article>
 
-        <!-- Papers: two printed first pages -->
-        <article class="ex ex-papers" id="papers">
-          <header class="placard">
-            <h3>Papers</h3>
-            <p>Three co-authored, Springer and Elsevier</p>
-          </header>
-          <div class="paper-stack">
-            <article class="sheet" data-order="0">
-              <p class="venue">ICICC-2026, Springer</p>
-              <h4>Automated Identification of Crop Diseases Using Deep Learning Frameworks</h4>
-              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
-              <p class="abstract"><b>Abstract.</b> Deep learning models that identify crop diseases from leaf images across 38 disease classes, built from the Krishi Saahayak work.</p>
-              <span class="stamp">Accepted</span>
-            </article>
-            <article class="sheet" data-order="1">
-              <p class="venue">Springer, 2025</p>
-              <h4><a href="https://link.springer.com/chapter/10.1007/978-3-031-98728-1_17">Leveraging Digital Devices for Behavioral Health Assessment via ML</a></h4>
-              <p class="authors">Harsh Vardhan Singh Chauhan and co-authors</p>
-              <p class="abstract"><b>Abstract.</b> Machine learning on data from everyday digital devices to assess behavioral health.</p>
-              <span class="stamp">Published</span>
-            </article>
-            <article class="sheet" data-order="2">
-              <p class="venue">Astronomy and Computing, Elsevier, 2025</p>
-              <h4><a href="https://doi.org/10.1016/j.ascom.2025.100988">A Cosmological Probe in a Theory of Higher-Order Gravity</a></h4>
-              <p class="authors">Shaily, A. Srivastava, Harsh Vardhan Singh Chauhan, A. Pratap, J. K. Singh</p>
-              <p class="abstract"><b>Abstract.</b> A cosmological model studied within a higher-order theory of gravity. Volume 53, article 100988.</p>
-              <span class="stamp">Published</span>
-            </article>
-          </div>
-          <button type="button" class="btn-line" data-action="shuffle">Show the next paper</button>
-        </article>
-
-        <!-- Arcflip: a toy version of the scoring engine -->
-        <article class="ex ex-arcflip" id="arcflip">
-          <header class="placard">
-            <h3>Scoring engine at Arcflip</h3>
-            <p>Dec 2025 to Feb 2026, AI research intern</p>
-          </header>
-          <div class="ranker">
-            <div class="weights"></div>
-            <ol class="ranking"></ol>
-          </div>
-          <p class="ex-text">A toy version of the engine I built for an AI career-matching platform. The real one combines many signals to rank best-fit candidates at scale, with pipelines that keep the data clean and scores calibrated against reference profiles.</p>
-          <p class="scribble scribble-arcflip" aria-hidden="true">drag the weights</p>
-        </article>
-
-        <!-- InboxKit: a support ticket moving across teams -->
-        <article class="ex ex-inboxkit" id="inboxkit">
-          <header class="placard">
-            <h3>Forward Deployed Engineer at InboxKit</h3>
-            <p>Apr 2026 to now, remote, Dubai</p>
-          </header>
-          <div class="ticket">
-            <p class="t-head"><span>Ticket 4821</span><span>Enterprise customer</span><span class="t-clock" aria-hidden="true">11:30</span><span class="t-state">Open</span></p>
-            <p class="t-title">“Half our mailboxes stopped sending this morning.”</p>
-            <ol class="t-steps">
-              <li><time>09:12</time><span class="lane">Support</span>Customer reports it. I join the call.</li>
-              <li><time>09:40</time><span class="lane">Engineering</span>Reproduce it and trace it to a broken DNS record on one domain.</li>
-              <li><time>10:05</time><span class="lane">Customer</span>Walk them through the fix. Mail flows again.</li>
-              <li><time>11:30</time><span class="lane">Product</span>Write it up so the product catches it before the next customer does.</li>
-            </ol>
-            <span class="stamp stamp-resolved">Resolved</span>
-            <div class="ticket-actions">
-              <button type="button" class="btn-ink" data-action="resolve">Close the ticket</button>
-              <button type="button" class="btn-line" data-action="replay">Replay the day</button>
-            </div>
-          </div>
-          <p class="ex-text">A typical day, simplified. I'm the engineer enterprise customers work with when something breaks, and I turn what they ask for into product changes.</p>
-          <p class="scribble scribble-inboxkit" aria-hidden="true">my actual job</p>
-        </article>
-
-        <!-- TalentScout: a working screening chat -->
-        <article class="ex ex-talentscout" id="talentscout">
-          <header class="placard">
-            <h3>TalentScout</h3>
-            <p>2025, LLM screening assistant</p>
-          </header>
-          <div class="chat">
-            <div class="chat-log" aria-live="polite">
-              <p class="msg bot">Hi, I'm TalentScout. Which of these do you work with? I'll ask you a question about it.</p>
-            </div>
-            <div class="chat-pick" role="group" aria-label="Pick a technology">
-              <button type="button" data-tech="Python">Python</button>
-              <button type="button" data-tech="React">React</button>
-              <button type="button" data-tech="SQL">SQL</button>
-              <button type="button" data-tech="Docker">Docker</button>
-              <button type="button" data-tech="LLMs">LLMs</button>
-            </div>
-          </div>
-          <p class="ex-text">Writes technical questions for the stack each candidate says they know, so recruiters don't draft them by hand. The original runs on Zephyr-7B; these questions are pre-written.</p>
-          <p class="ex-stack">Python, Zephyr-7B, Hugging Face, Streamlit</p>
-          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/talentscout-hiring-assistant"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
-        </article>
-
         <!-- RedditMind: a preview of the morning briefing -->
         <article class="ex ex-redditmind" id="redditmind">
           <header class="placard">
@@ -339,17 +445,42 @@
           <p class="ex-stack">Next.js, Trigger.dev, Claude API, Postgres with pgvector</p>
         </article>
 
-        <!-- Research assistant: the hero is the exhibit -->
-        <article class="ex ex-assistant" id="assistant">
+        <!-- Waystub: a sketch of the planner's core idea -->
+        <article class="ex ex-waystub" id="waystub">
           <header class="placard">
-            <h3>Agentic Research Assistant</h3>
-            <p>2025, multi-agent deep research</p>
+            <h3>Waystub</h3>
+            <p>In planning, a trip planner set as a railway timetable</p>
           </header>
-          <p class="used">You've already used this one.</p>
-          <p class="ex-text">The agent at the top of this page is a scripted version of it. The real one runs separate LangGraph agents that plan, search the live web through Serper.dev, analyse, check their own claims and write a report with citations.</p>
-          <p class="ex-stack">Python, LangGraph, OpenAI API, Serper.dev, Streamlit</p>
-          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/ai_research_agent"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
-          <button type="button" class="btn-ink" data-action="rerun">Run it again</button>
+          <div class="timetable">
+            <p class="tt-head"><span>Paris, 3 days</span><span>Drag or tap a stop to move it</span></p>
+            <div class="tt-days"></div>
+            <p class="tt-warn" aria-live="polite"></p>
+          </div>
+          <p class="ex-text">Drag a stop anywhere, on desktop or phone, and the list, map, travel times and warnings stay in sync. This card is a small sketch of that idea: the Louvre is closed on Tuesdays, so move it.</p>
+          <p class="ex-stack">In planning: Astro, React, MapLibre, OpenStreetMap data</p>
+        </article>
+
+        <!-- TalentScout: a working screening chat -->
+        <article class="ex ex-talentscout" id="talentscout">
+          <header class="placard">
+            <h3>TalentScout</h3>
+            <p>2025, LLM screening assistant</p>
+          </header>
+          <div class="chat">
+            <div class="chat-log" aria-live="polite">
+              <p class="msg bot">Hi, I'm TalentScout. Which of these do you work with? I'll ask you a question about it.</p>
+            </div>
+            <div class="chat-pick" role="group" aria-label="Pick a technology">
+              <button type="button" data-tech="Python">Python</button>
+              <button type="button" data-tech="React">React</button>
+              <button type="button" data-tech="SQL">SQL</button>
+              <button type="button" data-tech="Docker">Docker</button>
+              <button type="button" data-tech="LLMs">LLMs</button>
+            </div>
+          </div>
+          <p class="ex-text">Writes technical questions for the stack each candidate says they know, so recruiters don't draft them by hand. The original runs on Zephyr-7B; these questions are pre-written.</p>
+          <p class="ex-stack">Python, Zephyr-7B, Hugging Face, Streamlit</p>
+          <a class="ex-code" href="https://github.com/Vardhan-Harsh07/talentscout-hiring-assistant"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg><span>Code on GitHub</span></a>
         </article>
 
         <!-- Bennett: a university seal -->
