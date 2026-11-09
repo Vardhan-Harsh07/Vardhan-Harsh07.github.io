@@ -608,7 +608,7 @@ kbd {
   gap: clamp(1.5rem, 3vw, 2.5rem);
   align-items: stretch;
 }
-:is(section[aria-labelledby="ch-shipped"], section[aria-labelledby="ch-building"]) .chapter-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+@media (min-width: 861px) { :is(section[aria-labelledby="ch-shipped"], section[aria-labelledby="ch-building"]) .chapter-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 .chapter-grid > .col { display: flex; flex-direction: column; gap: clamp(2rem, 4vw, 3.25rem); min-width: 0; }
 /* The last card in each column stretches, so a pair of cards ends on the same line;
    its links sit on the bottom edge so the extra room reads as intended */
@@ -1221,7 +1221,7 @@ kbd {
 .clyp-video { display: flex; align-items: center; gap: 0.7rem; margin: 0.9rem 0 0.75rem; padding: 0.8rem; border-radius: 12px; background: linear-gradient(120deg, #0F0F0D, #0B0C0A 60%, #3A2A1E); font: 400 1.15rem/1.25 var(--serif); font-style: italic; }
 .clyp-play { flex: none; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: #FFFFFF; position: relative; }
 .clyp-play::after { content: ""; position: absolute; left: 0.72rem; top: 0.55rem; border-left: 0.6rem solid #080807; border-top: 0.4rem solid transparent; border-bottom: 0.4rem solid transparent; }
-.clyp-out { display: grid; gap: 0.5rem; min-height: 15rem; }
+.clyp-out { display: grid; gap: 0.5rem; min-height: 11rem; }
 .clyp-card { padding: 0.65rem 0.75rem; border-radius: 10px; background: #0D0E0C; border-top: 2px solid var(--c); font-size: 0.875rem; line-height: 1.45; animation: clyp-in 0.4s ease-out both; }
 .clyp-card h4 { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.25rem; font: 600 0.78rem/1 var(--text); color: #FFFFFF; }
 .clyp-card h4::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--c); }
@@ -1567,3 +1567,14 @@ kbd {
 @media (min-width: 1081px) { .rack { display: none; } }
 @media (max-width: 1080px) { .nodes { display: none; } }
 @media (prefers-reduced-motion: reduce) { .node.hit .node-pulse { animation: none; } .wire { transition: none; } }
+
+/* ---------- v2 spacing: no empty blocks inside stretched or wide cards ---------- */
+/* Wide cards: demo on the left, the story centred beside it */
+.chapter-wide .ex { grid-template-rows: none; align-items: center; }
+.chapter-wide .ex > .ex-story { grid-column: 2; grid-row: 1; }
+.chapter-wide .ex > :is(.shop, .briefing, .timetable) { grid-row: 1; grid-column: 1; }
+/* Arcflip keeps its own height; the InboxKit column beside it has no card to match */
+.chapter-grid > .col > .ex-arcflip:last-child { flex: 0 0 auto; }
+/* Less dead space after the last chapter */
+.desk { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
+@media (max-width: 860px) { .chapter-wide .ex > .ex-story, .chapter-wide .ex > :is(.shop, .briefing, .timetable) { grid-column: 1; grid-row: auto; } }

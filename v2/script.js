@@ -979,7 +979,7 @@ async function playClip(index) {
   chapters.className = 'mono';
   chapters.textContent = clip.chapters.map(([t, c]) => `${t}  ${c}`).join('\n');
   chapters.style.whiteSpace = 'pre-line';
-  const cards = [clypCard('Summary', '#F5B83D', summary), clypCard('Key points', '#F97316', points), clypCard('Quotes', '#EC4899', quote), clypCard('Chapters', '#A78BFA', chapters)];
+  const cards = [clypCard('Summary', '#F5B83D', summary), clypCard('Key points', '#F97316', points), clypCard('Quotes', '#EC4899', quote)];
   for (const card of cards) {
     await wait(420);
     if (run !== clypRun) return;

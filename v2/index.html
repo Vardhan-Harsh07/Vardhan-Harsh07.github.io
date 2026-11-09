@@ -35,7 +35,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Unbounded:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261109153545">
+  <link rel="stylesheet" href="styles.css?v=20261109154240">
 </head>
 <body>
   <div class="progress" aria-hidden="true"></div>
@@ -245,10 +245,6 @@
           <div class="chapter-wide">
         <!-- RealCheck: grade a product's reviews -->
         <article class="ex ex-realcheck" id="realcheck">
-          <header class="placard">
-            <h3>RealCheck</h3>
-            <p>2026, Chrome extension: fake review detector</p>
-          </header>
           <div class="shop">
             <div class="shop-bar">
               <span class="shop-dots" aria-hidden="true"></span>
@@ -281,9 +277,15 @@
               <button type="button" class="btn-ink" data-action="realcheck">Run RealCheck</button>
             </div>
           </div>
+          <div class="ex-story">
+          <header class="placard">
+            <h3>RealCheck</h3>
+            <p>2026, Chrome extension: fake review detector</p>
+          </header>
           <p class="rc-note">Demo with made-up reviews. RealCheck is in Chrome Web Store review.</p>
           <p class="ex-text">Grades the reviews on a product page from A to F while you shop, on Amazon, Flipkart, Walmart, Myntra and more, and shows why. It runs entirely in your browser, makes no network requests of its own, and has no sign-up.</p>
           <p class="ex-stack">Chrome extension, JavaScript, runs fully on-device</p>
+          </div>
         </article>
           </div>
         </section>
@@ -319,23 +321,6 @@
         </article>
             </div>
             <div class="col">
-        <!-- Waystub: a sketch of the planner's core idea -->
-        <article class="ex ex-waystub" id="waystub">
-          <header class="placard">
-            <h3>Waystub</h3>
-            <p>In planning, a trip planner set as a railway timetable</p>
-          </header>
-          <div class="timetable">
-            <p class="tt-head"><span>Paris, 3 days</span><span>Drag or tap a stop to move it</span></p>
-            <div class="tt-days"></div>
-            <p class="tt-warn" aria-live="polite"></p>
-          </div>
-          <p class="ex-text">Drag a stop anywhere, on desktop or phone, and the list, map, travel times and warnings stay in sync. This card is a small sketch of that idea: the Louvre is closed on Tuesdays, so move it.</p>
-          <p class="ex-stack">In planning: Astro, React, MapLibre, OpenStreetMap data</p>
-        </article>
-            </div>
-          </div>
-          <div class="chapter-wide">
         <!-- RedditMind: a preview of the morning briefing -->
         <article class="ex ex-redditmind" id="redditmind">
           <header class="placard">
@@ -366,6 +351,25 @@
           </div>
           <p class="ex-text">An agent that reads your subreddits overnight and hands you a short briefing in the morning, learning what you care about from what you read.</p>
           <p class="ex-stack">Next.js, Trigger.dev, Claude API, Postgres with pgvector</p>
+        </article>
+            </div>
+          </div>
+          <div class="chapter-wide">
+        <!-- Waystub: a sketch of the planner's core idea -->
+        <article class="ex ex-waystub" id="waystub">
+          <div class="timetable">
+            <p class="tt-head"><span>Paris, 3 days</span><span>Drag or tap a stop to move it</span></p>
+            <div class="tt-days"></div>
+            <p class="tt-warn" aria-live="polite"></p>
+          </div>
+          <div class="ex-story">
+          <header class="placard">
+            <h3>Waystub</h3>
+            <p>In planning, a trip planner set as a railway timetable</p>
+          </header>
+          <p class="ex-text">Drag a stop anywhere, on desktop or phone, and the list, map, travel times and warnings stay in sync. This card is a small sketch of that idea: the Louvre is closed on Tuesdays, so move it.</p>
+          <p class="ex-stack">In planning: Astro, React, MapLibre, OpenStreetMap data</p>
+          </div>
         </article>
           </div>
         </section>
@@ -648,6 +652,6 @@
 
   <p class="toast" role="status" aria-live="polite"></p>
 
-  <script src="script.js?v=20261109153545"></script>
+  <script src="script.js?v=20261109154240"></script>
 </body>
 </html>
