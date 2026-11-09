@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /classic/
+Disallow: /v2/

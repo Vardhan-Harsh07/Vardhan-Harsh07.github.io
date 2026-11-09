@@ -33,161 +33,93 @@ const panelColors = (canvas) => () => {
   return { dot: style.getPropertyValue('--hero-dot').trim(), lit: style.getPropertyValue('--hero-lit').trim() };
 };
 
-function createField(canvas, { dotsPerCluster = 22, labelAlpha = 0.34, origin = null, colors = panelColors(canvas), constellation = false } = {}) {
+// A calm dot grid. Dots near the cursor swell and take the accent colour, and when the
+// agent searches, a ring pulses out from the question across the grid.
+function createField(canvas, { origin = null, colors = panelColors(canvas), constellation = false } = {}) {
   const ctx = canvas.getContext('2d');
-  const rand = seeded(11);
-  const spread = () => (rand() + rand() + rand() - 1.5) / 1.5;
-  const points = [];
-  for (const cluster of CLUSTERS) {
-    for (const label of cluster.terms) {
-      points.push({ x: cluster.x + spread() * 0.1, y: cluster.y + spread() * 0.09, z: 0.55 + rand() * 0.45, phase: rand() * 6.28, label });
-    }
-    for (let i = 0; i < dotsPerCluster; i += 1) {
-      points.push({ x: cluster.x + spread() * 0.16, y: cluster.y + spread() * 0.14, z: 0.3 + rand() * 0.7, phase: rand() * 6.28 });
-    }
-  }
-
+  const GAP = constellation ? 34 : 28;
   let width = 0;
   let height = 0;
-  let lit = new Set();
-  let strength = 0;
-  let target = 0;
-  let mouseX = 0;
-  let mouseY = 0;
-  let visible = true;
-  let frame = 0;
+  let dpr = 1;
   let palette = colors();
+  let pointer = null;
+  let pulses = [];
+  let frame = 0;
+  let visible = true;
 
   function resize() {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    width = canvas.clientWidth;
-    height = canvas.clientHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+    const box = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = box.width;
+    height = box.height;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    spaceLabels();
     draw(performance.now());
   }
 
-  // Nudge labels apart so neighbouring terms in a cluster don't overprint.
-  function spaceLabels() {
-    ctx.font = '400 11px "Geist Mono", monospace';
-    const labelled = points.filter((p) => p.label);
-    for (const p of labelled) {
-      p.ox = 0;
-      p.oy = 0;
-      p.w = ctx.measureText(p.label).width + 14;
-    }
-    for (let pass = 0; pass < 40; pass += 1) {
-      for (let i = 0; i < labelled.length; i += 1) {
-        for (let j = i + 1; j < labelled.length; j += 1) {
-          const a = labelled[i];
-          const b = labelled[j];
-          const ax = a.x * width + a.ox;
-          const bx = b.x * width + b.ox;
-          const ay = a.y * height + a.oy;
-          const by = b.y * height + b.oy;
-          const overlapX = Math.min(ax + a.w, bx + b.w) - Math.max(ax, bx);
-          const overlapY = 18 - Math.abs(ay - by);
-          if (overlapX > 0 && overlapY > 0) {
-            const push = overlapY / 2 + 0.5;
-            const dir = ay <= by ? -1 : 1;
-            a.oy += dir * push;
-            b.oy -= dir * push;
+  function draw(now) {
+    ctx.clearRect(0, 0, width, height);
+    pulses = pulses.filter((p) => now - p.start < p.life);
+    const offset = GAP / 2;
+    for (let y = offset; y < height; y += GAP) {
+      for (let x = offset; x < width; x += GAP) {
+        let lift = 0;
+        let dx = 0;
+        let dy = 0;
+        if (pointer) {
+          const px = x - pointer.x;
+          const py = y - pointer.y;
+          const d = Math.hypot(px, py);
+          if (d < 150) {
+            const k = 1 - d / 150;
+            lift = Math.max(lift, k);
+            dx = (px / (d || 1)) * k * 6;
+            dy = (py / (d || 1)) * k * 6;
           }
         }
-      }
-    }
-  }
-
-  function draw(time) {
-    strength += (target - strength) * (reduced ? 1 : 0.07);
-    ctx.clearRect(0, 0, width, height);
-    const from = origin?.();
-    const t = reduced ? 0 : time;
-    const litPoints = [];
-
-    for (const p of points) {
-      const drift = p.label ? 0.3 : 1;
-      const px = (p.x + (Math.sin(t * 0.00018 * p.z + p.phase) * 0.008 + mouseX * 0.012 * p.z) * drift) * width + (p.ox ?? 0);
-      const py = (p.y + (Math.cos(t * 0.00015 * p.z + p.phase) * 0.01 + mouseY * 0.012 * p.z) * drift) * height + (p.oy ?? 0);
-      const on = p.label && lit.has(p.label);
-
-      if (on && from && strength > 0.01) {
-        ctx.strokeStyle = `rgba(${palette.lit}, ${0.55 * strength})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(px, py);
-        ctx.stroke();
-      }
-      if (on) litPoints.push([px, py]);
-
-      if (p.label) {
-        ctx.fillStyle = on ? `rgba(${palette.lit}, ${0.35 + 0.65 * strength})` : `rgba(${palette.dot}, ${labelAlpha * p.z})`;
-        ctx.beginPath();
-        ctx.arc(px, py, on ? 3.5 : 2.2, 0, Math.PI * 2);
-        ctx.fill();
-        if (on || width > 760) {
-          ctx.font = `${on ? 500 : 400} ${on ? 13 : 11}px "Geist Mono", monospace`;
-          ctx.fillText(p.label, px + 7, py + 4);
+        for (const p of pulses) {
+          const radius = ((now - p.start) / p.life) * p.reach;
+          const band = Math.abs(Math.hypot(x - p.x, y - p.y) - radius);
+          if (band < 40) lift = Math.max(lift, (1 - band / 40) * (1 - (now - p.start) / p.life));
         }
-      } else {
-        ctx.fillStyle = `rgba(${palette.dot}, ${0.22 * p.z})`;
+        const r = 1 + lift * 2.4;
+        ctx.fillStyle = lift > 0.05 ? `rgba(${palette.lit}, ${0.25 + lift * 0.75})` : `rgba(${palette.dot}, ${constellation ? 0.1 : 0.14})`;
         ctx.beginPath();
-        ctx.arc(px, py, 1.3 * p.z, 0, Math.PI * 2);
+        ctx.arc(x + dx, y + dy, r, 0, 6.283);
         ctx.fill();
       }
     }
-
-    if (constellation && litPoints.length > 1 && strength > 0.01) {
-      ctx.strokeStyle = `rgba(${palette.lit}, ${0.4 * strength})`;
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 4]);
-      ctx.beginPath();
-      litPoints.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
+    if (!reduced && visible && (pointer || pulses.length)) frame = requestAnimationFrame(draw);
+    else frame = 0;
   }
 
-  function loop(time) {
-    frame = 0;
-    if (!visible) return;
-    draw(time);
-    if (!reduced) frame = requestAnimationFrame(loop);
-  }
-
-  function kick() {
-    if (!frame && visible) frame = requestAnimationFrame(loop);
-  }
+  const kick = () => { if (!frame && !reduced) frame = requestAnimationFrame(draw); };
 
   new ResizeObserver(resize).observe(canvas);
-  document.fonts?.ready.then(resize);
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
     if (visible) kick();
   }).observe(canvas);
 
   if (!reduced) {
-    canvas.parentElement.addEventListener('pointermove', (event) => {
+    const host = constellation ? window : canvas.parentElement;
+    host.addEventListener('pointermove', (event) => {
       const box = canvas.getBoundingClientRect();
-      mouseX = (event.clientX - box.left) / box.width - 0.5;
-      mouseY = (event.clientY - box.top) / box.height - 0.5;
+      pointer = { x: event.clientX - box.left, y: event.clientY - box.top };
+      kick();
     });
+    (constellation ? document : canvas.parentElement).addEventListener('pointerleave', () => { pointer = null; kick(); });
   }
 
   const field = {
     focus(labels) {
-      lit = new Set(labels);
-      target = labels.length ? 1 : 0;
-      if (reduced) draw(0);
-      else kick();
+      if (!labels?.length || reduced) return;
+      const at = origin ? origin() : { x: width / 2, y: height / 2 };
+      pulses.push({ x: at.x, y: at.y, start: performance.now(), life: 1600, reach: Math.hypot(width, height) * 0.9 });
+      kick();
     },
-    clear() {
-      target = 0;
-      if (reduced) draw(0);
-    },
+    clear() {},
     refreshColors() {
       palette = colors();
       draw(performance.now());
@@ -249,7 +181,7 @@ const deskField = createField(document.querySelector('.desk-field'), {
 
 function syncTheme() {
   themeSwitch.setAttribute('aria-checked', String(!isWhite()));
-  document.querySelector('meta[name="theme-color"]').content = isWhite() ? '#FFFFFF' : '#5B2BE0';
+  document.querySelector('meta[name="theme-color"]').content = isWhite() ? '#FFFFFF' : '#0E0F0C';
   fields.forEach((field) => field.refreshColors());
 }
 
@@ -519,6 +451,16 @@ async function stream(text, id, lead) {
   }
 }
 
+const rack = document.querySelector('.rack-list');
+const RACK = [...new Map(Object.entries(SOURCES).map(([n, [id, name]]) => [id, { id, name: id === 'papers' ? 'Papers' : name, nums: [] }])).values()];
+for (const [n, [id]] of Object.entries(SOURCES)) RACK.find((r) => r.id === id).nums.push(Number(n));
+rack.replaceChildren(...RACK.map((r) => {
+  const li = Object.assign(document.createElement('li'), { textContent: r.name });
+  li.dataset.id = r.id;
+  return li;
+}));
+const rackItems = (cited) => RACK.filter((r) => r.nums.some((n) => cited.includes(n))).map((r) => rack.querySelector(`[data-id="${r.id}"]`));
+
 async function run(question, { type = false, loopBack = false } = {}) {
   const id = ++runId;
   const { answer, assumed } = route(question);
@@ -531,6 +473,7 @@ async function run(question, { type = false, loopBack = false } = {}) {
   STEPS.forEach((step) => setStep(step, null));
   loop.classList.remove('active');
   heroField.clear();
+  rack.querySelectorAll('li').forEach((li) => li.classList.remove('hit', 'read', 'dim'));
   trace.classList.add('running');
   trace.open = true;
 
@@ -551,9 +494,12 @@ async function run(question, { type = false, loopBack = false } = {}) {
   await step('plan', 'Planning', plan, 650);
   if (id !== runId) return;
   heroField.focus(answer.terms);
+  rackItems(cited).forEach((li, i) => setTimeout(() => { if (id === runId) li.classList.add('hit'); }, reduced ? 0 : 120 + i * 110));
   await step('search', 'Searching', `Matched ${cited.length} of ${SOURCE_COUNT} sources`, 900);
   if (id !== runId) return;
   const names = cited.map((n) => SOURCES[n][1]).join(', ');
+  rack.querySelectorAll('li:not(.hit)').forEach((li) => li.classList.add('dim'));
+  rackItems(cited).forEach((li) => li.classList.add('read'));
   await step('read', 'Reading', cited.length ? names : 'Nothing relevant on this page', 750);
   if (id !== runId) return;
   await step('reflect', 'Checking claims', 'Checked each claim against its source', 650);
@@ -783,6 +729,12 @@ function readLeaf(image) {
 uploadInput.addEventListener('change', async () => {
   const file = uploadInput.files[0];
   if (!file) return;
+  // Only images, and nothing huge: the photo is read in the browser and never uploaded
+  if (!file.type.startsWith('image/') || file.size > 10 * 1024 * 1024) {
+    verdict.textContent = 'Pick a JPG or PNG under 10 MB.';
+    uploadInput.value = '';
+    return;
+  }
   if (leafPhoto.src) URL.revokeObjectURL(leafPhoto.src);
   leafPhoto.src = URL.createObjectURL(file);
   try {
@@ -938,7 +890,7 @@ async function playClip(index) {
   chapters.className = 'mono';
   chapters.textContent = clip.chapters.map(([t, c]) => `${t}  ${c}`).join('\n');
   chapters.style.whiteSpace = 'pre-line';
-  const cards = [clypCard('Summary', '#F5B83D', summary), clypCard('Key points', '#F97316', points), clypCard('Quotes', '#EC4899', quote), clypCard('Chapters', '#A78BFA', chapters)];
+  const cards = [clypCard('Summary', '#F5B83D', summary), clypCard('Key points', '#F97316', points), clypCard('Quotes', '#EC4899', quote)];
   for (const card of cards) {
     await wait(420);
     if (run !== clypRun) return;
@@ -1464,12 +1416,61 @@ document.querySelector('[data-action="resume"]').addEventListener('click', print
 
 document.querySelector('[data-action="copy"]').addEventListener('click', copyEmail);
 
-document.querySelector('.note').addEventListener('submit', (event) => {
+// The contact box sends straight to Harsh's inbox through FormSubmit, no email app needed
+const mailbox = document.querySelector('.mailbox');
+const mailStatus = mailbox.querySelector('.mailbox-status');
+const sendButton = mailbox.querySelector('.send');
+
+mailbox.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const body = document.querySelector('#note-body').value.trim();
-  const params = new URLSearchParams({ subject: 'Hello from your portfolio', body });
-  location.href = `mailto:${EMAIL}?${params.toString().replace(/\+/g, '%20')}`;
+  const data = Object.fromEntries(new FormData(mailbox));
+  if (data._honey) return;
+  // Strip control characters and cap lengths before anything leaves the browser
+  const clean = (value, max) => String(value ?? '').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim().slice(0, max);
+  data.name = clean(data.name, 100);
+  data.email = clean(data.email, 254);
+  data.message = clean(data.message, 3000);
+  // A light limit against spam: one message a minute, three per visit
+  let sentLog = [];
+  try { sentLog = JSON.parse(sessionStorage.getItem('sent') || '[]').filter((t) => typeof t === 'number'); } catch {}
+  if (sentLog.length >= 3 || (sentLog.length && Date.now() - sentLog[sentLog.length - 1] < 60000)) {
+    mailStatus.textContent = sentLog.length >= 3 ? 'That’s plenty for one visit. Email Harsh directly for more.' : 'Give it a minute before sending another.';
+    return;
+  }
+  const checks = { name: data.name.trim().length > 1, email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()), message: data.message.trim().length > 4 };
+  let firstBad = null;
+  for (const [name, ok] of Object.entries(checks)) {
+    const field = mailbox.querySelector(`[name="${name}"]`);
+    field.closest('.fld').classList.toggle('bad', !ok);
+    if (!ok && !firstBad) firstBad = field;
+  }
+  if (firstBad) {
+    mailStatus.textContent = 'Add your name, a valid email and a short message.';
+    firstBad.focus();
+    return;
+  }
+  sendButton.disabled = true;
+  sendButton.classList.add('flying');
+  mailStatus.textContent = 'Sending…';
+  try {
+    const response = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ name: data.name.trim(), email: data.email.trim(), message: data.message.trim(), _subject: `Portfolio message from ${data.name.trim()}`, _template: 'box', _captcha: 'false' }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || String(result.success) === 'false') throw new Error('not sent');
+    try { sessionStorage.setItem('sent', JSON.stringify([...sentLog, Date.now()])); } catch {}
+    mailbox.classList.add('sent');
+    mailStatus.textContent = `Sent. Harsh will reply to ${data.email.trim()}.`;
+    sendButton.querySelector('.send-label').textContent = 'Sent';
+  } catch {
+    sendButton.classList.remove('flying');
+    sendButton.disabled = false;
+    mailStatus.replaceChildren('That didn’t go through. ', Object.assign(document.createElement('a'), { href: `mailto:${EMAIL}`, textContent: 'Email Harsh directly' }), ' instead.');
+  }
 });
+mailbox.addEventListener('input', (event) => event.target.closest('.fld')?.classList.remove('bad'));
 
 /* ---------- Command palette ---------- */
 
@@ -1491,7 +1492,7 @@ function paletteCommands() {
     { label: 'Open the terminal', group: 'Action', keys: 'shell console cli command', run: openTerminal },
     {
       label: 'Write Harsh a note', group: 'Action', keys: 'message contact hire',
-      run: () => { jumpTo('contact'); document.querySelector('#note-body').focus({ preventScroll: true }); },
+      run: () => { jumpTo('contact'); mailbox.querySelector('[name="name"]').focus({ preventScroll: true }); },
     },
   ];
 }
@@ -1910,12 +1911,12 @@ const pageTitle = document.title;
 const AWAY_TITLES = ['👀 Harsh Vardhan', '👀 Harsh is waiting'];
 // Favicon frames: the eyes glance around, and blink now and then
 const faceIcon = (dx, dy, shut = false) => 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#5B2BE0"/>` +
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="18" fill="#0E0F0C"/>` +
   (shut
     ? `<rect x="13" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/><rect x="33" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/>`
     : `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
-      `<circle cx="${22 + dx}" cy="${28 + dy}" r="4.6" fill="#1F153B"/><circle cx="${42 + dx}" cy="${28 + dy}" r="4.6" fill="#1F153B"/>`) +
-  `<rect x="21" y="45" width="22" height="5.5" rx="2.75" fill="#FFE45C"/></svg>`);
+      `<circle cx="${22 + dx}" cy="${28 + dy}" r="4.6" fill="#0E0F0C"/><circle cx="${42 + dx}" cy="${28 + dy}" r="4.6" fill="#0E0F0C"/>`) +
+  `<rect x="21" y="45" width="22" height="5.5" rx="2.75" fill="#B6FF3B"/></svg>`);
 const AWAY_ICONS = [faceIcon(-4, 0), faceIcon(-3, -4), faceIcon(4, -3), faceIcon(4, 2), faceIcon(0, 0, true), faceIcon(-2, 3)];
 let awayTimer = 0;
 
@@ -2001,3 +2002,144 @@ const introDone = new Promise((resolve) => {
 
 introDone.then(() => run(ANSWERS[0].ask, { type: true, loopBack: true }));
 
+
+
+/* ---------- v2 motion: progress bar, cursor, reveals, decoding titles, tilt ---------- */
+
+const progressBar = document.querySelector('.progress');
+addEventListener('scroll', () => {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  progressBar.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+}, { passive: true });
+
+const cursor = document.querySelector('.cursor');
+if (finePointer && !reduced) {
+  let cx = 0, cy = 0, tx = 0, ty = 0;
+  addEventListener('pointermove', (e) => {
+    tx = e.clientX; ty = e.clientY;
+    cursor.classList.add('on');
+    cursor.classList.toggle('big', !!e.target.closest('a, button, input, textarea, label, [role="tab"], .tt-stop, .pedal'));
+  });
+  addEventListener('pointerdown', () => cursor.classList.add('down'));
+  addEventListener('pointerup', () => cursor.classList.remove('down'));
+  document.addEventListener('pointerleave', () => cursor.classList.remove('on'));
+  (function follow() {
+    cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
+    cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+    requestAnimationFrame(follow);
+  })();
+}
+
+// Chapter titles decode from random glyphs, then settle
+const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=?';
+function decode(el) {
+  const final = el.textContent;
+  let tick = 0;
+  const timer = setInterval(() => {
+    tick += 1;
+    el.textContent = [...final].map((ch, i) => (ch === ' ' || i < tick / 1.6 ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)])).join('');
+    if (tick / 1.6 >= final.length) { clearInterval(timer); el.textContent = final; }
+  }, 28);
+}
+
+if (!reduced) {
+  root.classList.add('reveal-ready');
+  const revealer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      const el = entry.target;
+      const siblings = el.parentElement ? [...el.parentElement.children].filter((c) => c.matches('.ex')) : [];
+      el.style.transitionDelay = `${Math.max(0, siblings.indexOf(el)) * 110}ms`;
+      el.classList.add('in');
+      setTimeout(() => { el.style.transitionDelay = ''; el.classList.add('settled'); }, 1400);
+      if (el.matches('.chapter-head')) decode(el.querySelector('h3'));
+      revealer.unobserve(el);
+    }
+  }, { rootMargin: '0px 0px -12% 0px' });
+  document.querySelectorAll('.ex, .chapter-head, .edu').forEach((el) => revealer.observe(el));
+}
+
+// Cards tilt toward the cursor, with a glare that follows it
+if (finePointer && !reduced) {
+  document.querySelectorAll('.chapter .ex').forEach((card) => {
+    if (getComputedStyle(card).backgroundColor === 'rgba(0, 0, 0, 0)') return;
+    card.classList.add('tilt');
+    card.append(Object.assign(document.createElement('span'), { className: 'tilt-glare' }));
+    card.addEventListener('pointermove', (e) => {
+      if (e.target.closest('input, textarea, .tt-days, .pedal, .chat, .weights, input[type="range"]')) return;
+      const box = card.getBoundingClientRect();
+      const px = (e.clientX - box.left) / box.width;
+      const py = (e.clientY - box.top) / box.height;
+      card.style.transform = `perspective(1100px) rotateX(${(0.5 - py) * 5}deg) rotateY(${(px - 0.5) * 6}deg)`;
+      card.style.setProperty('--gx', `${px * 100}%`);
+      card.style.setProperty('--gy', `${py * 100}%`);
+    });
+    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+  });
+}
+
+/* ---------- More motion: click bursts, magnetic buttons, counting numbers, rising headings ---------- */
+
+if (!reduced) {
+  // A green ring bursts from wherever a button or link is pressed
+  addEventListener('pointerdown', (e) => {
+    if (!e.target.closest('button, a, [role="tab"], .tt-stop, .pedal')) return;
+    const burst = document.createElement('span');
+    burst.className = 'burst';
+    burst.style.left = `${e.clientX}px`;
+    burst.style.top = `${e.clientY}px`;
+    document.body.append(burst);
+    burst.addEventListener('animationend', () => burst.remove(), { once: true });
+  });
+
+  // Main buttons lean toward the cursor
+  if (finePointer) {
+    document.querySelectorAll('.ask button[type="submit"], .send, .mail, .btn-resume').forEach((button) => {
+      button.addEventListener('pointermove', (e) => {
+        const box = button.getBoundingClientRect();
+        button.style.translate = `${(e.clientX - box.left - box.width / 2) * 0.18}px ${(e.clientY - box.top - box.height / 2) * 0.3}px`;
+      });
+      button.addEventListener('pointerleave', () => { button.style.translate = ''; });
+    });
+  }
+
+  // Numbers count up the first time they come into view
+  const counters = [...document.querySelectorAll('.acc-row b')];
+  const countWatcher = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      countWatcher.unobserve(entry.target);
+      const el = entry.target;
+      const target = parseFloat(el.textContent);
+      const start = performance.now();
+      const tick = (now) => {
+        const k = Math.min(1, (now - start) / 1400);
+        el.textContent = `${(target * (1 - (1 - k) ** 3)).toFixed(2)}%`;
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      el.closest('.acc-row').querySelector('.acc-bar i')?.classList.add('fill');
+    }
+  }, { threshold: 0.6 });
+  counters.forEach((el) => countWatcher.observe(el));
+
+  // Big headings rise letter by letter
+  document.querySelectorAll('.desk-head h2, .contact h2').forEach((heading) => {
+    const words = heading.textContent.split(' ');
+    heading.setAttribute('aria-label', heading.textContent);
+    heading.replaceChildren(...words.flatMap((word, w) => {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.setAttribute('aria-hidden', 'true');
+      [...word].forEach((ch, i) => {
+        const letter = Object.assign(document.createElement('span'), { className: 'letter', textContent: ch });
+        letter.style.setProperty('--d', `${(w * 4 + i) * 35}ms`);
+        span.append(letter);
+      });
+      return w < words.length - 1 ? [span, document.createTextNode(' ')] : [span];
+    }));
+    new IntersectionObserver(([entry], observer) => {
+      if (entry.isIntersecting) { heading.classList.add('risen'); observer.disconnect(); }
+    }, { threshold: 0.4 }).observe(heading);
+  });
+}

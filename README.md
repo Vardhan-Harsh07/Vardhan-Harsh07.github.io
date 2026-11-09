@@ -1,6 +1,7 @@
 # Harsh Vardhan Singh Chauhan
 
-Personal portfolio: https://vardhan-harsh07.github.io
+Personal portfolio: an agent that answers questions about my work, with hands-on exhibits of what I've built.
 
-A static site (HTML, CSS, vanilla JS). Open `index.html` locally, or serve the folder with any static server.
-`tools/` holds the sources for the résumé PDF and the link-preview image, rendered with headless Chrome.
+Live: https://vardhan-harsh07.github.io
+
+Static HTML, CSS and JavaScript. No build step.
