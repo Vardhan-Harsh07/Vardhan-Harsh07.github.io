@@ -1587,4 +1587,27 @@ kbd {
 .mark-hv { position: relative; font: 800 1.35rem/1 var(--display); letter-spacing: -0.04em; padding-bottom: 0.3rem; }
 .mark-hv::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0.28rem; border-radius: 99px; background: var(--marker); transform-origin: left; transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1); }
 .mark:hover .mark-hv::after { transform: scaleX(1.25); }
-.intro-nick { font: 400 1rem/1.4 var(--serif); font-style: italic; color: rgba(255, 255, 255, 0.7); animation: rise-up 0.6s cubic-bezier(0.2, 0.9, 0.2, 1) 0.9s both; }
+.intro-nick { font: 400 clamp(1.15rem, 2.4vw, 1.5rem)/1.4 var(--serif); font-style: italic; color: #FFFFFF; animation: rise-up 0.6s cubic-bezier(0.2, 0.9, 0.2, 1) 0.9s both; }
+
+/* Nickname line: the two names in highlighter */
+.nick { margin-bottom: 1.6rem; font: 400 clamp(1.15rem, 2vw, 1.45rem)/1.35 var(--serif); font-style: italic; color: var(--on-ultra); }
+.nick mark, .intro-nick mark {
+  padding: 0 0.3em;
+  border-radius: 0.25em;
+  background: linear-gradient(var(--marker), var(--marker)) no-repeat 0 60% / 0% 85%;
+  color: inherit;
+  font-style: normal;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.85em;
+  letter-spacing: -0.02em;
+  animation: mark-in 0.7s cubic-bezier(0.6, 0, 0.2, 1) backwards;
+  background-size: 100% 85%;
+}
+.nick mark { --from: var(--on-ultra); --to: var(--marker-ink); color: var(--to); }
+.intro-nick mark { --from: #FFFFFF; --to: #0E0F0C; color: var(--to); }
+.nick mark + * , .nick mark:last-of-type { animation-delay: 0.45s; }
+.intro-nick mark { animation-delay: 1.1s; }
+.intro-nick mark:last-of-type { animation-delay: 1.35s; }
+@keyframes mark-in { from { color: var(--from); background-size: 0% 85%; } to { background-size: 100% 85%; color: var(--to); } }
+@media (prefers-reduced-motion: reduce) { .nick mark, .intro-nick mark { animation: none; background-size: 100% 85%; } }
