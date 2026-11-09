@@ -1910,12 +1910,15 @@ const favicon = document.querySelector('#favicon');
 const pageTitle = document.title;
 const AWAY_TITLES = ['👀 Harsh Vardhan', '👀 Harsh is waiting'];
 // Favicon frames: the eyes glance around, and blink now and then
-// Away-tab icon frames: the green bar under HV sweeps back and forth
-const hvIcon = (x, w) => 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="1.5" y="1.5" width="61" height="61" rx="15" fill="#0E0F0C" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3"/>` +
-  `<path d="M14 18V42M26 18V42M14 30H26M33 18L41 42L49 18" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="square"/>` +
-  `<rect x="${x}" y="48" width="${w}" height="5" rx="2.5" fill="#B6FF3B"/></svg>`);
-const AWAY_ICONS = [hvIcon(13, 14), hvIcon(25, 14), hvIcon(37, 14), hvIcon(25, 14)];
+// Favicon frames: the eyes glance around, and blink now and then
+const faceIcon = (dx, dy, shut = false) => 'data:image/svg+xml,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="#0E0F0C" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3"/>` +
+  (shut
+    ? `<rect x="13" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/><rect x="33" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/>`
+    : `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
+      `<circle cx="${22 + dx}" cy="${28 + dy}" r="4.6" fill="#0E0F0C"/><circle cx="${42 + dx}" cy="${28 + dy}" r="4.6" fill="#0E0F0C"/>`) +
+  `<rect x="21" y="45" width="22" height="5.5" rx="2.75" fill="#B6FF3B"/></svg>`);
+const AWAY_ICONS = [faceIcon(-4, 0), faceIcon(-3, -4), faceIcon(4, -3), faceIcon(4, 2), faceIcon(0, 0, true), faceIcon(-2, 3)];
 let awayTimer = 0;
 
 document.addEventListener('visibilitychange', () => {
@@ -1931,7 +1934,7 @@ document.addEventListener('visibilitychange', () => {
     awayTimer = setInterval(step, 1100);
   } else {
     document.title = pageTitle;
-    favicon.href = 'favicon.svg?v=20261109191551';
+    favicon.href = 'favicon.svg?v=20261109195653';
     blink();
   }
 });
