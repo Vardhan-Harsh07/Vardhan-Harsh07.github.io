@@ -1543,31 +1543,6 @@ kbd {
 }
 
 
-/* ---------- Nodes: 13 projects around the hero, wired to the question on search ---------- */
-.console > .nodes { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: visible; }
-.node { pointer-events: auto; cursor: pointer; transition: opacity 0.5s; }
-.node-ring { fill: var(--ultra); stroke: var(--on-ultra); stroke-width: 1.5; opacity: 0.55; transition: fill 0.35s, stroke 0.35s, opacity 0.35s, r 0.35s; }
-.node-label { font: 500 11.5px var(--mono); fill: var(--on-ultra-muted); transition: fill 0.35s; }
-.node:hover .node-ring { opacity: 1; }
-.node:hover .node-label { fill: var(--on-ultra); }
-.node-pulse { fill: none; stroke: var(--marker); stroke-width: 2; opacity: 0; transform-box: fill-box; transform-origin: center; }
-.node.hit .node-ring { fill: var(--marker); stroke: var(--marker-ink); opacity: 1; r: 6.5; }
-.node.hit .node-label { fill: var(--on-ultra); font-weight: 700; }
-.node.hit .node-pulse { animation: node-pulse 0.9s ease-out; }
-.node.dim { opacity: 0.35; }
-.node.kept .node-ring { r: 5.5; }
-@keyframes node-pulse { 0% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0; transform: scale(4); } }
-.node-links line { stroke: var(--on-ultra); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.18; }
-.wire { fill: none; stroke: var(--on-ultra); stroke-width: 1.25; opacity: 0.55; transition: stroke-dashoffset 0.65s cubic-bezier(0.6, 0, 0.2, 1), opacity 1.2s; }
-.wire.fade { opacity: 0; }
-.spark { fill: var(--marker); stroke: var(--marker-ink); stroke-width: 1; }
-:root[data-theme="white"] .node.hit .node-ring { stroke: #0E0F0C; }
-
-/* Desktop shows the nodes; phones keep the sources pills instead */
-@media (min-width: 1081px) { .rack { display: none; } }
-@media (max-width: 1080px) { .nodes { display: none; } }
-@media (prefers-reduced-motion: reduce) { .node.hit .node-pulse { animation: none; } .wire { transition: none; } }
-
 /* ---------- v2 spacing: no empty blocks inside stretched or wide cards ---------- */
 /* Wide cards: demo on the left, the story centred beside it */
 .chapter-wide .ex { grid-template-rows: none; align-items: center; }
