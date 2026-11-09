@@ -634,7 +634,7 @@ const EXHIBITS = [
   ['redditmind', 'RedditMind', ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit']],
   ['waystub', 'Waystub', ['MapLibre']],
   ['talentscout', 'TalentScout', ['Zephyr-7B', 'Hugging Face', 'Streamlit', 'Prompting']],
-  ['bennett', 'Bennett University', ['Python', 'SQL', 'C++', 'LSTM']],
+  ['bennett', 'Education', ['Python', 'SQL', 'C++', 'LSTM']],
 ];
 
 const exhibitWatcher = new IntersectionObserver((entries) => {

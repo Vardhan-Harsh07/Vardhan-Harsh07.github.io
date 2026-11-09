@@ -1398,3 +1398,10 @@ section[aria-labelledby="ch-shipped"] .chapter-grid { grid-template-columns: min
 /* The icon tile is drawn in the card's own text colour, so its glyph needs the opposite */
 .ex-clypso .lc-site .lc-icon .ico, .ex-treadle .lc-site .lc-icon .ico, .ex-assistant .lc-site .lc-icon .ico { color: #111111; }
 .ex-links .btn-ink { margin: 0; }
+
+/* Education: a quiet centred sign-off under the last chapter */
+.edu { display: flex; align-items: center; justify-content: center; gap: 1.1rem; margin: clamp(3.5rem, 7vw, 5rem) auto 0; text-align: left; }
+.edu-seal { flex: none; width: 4.75rem; color: var(--seal); transform: rotate(-8deg); }
+.edu p { display: grid; gap: 0.2rem; }
+.edu b { font: 700 1rem/1.25 var(--display); letter-spacing: -0.02em; }
+.edu span { font: 400 0.8125rem/1.4 var(--mono); color: var(--ink-2); }
