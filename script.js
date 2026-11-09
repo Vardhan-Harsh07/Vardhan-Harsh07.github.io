@@ -7,13 +7,13 @@ const NOW = 'Learning the ins and outs of Meta ads.';
 /* ---------- Latent field: skills as points in an embedding space ---------- */
 
 const CLUSTERS = [
-  { x: 0.14, y: 0.86, terms: ['LangGraph', 'RAG', 'Planner', 'Reflection', 'Serper.dev', 'GPT-4o', 'Claude API', 'Prompting'] },
-  { x: 0.50, y: 0.90, terms: ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras'] },
+  { x: 0.14, y: 0.86, terms: ['LangGraph', 'RAG', 'Claude API', 'OpenAI API', 'Prompt engineering', 'Agent harnesses', 'Tool use', 'Reflection', 'Serper.dev', 'Hugging Face', 'Zephyr-7B'] },
+  { x: 0.50, y: 0.90, terms: ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras', 'scikit-learn', 'Flask', 'Streamlit'] },
   { x: 0.88, y: 0.80, terms: ['Scoring engine', 'XGBoost', 'LightGBM', 'Calibration', 'Signals'] },
   { x: 0.90, y: 0.14, terms: ['Enterprise', 'Onboarding', 'SOPs', 'Support', 'Debugging', 'DNS', 'SPF', 'DMARC'] },
   { x: 0.62, y: 0.06, terms: ['Springer', 'ICICC-2026', 'Health ML', 'Cosmology'] },
-  { x: 0.38, y: 0.05, terms: ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit', 'Hono', 'MapLibre'] },
-  { x: 0.67, y: 0.56, terms: ['Python', 'SQL', 'C++', 'Flask', 'Streamlit', 'Zephyr-7B', 'Hugging Face', 'LSTM', 'three.js', 'Chrome extension'] },
+  { x: 0.38, y: 0.05, terms: ['Next.js', 'React', 'Tailwind CSS', 'Hono', 'Vercel', 'Trigger.dev', 'pgvector', 'Briefings', 'Reddit'] },
+  { x: 0.67, y: 0.56, terms: ['TypeScript', 'Python', 'Node.js', 'JavaScript', 'SQL', 'C++', 'Postgres', 'Drizzle', 'Zod', 'Playwright', 'three.js', 'Chrome extension'] },
 ];
 
 function seeded(seed) {
@@ -341,7 +341,7 @@ const ANSWERS = [
     match: /\b(now|currently|current|building|next|reddit\w*|clypso|waystub|youtube|side)\b/i,
     keys: ['now', 'currently', 'building', 'next', 'reddit', 'redditmind', 'clypso', 'waystub', 'youtube', 'latest', 'today', 'recent'],
     parts: 2,
-    terms: ['Next.js', 'Hono', 'Claude API', 'pgvector', 'Reddit', 'MapLibre'],
+    terms: ['Next.js', 'Hono', 'Claude API', 'pgvector', 'Reddit', 'TypeScript'],
     text: "Clypso [13], which turns a YouTube video into a summary, key points, verified quotes, chapters and social posts from one link or one API call. Its website is up but the product is still being built. Alongside it, RedditMind, an agent that writes you a morning briefing from your subreddits [3], and next in line is Waystub, a trip planner set as a railway timetable [15]. On the side, he's learning the ins and outs of Meta ads.",
   },
   {
@@ -354,11 +354,11 @@ const ANSWERS = [
   },
   {
     ask: "What's his stack?",
-    match: /\b(stack|skills?|tools?|tech|languages?|python|langgraph|tensorflow|frameworks?)\b/i,
-    keys: ['stack', 'skills', 'tools', 'technology', 'languages', 'python', 'langgraph', 'tensorflow', 'frameworks', 'experience', 'knows'],
-    parts: 1,
-    terms: ['Python', 'LangGraph', 'TensorFlow', 'XGBoost', 'Flask', 'Streamlit', 'SQL', 'C++'],
-    text: "Python first. For agents: LangGraph, the OpenAI and Claude APIs, and retrieval-augmented generation [4]. For models: TensorFlow, scikit-learn and XGBoost, optimised with TensorRT [5]. He ships with Flask, Streamlit and React, and also writes C++, SQL and JavaScript.",
+    match: /\b(stack|skills?|tools?|tech|languages?|python|typescript|javascript|node|react|next\.?js|langgraph|tensorflow|frameworks?|prompt\w*|harness\w*)\b/i,
+    keys: ['stack', 'skills', 'tools', 'technology', 'languages', 'python', 'typescript', 'javascript', 'node', 'react', 'nextjs', 'langgraph', 'tensorflow', 'frameworks', 'prompt', 'harness', 'experience', 'knows'],
+    parts: 3,
+    terms: ['TypeScript', 'Next.js', 'Node.js', 'Postgres', 'Prompt engineering', 'Agent harnesses', 'Python', 'TensorFlow'],
+    text: "TypeScript and Python. He ships products in TypeScript on Next.js, React, Node.js and Hono, with Postgres through Drizzle, Zod for validation, Playwright for tests and Vercel for hosting, as in Stamp [11] and Clypso [13]. For AI he works with the Claude and OpenAI APIs, LangGraph and RAG, and on the engineering around them: prompt engineering, tool use and agent harnesses [4] [13]. RealCheck is a Chrome extension in plain JavaScript [12], Treadle is built on three.js [14], and his models use TensorFlow, scikit-learn and XGBoost, optimised with TensorRT [5]. He also writes SQL and C++.",
   },
   {
     ask: 'How do I hire him?',
@@ -622,19 +622,19 @@ document.fonts?.ready.then(() => { fitInput(); placeLoop(); });
 /* ---------- Exhibits light up the background as they scroll past ---------- */
 
 const EXHIBITS = [
-  ['stamp', 'Stamp', ['DNS', 'SPF', 'DMARC', 'Next.js']],
-  ['clypso', 'Clypso', ['Claude API', 'Hono', 'Next.js', 'Prompting']],
+  ['stamp', 'Stamp', ['DNS', 'SPF', 'DMARC', 'Next.js', 'Drizzle', 'Playwright']],
+  ['clypso', 'Clypso', ['Claude API', 'Hono', 'Next.js', 'Prompt engineering', 'TypeScript']],
   ['treadle', 'Treadle', ['three.js']],
-  ['realcheck', 'RealCheck', ['Chrome extension', 'Signals']],
+  ['realcheck', 'RealCheck', ['Chrome extension', 'JavaScript', 'Signals']],
   ['inboxkit', 'InboxKit', ['Enterprise', 'Onboarding', 'SOPs', 'Support', 'Debugging']],
-  ['assistant', 'Research Assistant', ['LangGraph', 'RAG', 'Planner', 'Reflection', 'Serper.dev']],
+  ['assistant', 'Research Assistant', ['LangGraph', 'RAG', 'Agent harnesses', 'Reflection', 'Serper.dev', 'Tool use']],
   ['arcflip', 'Arcflip scoring engine', ['Scoring engine', 'XGBoost', 'LightGBM', 'Calibration', 'Signals']],
   ['papers', 'Papers', ['Springer', 'ICICC-2026', 'Health ML', 'Cosmology']],
   ['krishi', 'Krishi Saahayak', ['CNN', 'TensorRT', 'Ensemble', '38 classes', 'TensorFlow', 'Keras']],
   ['redditmind', 'RedditMind', ['Next.js', 'pgvector', 'Trigger.dev', 'Briefings', 'Reddit']],
-  ['waystub', 'Waystub', ['MapLibre']],
-  ['talentscout', 'TalentScout', ['Zephyr-7B', 'Hugging Face', 'Streamlit', 'Prompting']],
-  ['bennett', 'Education', ['Python', 'SQL', 'C++', 'LSTM']],
+  ['waystub', 'Waystub', ['React', 'TypeScript']],
+  ['talentscout', 'TalentScout', ['Zephyr-7B', 'Hugging Face', 'Streamlit', 'Prompt engineering']],
+  ['bennett', 'Education', ['Python', 'SQL', 'C++']],
 ];
 
 const exhibitWatcher = new IntersectionObserver((entries) => {
@@ -1609,6 +1609,7 @@ let terminalReturn = null;
 let greeted = false;
 
 const FILES = {
+  'stack.md': 'Languages: TypeScript, JavaScript, Python, SQL, C++\nAI and agents: Claude API, OpenAI API, LangGraph, RAG, prompt engineering, tool use, agent harnesses\nFrontend: Next.js, React, Tailwind CSS, Radix UI, Motion, three.js\nBackend: Node.js, Hono, REST and OpenAPI, Zod, Better Auth, Resend\nData: Postgres (Neon), pgvector, Drizzle, Turso, Upstash Redis\nML: TensorFlow, Keras, scikit-learn, XGBoost, LightGBM, TensorRT, Hugging Face\nShipping: Vercel, Trigger.dev, Chrome extensions, Playwright, Vitest, Git',
   'stamp.md': 'Stamp (2026, live)\nRuns the DNS checks Gmail, Outlook and Yahoo make: SPF, DKIM, DMARC, MX, MTA-STS, BIMI, blocklists. Grades the domain and says what to fix.\nhttps://stamp-zeta-two.vercel.app',
   'realcheck.md': 'RealCheck (2026, Chrome extension, in store review)\nGrades product reviews from A to F on Amazon, Flipkart, Walmart, Myntra and more. Runs entirely in your browser.',
   'clypso.md': 'Clypso (building)\nYouTube video in, summary, key points, quotes, chapters, SEO and social posts out. The website is up; the product is still being built.\nhttps://clypso-eta.vercel.app',

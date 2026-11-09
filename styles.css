@@ -1401,8 +1401,8 @@ kbd {
 .ex-links .btn-ink { margin: 0; }
 
 /* Education: a quiet centred sign-off under the last chapter */
-.edu { display: flex; align-items: center; justify-content: center; gap: 1.25rem; margin: clamp(3.5rem, 7vw, 5rem) auto 0; text-align: left; }
-.edu-seal { flex: none; width: 5rem; height: 5rem; color: var(--seal); transform: rotate(-8deg); }
+.edu { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin: clamp(3.5rem, 7vw, 5rem) auto 0; text-align: left; }
+.edu-seal { flex: none; width: 6.25rem; height: 6.25rem; color: var(--seal); transform: rotate(-8deg); }
 .edu p { display: grid; gap: 0.3rem; }
-.edu b { font: 700 1.15rem/1.25 var(--display); letter-spacing: -0.025em; }
-.edu span { font: 400 0.875rem/1.4 var(--mono); color: var(--ink-2); }
+.edu b { font: 700 1.4rem/1.2 var(--display); letter-spacing: -0.03em; }
+.edu span { font: 400 1rem/1.4 var(--mono); color: var(--ink-2); }
