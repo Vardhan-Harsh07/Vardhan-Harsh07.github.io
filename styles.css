@@ -1581,3 +1581,16 @@ kbd {
 .link-card:hover::after { transform: translateX(120%); transition: transform 0.7s ease; }
 
 @media (prefers-reduced-motion: reduce) { .letter { transform: none; opacity: 1; } .burst { display: none; } }
+
+/* HV monogram */
+.logo-face { fill: #0E0F0C; stroke: rgba(255, 255, 255, 0.35); stroke-width: 2; }
+.logo-hv { stroke: #FFFFFF; transition: stroke 0.3s; }
+.mark:hover .logo-hv { stroke: #B6FF3B; }
+.mark { gap: 0; }
+.mark .logo { width: 2.6rem; height: 2.6rem; }
+/* Intro: HV draws itself, the bar swipes under it */
+.intro-hv { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw-hv 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.25s forwards; }
+@keyframes draw-hv { to { stroke-dashoffset: 0; } }
+.intro-smile { animation-delay: 0.95s !important; }
+.intro-nick { font: 400 1rem/1.4 var(--serif); font-style: italic; color: rgba(255, 255, 255, 0.7); animation: rise-up 0.6s cubic-bezier(0.2, 0.9, 0.2, 1) 0.9s both; }
+@media (prefers-reduced-motion: reduce) { .intro-hv { stroke-dashoffset: 0; animation: none; } }

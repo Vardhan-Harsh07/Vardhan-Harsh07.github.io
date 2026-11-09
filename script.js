@@ -250,7 +250,7 @@ const ANSWERS = [
     keys: ['who', 'about', 'introduction', 'summary', 'background', 'harsh', 'profile'],
     parts: 3,
     terms: ['Enterprise', 'DMARC', 'Chrome extension', 'LangGraph', 'Ensemble', 'Springer'],
-    text: "Harsh is a Forward Deployed Engineer at InboxKit, where he's the engineer enterprise customers work with when something breaks [1]. He recently shipped Stamp, a live email deliverability checker [11], and RealCheck, a Chrome extension that grades product reviews [12]. Before that he built a multi-agent research system [4] and a crop-disease model with 99.55% accuracy that became a Springer paper [5] [6]. Right now he's building Clypso [13].",
+    text: "People call him Harsh; friends call him Vardhan. He's a Forward Deployed Engineer at InboxKit, where he's the engineer enterprise customers work with when something breaks [1]. He recently shipped Stamp, a live email deliverability checker [11], and RealCheck, a Chrome extension that grades product reviews [12]. Before that he built a multi-agent research system [4] and a crop-disease model with 99.55% accuracy that became a Springer paper [5] [6]. Right now he's building Clypso [13].",
   },
   {
     ask: 'What has he shipped?',
@@ -1616,7 +1616,7 @@ const FILES = {
   'clypso.md': 'Clypso (building)\nYouTube video in, summary, key points, quotes, chapters, SEO and social posts out. The website is up; the product is still being built.\nhttps://clypso-eta.vercel.app',
   'treadle.md': 'Treadle (2026, UI concept)\nA product page for a foot pedal that runs AI agents while your foot is down. Concept. No pedal exists.\nhttps://treadle-pedal.vercel.app',
   'waystub.md': 'Waystub (in planning)\nA trip planner set as a railway timetable. Drag a stop and every time and warning follows.',
-  'about.md': 'Harsh Vardhan Singh Chauhan\nForward Deployed Engineer at InboxKit. Builds AI agents and gets them working for real customers.\nHaryana, India.',
+  'about.md': 'Harsh Vardhan Singh Chauhan\nPeople call him Harsh. Friends call him Vardhan.\nForward Deployed Engineer at InboxKit. Builds AI agents and gets them working for real customers.\nHaryana, India.',
   'now.md': NOW,
   'inboxkit.md': 'Forward Deployed Engineer, InboxKit (Apr 2026 to now, remote, Dubai)\n- The engineer enterprise customers work with when something breaks\n- Runs onboarding, implementation and the procedures behind them\n- Turns customer requirements into fixes and features',
   'arcflip.md': 'AI Research & Algorithm Intern, Arcflip (Dec 2025 to Feb 2026)\n- Built the core scoring engine for AI career matching\n- Python pipelines that kept data clean across agent workflows\n- Calibrated scores against reference profiles to cut drift',
@@ -1710,7 +1710,7 @@ function execute(raw) {
       print(NOW);
       break;
     case 'whoami':
-      print('visitor. Harsh is in about.md.');
+      print('visitor. Harsh is in about.md. (People call him Harsh. Friends call him Vardhan.)');
       break;
     case 'pwd':
       print('/home/visitor');
@@ -1910,14 +1910,12 @@ const favicon = document.querySelector('#favicon');
 const pageTitle = document.title;
 const AWAY_TITLES = ['👀 Harsh Vardhan', '👀 Harsh is waiting'];
 // Favicon frames: the eyes glance around, and blink now and then
-const faceIcon = (dx, dy, shut = false) => 'data:image/svg+xml,' + encodeURIComponent(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="1.5" y="1.5" width="61" height="61" rx="17" fill="#0E0F0C" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3"/>` +
-  (shut
-    ? `<rect x="13" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/><rect x="33" y="27" width="18" height="3.5" rx="1.75" fill="#fff"/>`
-    : `<ellipse cx="22" cy="28" rx="9" ry="11" fill="#fff"/><ellipse cx="42" cy="28" rx="9" ry="11" fill="#fff"/>` +
-      `<circle cx="${22 + dx}" cy="${28 + dy}" r="4.6" fill="#0E0F0C"/><circle cx="${42 + dx}" cy="${28 + dy}" r="4.6" fill="#0E0F0C"/>`) +
-  `<rect x="21" y="45" width="22" height="5.5" rx="2.75" fill="#B6FF3B"/></svg>`);
-const AWAY_ICONS = [faceIcon(-4, 0), faceIcon(-3, -4), faceIcon(4, -3), faceIcon(4, 2), faceIcon(0, 0, true), faceIcon(-2, 3)];
+// Away-tab icon frames: the green bar under HV sweeps back and forth
+const hvIcon = (x, w) => 'data:image/svg+xml,' + encodeURIComponent(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="1.5" y="1.5" width="61" height="61" rx="15" fill="#0E0F0C" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3"/>` +
+  `<path d="M14 18V42M26 18V42M14 30H26M33 18L41 42L49 18" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="square"/>` +
+  `<rect x="${x}" y="48" width="${w}" height="5" rx="2.5" fill="#B6FF3B"/></svg>`);
+const AWAY_ICONS = [hvIcon(13, 14), hvIcon(25, 14), hvIcon(37, 14), hvIcon(25, 14)];
 let awayTimer = 0;
 
 document.addEventListener('visibilitychange', () => {
@@ -1933,7 +1931,7 @@ document.addEventListener('visibilitychange', () => {
     awayTimer = setInterval(step, 1100);
   } else {
     document.title = pageTitle;
-    favicon.href = 'favicon.svg?v=20261109191428';
+    favicon.href = 'favicon.svg?v=20261109191551';
     blink();
   }
 });
