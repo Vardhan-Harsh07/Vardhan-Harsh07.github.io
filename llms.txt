@@ -1,0 +1,33 @@
+# Harsh Vardhan Singh Chauhan
+
+> Forward Deployed Engineer at InboxKit who builds AI agents and gets them working for real customers. Based in Haryana, India. People call him Harsh; friends call him Vardhan.
+
+Website: https://vardhan.live
+Email: vardhanharsh806@gmail.com
+GitHub: https://github.com/Vardhan-Harsh07
+LinkedIn: https://www.linkedin.com/in/harsh-vardhan-singh-chauhan-7a7b7c
+X: https://x.com/RealfromDay0ne
+
+## Experience
+- Forward Deployed Engineer, InboxKit (Apr 2026 to now, remote, Dubai): primary technical contact for enterprise customers; drives fixes across support, engineering and product; turns customer requirements into product changes.
+- AI Research & Algorithm Intern, Arcflip (Dec 2025 to Feb 2026, US startup, remote): built the core scoring engine for an AI career-matching platform.
+- B.Tech, Computer Science (Data Science), Bennett University, 2022 to 2026, CGPA 8.95.
+
+## Projects
+- Stamp (shipped): checks the DNS records mail providers look at (SPF, DKIM, DMARC, MX, MTA-STS, BIMI, blocklists), grades a domain and says what to fix. https://stamp-zeta-two.vercel.app
+- RealCheck (shipped, Chrome Web Store review): Chrome extension that grades product reviews from A to F on Amazon, Flipkart, Walmart, Myntra and more, fully in the browser.
+- Treadle (UI concept): product page for a foot pedal that runs AI agents while your foot is down. https://treadle-pedal.vercel.app
+- Clypso (building): YouTube video in; summary, key points, quotes, chapters, SEO and social posts out. https://clypso-eta.vercel.app
+- RedditMind (building): agent that writes a personalised morning briefing from your subreddits.
+- Waystub (planning): trip planner set as a railway timetable.
+- Agentic AI Research Assistant: multi-agent deep research in LangGraph with live web search and cited reports.
+- Krishi Saahayak: crop disease detection across 38 classes; ensemble of five models reached 99.55% accuracy.
+- TalentScout: LLM screening assistant that writes technical questions for each candidate's stack.
+
+## Papers
+- A Cosmological Probe in a Theory of Higher-Order Gravity. Astronomy and Computing (Elsevier), 2025. https://doi.org/10.1016/j.ascom.2025.100988
+- Leveraging Digital Devices for Behavioral Health Assessment via ML. Springer, 2025. https://link.springer.com/chapter/10.1007/978-3-031-98728-1_17
+- Automated Identification of Crop Diseases Using Deep Learning Frameworks. ICICC-2026, Springer. Accepted.
+
+## Skills
+TypeScript, JavaScript, Python, SQL, C++. Claude API, OpenAI API, LangGraph, RAG, prompt engineering, tool use, agent harnesses. Next.js, React, Node.js, Hono, Postgres, Drizzle, Zod, Playwright, Vercel. TensorFlow, scikit-learn, XGBoost, TensorRT.
