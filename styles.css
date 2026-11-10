@@ -1107,7 +1107,7 @@ kbd {
   .bar nav { margin-left: 0; }
   .bar-tools { margin-left: auto; }
   .stage { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
-  .graph { order: -1; padding-top: 0; }
+  .graph { order: 0; padding-top: 0; }
   .graph-title, .graph-note, .loop, .scribble-ask { display: none; }
   .flow { width: auto; display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .flow li { padding: 0.4rem 0.65rem; font-size: 0.8125rem; border-radius: 999px; }
