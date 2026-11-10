@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /classic/
 Disallow: /v2/
+
+Sitemap: https://vardhan.live/sitemap.xml

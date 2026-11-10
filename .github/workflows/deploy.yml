@@ -36,6 +36,7 @@ jobs:
           cp index.html boot.js script.js styles.css logo.svg favicon.svg apple-touch-icon.png og.png Harsh-Vardhan-Chauhan-Resume.pdf _site/
           [ -f CNAME ] && cp CNAME _site/ || true
           [ -f robots.txt ] && cp robots.txt _site/ || true
+          [ -f sitemap.xml ] && cp sitemap.xml _site/ || true
           [ -f 404.html ] && cp 404.html _site/ || true
           cp -r classic v2 _site/
 
