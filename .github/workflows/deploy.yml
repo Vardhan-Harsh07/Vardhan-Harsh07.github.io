@@ -34,6 +34,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html boot.js script.js styles.css logo.svg favicon.svg apple-touch-icon.png og.png Harsh-Vardhan-Resume.pdf _site/
+          cp Harsh-Vardhan-Resume.pdf _site/Harsh-Vardhan-Chauhan-Resume.pdf # old link, kept for cached pages and shared URLs
           [ -f CNAME ] && cp CNAME _site/ || true
           [ -f robots.txt ] && cp robots.txt _site/ || true
           [ -f sitemap.xml ] && cp sitemap.xml _site/ || true
